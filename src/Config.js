@@ -109,11 +109,11 @@ module.exports = class extends ChainedMap {
           case 'plugins': {
             if (Array.isArray(value)) {
               return value
-              .forEach((plugin, index) => {
-                if (plugin.name) index = plugin.name;
-                if (isClass(plugin)) this.plugin(index).plugin(plugin);
-                else this.plugin(index).init((args) => plugin);
-              });
+                .forEach((plugin, index) => {
+                  if (plugin.name) index = plugin.name;
+                  if (isClass(plugin)) this.plugin(index).plugin(plugin);
+                  else this.plugin(index).init((args) => plugin);
+                });
             }
           }
 
