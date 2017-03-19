@@ -7,6 +7,7 @@ const DevServer = require('./DevServer');
 const Plugin = require('./Plugin');
 const Module = require('./Module');
 const Performance = require('./Performance');
+const isClass = require('izz/class')
 
 module.exports = class extends ChainedMap {
   constructor() {
@@ -89,6 +90,11 @@ module.exports = class extends ChainedMap {
           }
 
           case 'entry': {
+            if (typeof value === 'string') {
+              const path = require('path');
+              const name = path.basename(value);
+              return this.entry(name).merge([value]);
+            }
             return Object
               .keys(value)
               .forEach(name => this.entry(name).merge(value[name]));
@@ -98,6 +104,17 @@ module.exports = class extends ChainedMap {
             return Object
               .keys(value)
               .forEach(name => this.plugin(name).merge(value[name]));
+          }
+
+          case 'plugins': {
+            if (Array.isArray(value)) {
+              return value
+              .forEach((plugin, index) => {
+                if (plugin.name) index = plugin.name;
+                if (isClass(plugin)) this.plugin(index).plugin(plugin);
+                else this.plugin(index).init((args) => plugin);
+              });
+            }
           }
 
           default: {
