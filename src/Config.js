@@ -7,7 +7,7 @@ const DevServer = require('./DevServer');
 const Plugin = require('./Plugin');
 const Module = require('./Module');
 const Performance = require('./Performance');
-const isClass = require('izz/class')
+const isClass = require('izz-class')
 
 module.exports = class extends ChainedMap {
   constructor() {
