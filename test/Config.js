@@ -54,6 +54,72 @@ test('entry', t => {
   t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
 });
 
+test('merge entry as string with existing entries, with the same prop', t => {
+  const configObj = {
+    entry: 'src/index.js'
+  };
+
+  const config = new Config();
+
+  config.entry('index')
+    .add('babel-polyfill')
+    .add('src/index.js');
+
+  t.true(config.entryPoints.has('index'));
+  t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
+});
+
+test('merge entry as string with existing entries', t => {
+  t.plan(4)
+  const configObj = {
+    entry: 'src/other.js'
+  };
+
+  const config = new Config();
+
+  config.entry('index')
+    .add('babel-polyfill')
+    .add('src/index.js');
+
+  config.merge(configObj);
+
+  const backToObj = config.toConfig();
+
+  t.true(config.entryPoints.has('index'));
+  t.true(config.entryPoints.has('other'));
+  t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
+  t.deepEqual(config.entryPoints.get('other').values(), ['src/other.js']);
+});
+
+test('merge entry as string', t => {
+  t.plan(3)
+  const configObj = {
+    entry: 'src/index.js'
+  };
+  const config = new Config();
+  config.merge(configObj);
+  const backToObj = config.toConfig();
+
+  t.deepEqual(backToObj.entry.index, [configObj.entry]);
+  t.true(config.entryPoints.has('index'));
+  t.deepEqual(config.entryPoints.get('index').values(), [configObj.entry]);
+});
+
+test('merge output as string', t => {
+  const configObj = {
+    output: 'dist/bundle.js'
+  };
+  const config = new Config().merge(configObj);
+  const backToObj = config.toConfig();
+
+  t.deepEqual(backToObj, {
+    output: {
+      path: 'dist',
+      filename: 'bundle.js'
+    }
+  })
+});
+
 test('plugin empty', t => {
   const config = new Config();
   const instance = config.plugin('stringify').use(StringifyPlugin).end();
