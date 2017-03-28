@@ -1,4 +1,4 @@
-const path = require('path');
+const { basename, dirname } = require('path');
 const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
 const Resolve = require('./Resolve');
@@ -104,11 +104,9 @@ module.exports = class extends ChainedMap {
            */
           case 'output': {
             if (typeof value === 'string') {
-              const filename = path.basename(value);
-              const dir = path.dirname(value);
               const asObject = {
-                path: dir,
-                filename,
+                path: dirname(value),
+                filename: basename(value),
               };
 
               return this.output.merge(asObject);
@@ -125,13 +123,13 @@ module.exports = class extends ChainedMap {
            * @example:
            *
            * input: './src/front/index.js'
-           * output: {index: ['./src/front/index.js']}
+           * output: {front: ['./src/front/index.js']}
            */
           case 'entry': {
             if (typeof value === 'string') {
-              let name = path.basename(value);
-              if (name.includes('.')) {
-                name = name.split('.').shift();
+              let name = dirname(value);
+              if (name.includes('/')) {
+                name = name.split('/').pop();
               }
 
               return this.entry(name).merge([value]);
