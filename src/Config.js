@@ -111,6 +111,8 @@ module.exports = class extends ChainedMap {
 
               return this.output.merge(asObject);
             }
+
+            return this[key].merge(value);
           }
 
           /**
