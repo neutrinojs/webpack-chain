@@ -216,6 +216,7 @@ test('validate with entry', t => {
   t.is(errors.length, 0);
 });
 
+test.todo('resolve entry & output with latest webpack');
 test('validate with values', t => {
   const config = new Config();
 
@@ -251,7 +252,7 @@ test('validate with values', t => {
           .loader('babel-loader')
           .options({ presets: ['alpha'] });
 
-  const errors = validate(config.toConfig());
-
+  const obj = config.toConfig();
+  const errors = validate(obj);
   t.is(errors.length, 0);
 });
