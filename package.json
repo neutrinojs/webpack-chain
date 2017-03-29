@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "ava": "^0.18.2",
-    "webpack": "^2.2.1"
+    "webpack": "2.2.1"
   }
 }

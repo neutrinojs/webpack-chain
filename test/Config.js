@@ -54,8 +54,77 @@ test('entry', t => {
   t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
 });
 
+test('merge entry as string with existing entries, with the same prop', t => {
+  const configObj = {
+    entry: 'src/index.js'
+  };
+
+  const config = new Config();
+
+  config.entry('index')
+    .add('babel-polyfill')
+    .add('src/index.js');
+  config.merge(configObj);
+
+  t.true(config.entryPoints.has('index'));
+  t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
+});
+
+test('merge entry as string with existing entries', t => {
+  t.plan(4)
+  const configObj = {
+    entry: 'src/other.js'
+  };
+
+  const config = new Config();
+
+  config.entry('index')
+    .add('babel-polyfill')
+    .add('src/index.js');
+
+  config.merge(configObj);
+
+  t.true(config.entryPoints.has('index'));
+  t.true(config.entryPoints.has('src'));
+  t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
+  t.deepEqual(config.entryPoints.get('src').values(), ['src/other.js']);
+});
+
+test('merge entry as string', t => {
+  t.plan(3)
+
+  const configObj = {
+    entry: 'src/front/index.js'
+  };
+  const config = new Config();
+
+  config.merge(configObj);
+
+  const backToObj = config.toConfig();
+
+  t.deepEqual(backToObj.entry.front, [configObj.entry]);
+  t.true(config.entryPoints.has('front'));
+  t.deepEqual(config.entryPoints.get('front').values(), [configObj.entry]);
+});
+
+test('merge output as string', t => {
+  const configObj = {
+    output: 'dist/bundle.js'
+  };
+  const config = new Config().merge(configObj);
+  const backToObj = config.toConfig();
+
+  t.deepEqual(backToObj, {
+    output: {
+      path: 'dist',
+      filename: 'bundle.js'
+    }
+  });
+});
+
 test('plugin empty', t => {
   const config = new Config();
+
   const instance = config.plugin('stringify').use(StringifyPlugin).end();
 
   t.is(instance, config);
@@ -135,6 +204,7 @@ test('toConfig with values', t => {
 
 test('validate empty', t => {
   const config = new Config();
+
   const errors = validate(config.toConfig());
 
   t.is(errors.length, 1);
@@ -149,6 +219,8 @@ test('validate with entry', t => {
 
   t.is(errors.length, 0);
 });
+
+test.todo('resolve entry & output with latest webpack');
 
 test('validate with values', t => {
   const config = new Config();
@@ -185,7 +257,7 @@ test('validate with values', t => {
           .loader('babel-loader')
           .options({ presets: ['alpha'] });
 
-  const errors = validate(config.toConfig());
-
+  const obj = config.toConfig();
+  const errors = validate(obj);
   t.is(errors.length, 0);
 });

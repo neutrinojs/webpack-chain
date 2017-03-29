@@ -1,3 +1,4 @@
+const { basename, dirname } = require('path');
 const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
 const Resolve = require('./Resolve');
@@ -80,7 +81,6 @@ module.exports = class extends ChainedMap {
 
         switch (key) {
           case 'node':
-          case 'output':
           case 'resolve':
           case 'resolveLoader':
           case 'devServer':
@@ -88,7 +88,55 @@ module.exports = class extends ChainedMap {
             return this[key].merge(value);
           }
 
+          /**
+           * @example:
+           *
+           * input:
+           * '/code/example/dist/[name].js'
+           *
+           * output:
+           * {
+           *   path: '/code/example/dist',
+           *   filename: '[name].js',
+           * }
+           *
+           *
+           */
+          case 'output': {
+            if (typeof value === 'string') {
+              const asObject = {
+                path: dirname(value),
+                filename: basename(value),
+              };
+
+              return this.output.merge(asObject);
+            }
+
+            return this[key].merge(value);
+          }
+
+          /**
+           * take a string entry,
+           * file name becomes property,
+           * value becomes an array,
+           * if the same prop exists,
+           * it is merged in with existing values
+           *
+           * @example:
+           *
+           * input: './src/front/index.js'
+           * output: {front: ['./src/front/index.js']}
+           */
           case 'entry': {
+            if (typeof value === 'string') {
+              let name = dirname(value);
+              if (name.includes('/')) {
+                name = name.split('/').pop();
+              }
+
+              return this.entry(name).merge([value]);
+            }
+
             return Object
               .keys(value)
               .forEach(name => this.entry(name).merge(value[name]));
@@ -98,6 +146,29 @@ module.exports = class extends ChainedMap {
             return Object
               .keys(value)
               .forEach(name => this.plugin(name).merge(value[name]));
+          }
+
+          /**
+           * @see ./Plugin
+           * merge an array of plugins
+           */
+          case 'plugins': {
+            if (Array.isArray(value)) {
+              return value
+                .forEach((plugin, index) => {
+                  plugin.name = plugin.name || index
+
+                  // if Class, default Plugin.init will instantiate it
+                  if (toString.call(plugin) === '[object Function]') {
+                    this.plugin(plugin.name).plugin(plugin);
+                  }
+
+                  // otherwise, it is already instantiated
+                  else {
+                    this.plugin(plugin.name).init((args) => plugin);
+                  }
+                });
+            }
           }
 
           default: {
