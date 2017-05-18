@@ -31,6 +31,7 @@ module.exports = class extends ChainedMap {
         const value = obj[key];
 
         switch (key) {
+          case 'rules':
           case 'rule': {
             return Object
               .keys(value)
