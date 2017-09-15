@@ -948,11 +948,9 @@ provide a second function to be invoked when the condition is falsy, which is al
 ```js
 // Example: Only add minify plugin during production
 config
-  .when(process.env.NODE_ENV === 'production', config => {
-    config
-      .plugin('minify')
+  .when(process.env.NODE_ENV === 'production')
+    .plugin('minify')
       .use(BabiliWebpackPlugin);
-  });
 ```
 
 ```js
