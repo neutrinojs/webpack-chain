@@ -68,7 +68,6 @@ config
   .entry('index')
     .add('src/index.js')
     .end()
-
   // Modify output settings
   .output
     .path('dist')
@@ -194,6 +193,8 @@ values()
 // where the key is the object property, and the value
 // corresponding to the key. Will return `undefined` if the backing
 // Map is empty.
+// This will order properties by their name if the value is
+// a ChainedMap that used .before() or .after().
 // returns: Object, undefined if empty
 entries()
 ````
@@ -201,18 +202,21 @@ entries()
 ```js
 // Provide an object which maps its properties and values
 // into the backing Map as keys and values.
+// You can also provide an array as the second argument
+// for property names to omit from being merged.
 // obj: Object
-merge(obj)
+// omit: Optional Array
+merge(obj, omit)
 ```
 
 ```js
 // Conditionally execute a function to continue configuration
 // condition: Boolean
-// truthyHandler: Function -> ChainedMap
+// whenTruthy: Function -> ChainedMap
   // invoked when condition is truthy, given a single argument of the ChainedMap instance
-// falsyHandler: Function -> ChainedMap
+// whenFalsy: Optional Function -> ChainedMap
   // invoked when condition is falsy, given a single argument of the ChainedMap instance
-when(condition, truthyHandler, falsyHandler)
+when(condition, whenTruthy, whenFalsy)
 ```
 
 ## ChainedSet
@@ -269,11 +273,11 @@ merge(arr)
 ```js
 // Conditionally execute a function to continue configuration
 // condition: Boolean
-// truthyHandler: Function -> ChainedSet
+// whenTruthy: Function -> ChainedSet
   // invoked when condition is truthy, given a single argument of the ChainedSet instance
-// falsyHandler: Function -> ChainedSet
+// whenFalsy: Optional Function -> ChainedSet
   // invoked when condition is falsy, given a single argument of the ChainedSet instance
-when(condition, truthyHandler, falsyHandler)
+when(condition, whenTruthy, whenFalsy)
 ```
 
 ## Shorthand methods
@@ -353,7 +357,7 @@ config
 
 config
   .entry(name)
-  .clear()
+    .clear()
 
 // Using low-level config.entryPoints:
 
@@ -608,6 +612,48 @@ config
 config.plugins.delete(name)
 ```
 
+#### Config plugins: ordering before
+
+Specify that the current `plugin` context should operate before another named `plugin`.
+You cannot use both `.before()` and `.after()` on the same plugin.
+
+```js
+config
+  .plugin(name)
+    .before(otherName)
+    
+// Example
+
+config
+  .plugin('html-template')
+    .use(HtmlWebpackTemplate)
+    .end()
+  .plugin('script-ext')
+    .use(ScriptExtWebpackPlugin)
+    .before('html-template');
+```
+
+#### Config plugins: ordering after
+
+Specify that the current `plugin` context should operate after another named `plugin`.
+You cannot use both `.before()` and `.after()` on the same plugin.
+
+```js
+config
+  .plugin(name)
+    .after(otherName)
+
+// Example
+
+config
+  .plugin('html-template')
+    .after('script-ext')
+    .use(HtmlWebpackTemplate)
+    .end()
+  .plugin('script-ext')
+    .use(ScriptExtWebpackPlugin);
+```
+
 #### Config resolve plugins
 
 ```js
@@ -645,6 +691,48 @@ config.resolve
 
 ```js
 config.resolve.plugins.delete(name)
+```
+
+#### Config resolve plugins: ordering before
+
+Specify that the current `plugin` context should operate before another named `plugin`.
+You cannot use both `.before()` and `.after()` on the same resolve plugin.
+
+```js
+config.resolve
+  .plugin(name)
+    .before(otherName)
+
+// Example
+
+config.resolve
+  .plugin('beta')
+    .use(BetaWebpackPlugin)
+    .end()
+  .plugin('alpha')
+    .use(AlphaWebpackPlugin)
+    .before('beta');
+```
+
+#### Config resolve plugins: ordering after
+
+Specify that the current `plugin` context should operate after another named `plugin`.
+You cannot use both `.before()` and `.after()` on the same resolve plugin.
+
+```js
+config.resolve
+  .plugin(name)
+    .after(otherName)
+
+// Example
+
+config.resolve
+  .plugin('beta')
+    .after('alpha')
+    .use(BetaWebpackTemplate)
+    .end()
+  .plugin('alpha')
+    .use(AlphaWebpackPlugin);
 ```
 
 #### Config node
