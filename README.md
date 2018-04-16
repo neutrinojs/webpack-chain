@@ -574,6 +574,32 @@ config.performance
   .assetFilter(assetFilter)
 ```
 
+#### Configuring optimizations: shorthand methods
+
+```js
+config.optimization : ChainedMap
+
+config.optimization
+  .concatenateModules(concatenateModules)
+  .flagIncludedChunks(flagIncludedChunks)
+  .mergeDuplicateChunks(mergeDuplicateChunks)
+  .minimize(minimize)
+  .minimizer(minimizer)
+  .namedChunks(namedChunks)
+  .namedModules(namedModules)
+  .nodeEnv(nodeEnv)
+  .noEmitOnErrors(noEmitOnErrors)
+  .occurrenceOrder(occurrenceOrder)
+  .portableRecords(portableRecords)
+  .providedExports(providedExports)
+  .removeAvailableModules(removeAvailableModules)
+  .removeEmptyChunks(removeEmptyChunks)
+  .runtimeChunk(runtimeChunk)
+  .sideEffects(sideEffects)
+  .splitChunks(splitChunks)
+  .usedExports(usedExports)
+```
+
 #### Config plugins
 
 ```js
@@ -930,10 +956,12 @@ config.merge({
   amd,
   bail,
   cache,
-  devtool,
   context,
+  devtool,
   externals,
   loader,
+  mode,
+  parallelism,
   profile,
   recordsPath,
   recordsInputPath,
@@ -983,6 +1011,27 @@ config.merge({
 
   node: {
     [key]: value
+  },
+
+  optimizations: {
+    concatenateModules,
+    flagIncludedChunks,
+    mergeDuplicateChunks,
+    minimize,
+    minimizer,
+    namedChunks,
+    namedModules,
+    nodeEnv,
+    noEmitOnErrors,
+    occurrenceOrder,
+    portableRecords,
+    providedExports,
+    removeAvailableModules,
+    removeEmptyChunks,
+    runtimeChunk,
+    sideEffects,
+    splitChunks,
+    usedExports,
   },
 
   performance: {

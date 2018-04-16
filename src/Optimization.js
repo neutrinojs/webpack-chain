@@ -4,24 +4,24 @@ module.exports = class extends ChainedMap {
   constructor(parent) {
     super(parent);
     this.extend([
-      'removeAvailableModules',
-      'removeEmptyChunks',
-      'mergeDuplicateChunks',
-      'flagIncludedChunks',
-      'occurrenceOrder',
-      'sideEffects',
-      'providedExports',
-      'usedExports',
       'concatenateModules',
-      'splitChunks',
-      'runtimeChunk',
-      'noEmitOnErrors',
-      'namedModules',
-      'namedChunks',
-      'portableRecords',
+      'flagIncludedChunks',
+      'mergeDuplicateChunks',
       'minimize',
       'minimizer',
+      'namedChunks',
+      'namedModules',
       'nodeEnv',
+      'noEmitOnErrors',
+      'occurrenceOrder',
+      'portableRecords',
+      'providedExports',
+      'removeAvailableModules',
+      'removeEmptyChunks',
+      'runtimeChunk',
+      'sideEffects',
+      'splitChunks',
+      'usedExports',
     ]);
   }
 };
