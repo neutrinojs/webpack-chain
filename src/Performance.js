@@ -4,10 +4,10 @@ module.exports = class extends ChainedMap {
   constructor(parent) {
     super(parent);
     this.extend([
+      'assetFilter',
       'hints',
-      'maxEntrypointSize',
       'maxAssetSize',
-      'assetFilter'
+      'maxEntrypointSize'
     ]);
   }
 };

@@ -85,12 +85,12 @@ test('toConfig with values', t => {
     .output
       .path('build')
       .end()
-    .mode("development")
+    .mode('development')
     .node
       .set('__dirname', 'mock')
       .end()
     .optimization
-      .nodeEnv("PRODUCTION")
+      .nodeEnv('PRODUCTION')
       .end()
     .target('node')
     .plugin('stringify')
@@ -100,7 +100,7 @@ test('toConfig with values', t => {
       .defaultRule('inline')
         .use('banner')
           .loader('banner-loader')
-          .options({ prefix: "banner-prefix.txt" })
+          .options({ prefix: 'banner-prefix.txt' })
           .end()
         .end()
       .rule('compile')
@@ -120,12 +120,12 @@ test('toConfig with values', t => {
           .options({ presets: ['alpha'] });
 
   t.deepEqual(config.toConfig(), {
-    mode: "development",
+    mode: 'development',
     node: {
       __dirname: 'mock'
     },
     optimization: {
-      nodeEnv: "PRODUCTION",
+      nodeEnv: 'PRODUCTION',
     },
     output: {
       path: 'build'
@@ -136,7 +136,7 @@ test('toConfig with values', t => {
       defaultRules: [{
         use: [{
           loader: 'banner-loader',
-          options: { prefix: "banner-prefix.txt" },
+          options: { prefix: 'banner-prefix.txt' },
         }]
       }],
       rules: [{
@@ -182,9 +182,9 @@ test('validate with values', t => {
     .output
       .path('/build')
       .end()
-    .mode("development")
+    .mode('development')
     .optimization
-      .nodeEnv("PRODUCTION")
+      .nodeEnv('PRODUCTION')
       .end()
     .node
       .set('__dirname', 'mock')

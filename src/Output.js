@@ -5,9 +5,9 @@ module.exports = class extends ChainedMap {
     super(parent);
     this.extend([
       'auxiliaryComment',
+      'chunkCallbackName',
       'chunkFilename',
       'chunkLoadTimeout',
-      'chunkCallbackName',
       'crossOriginLoading',
       'devtoolFallbackModuleFilenameTemplate',
       'devtoolLineToLine',

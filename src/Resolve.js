@@ -20,8 +20,8 @@ module.exports = class extends ChainedMap {
       'concord',
       'enforceExtension',
       'enforceModuleExtension',
-      'unsafeCache',
       'symlinks',
+      'unsafeCache',
     ]);
   }
 
