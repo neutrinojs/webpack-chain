@@ -9,7 +9,16 @@ module.exports = class Rule extends ChainedMap {
     this.include = new ChainedSet(this);
     this.exclude = new ChainedSet(this);
     this.oneOfs = new ChainedMap(this);
-    this.extend(['parser', 'test', 'enforce', 'issuer', 'resource', 'resourceQuery']);
+    this.extend([
+      'enforce',
+      'issuer',
+      'parser',
+      'resource',
+      'resourceQuery',
+      'sideEffects',
+      'test',
+      'type'
+    ]);
   }
 
   use(name) {

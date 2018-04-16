@@ -17,10 +17,11 @@ module.exports = class extends ChainedMap {
     this.extend([
       'cachePredicate',
       'cacheWithContext',
+      'concord',
       'enforceExtension',
       'enforceModuleExtension',
+      'symlinks',
       'unsafeCache',
-      'symlinks'
     ]);
   }
 

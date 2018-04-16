@@ -1,7 +1,7 @@
 # webpack-chain
 
 Use a chaining API to generate and simplify the modification of
-Webpack 2 and 3 configurations.
+Webpack version 2-4 configurations.
 
 This documentation corresponds to v4 of webpack-chain.
 
@@ -30,7 +30,7 @@ This is easier explained through the examples following.
 ## Installation
 
 `webpack-chain` requires Node.js v6.9 and higher. `webpack-chain` also
-only creates configuration objects designed for use in Webpack 2 and 3.
+only creates configuration objects designed for use in Webpack version 2, 3, and 4.
 
 You may install this package using either Yarn or npm (choose one):
 
@@ -347,6 +347,7 @@ config
   .context(context)
   .externals(externals)
   .loader(loader)
+  .mode(mode)
   .parallelism(parallelism)
   .profile(profile)
   .recordsPath(recordsPath)
@@ -571,6 +572,32 @@ config.performance
   .maxEntrypointSize(maxEntrypointSize)
   .maxAssetSize(maxAssetSize)
   .assetFilter(assetFilter)
+```
+
+#### Configuring optimizations: shorthand methods
+
+```js
+config.optimization : ChainedMap
+
+config.optimization
+  .concatenateModules(concatenateModules)
+  .flagIncludedChunks(flagIncludedChunks)
+  .mergeDuplicateChunks(mergeDuplicateChunks)
+  .minimize(minimize)
+  .minimizer(minimizer)
+  .namedChunks(namedChunks)
+  .namedModules(namedModules)
+  .nodeEnv(nodeEnv)
+  .noEmitOnErrors(noEmitOnErrors)
+  .occurrenceOrder(occurrenceOrder)
+  .portableRecords(portableRecords)
+  .providedExports(providedExports)
+  .removeAvailableModules(removeAvailableModules)
+  .removeEmptyChunks(removeEmptyChunks)
+  .runtimeChunk(runtimeChunk)
+  .sideEffects(sideEffects)
+  .splitChunks(splitChunks)
+  .usedExports(usedExports)
 ```
 
 #### Config plugins
@@ -929,10 +956,12 @@ config.merge({
   amd,
   bail,
   cache,
-  devtool,
   context,
+  devtool,
   externals,
   loader,
+  mode,
+  parallelism,
   profile,
   recordsPath,
   recordsInputPath,
@@ -982,6 +1011,27 @@ config.merge({
 
   node: {
     [key]: value
+  },
+
+  optimizations: {
+    concatenateModules,
+    flagIncludedChunks,
+    mergeDuplicateChunks,
+    minimize,
+    minimizer,
+    namedChunks,
+    namedModules,
+    nodeEnv,
+    noEmitOnErrors,
+    occurrenceOrder,
+    portableRecords,
+    providedExports,
+    removeAvailableModules,
+    removeEmptyChunks,
+    runtimeChunk,
+    sideEffects,
+    splitChunks,
+    usedExports,
   },
 
   performance: {

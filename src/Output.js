@@ -5,13 +5,16 @@ module.exports = class extends ChainedMap {
     super(parent);
     this.extend([
       'auxiliaryComment',
+      'chunkCallbackName',
       'chunkFilename',
       'chunkLoadTimeout',
       'crossOriginLoading',
       'devtoolFallbackModuleFilenameTemplate',
       'devtoolLineToLine',
       'devtoolModuleFilenameTemplate',
+      'devtoolNamespace',
       'filename',
+      'globalObject',
       'hashDigest',
       'hashDigestLength',
       'hashFunction',
@@ -29,7 +32,8 @@ module.exports = class extends ChainedMap {
       'sourceMapFilename',
       'sourcePrefix',
       'strictModuleExceptionHandling',
-      'umdNamedDefine'
+      'umdNamedDefine',
+      'webassemblyModuleFilename',
     ]);
   }
 };

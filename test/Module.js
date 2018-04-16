@@ -24,6 +24,14 @@ test('rule', t => {
   t.true(module.rules.has('compile'));
 });
 
+test('defaultRule', t => {
+  const module = new Module();
+  const instance = module.defaultRule('banner').end();
+
+  t.is(instance, module);
+  t.true(module.defaultRules.has('banner'));
+})
+
 test('toConfig empty', t => {
   const module = new Module();
 
