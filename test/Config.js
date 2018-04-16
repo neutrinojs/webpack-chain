@@ -1,6 +1,6 @@
 import test from 'ava';
 import Config from '../src/Config';
-import { validateSchema } from 'webpack';
+import { validate } from 'webpack';
 
 class StringifyPlugin {
   constructor(...args) {
@@ -156,7 +156,7 @@ test('toConfig with values', t => {
 test('validate empty', t => {
   const config = new Config();
 
-  const errors = validateSchema(config.toConfig());
+  const errors = validate(config.toConfig());
 
   t.is(errors.length, 0);
 });
@@ -166,7 +166,7 @@ test('validate with entry', t => {
 
   config.entry('index').add('src/index.js');
 
-  const errors = validateSchema(config.toConfig());
+  const errors = validate(config.toConfig());
 
   t.is(errors.length, 0);
 });
@@ -211,7 +211,7 @@ test('validate with values', t => {
           .loader('babel-loader')
           .options({ presets: ['alpha'] });
 
-  const errors = validateSchema(config.toConfig());
+  const errors = validate(config.toConfig());
 
   t.is(errors.length, 0);
 });
