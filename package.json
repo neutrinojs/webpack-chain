@@ -23,7 +23,7 @@
     "deepmerge": "^1.5.2"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
+    "ava": "^0.25.0",
     "changelog": "^1.4.0",
     "webpack": "^3.6.0"
   }
