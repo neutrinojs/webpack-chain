@@ -2,7 +2,7 @@ dist: trusty
 language: node_js
 cache: yarn
 node_js:
-- '6.10'
+- '6.11.5'
 - '7'
 - '8'
 install:
