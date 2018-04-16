@@ -25,6 +25,6 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "changelog": "^1.4.0",
-    "webpack": "^3.6.0"
+    "webpack": "^4.5.0"
   }
 }

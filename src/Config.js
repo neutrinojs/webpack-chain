@@ -6,6 +6,7 @@ const Output = require('./Output');
 const DevServer = require('./DevServer');
 const Plugin = require('./Plugin');
 const Module = require('./Module');
+const Optimization = require('./Optimization');
 const Performance = require('./Performance');
 
 module.exports = class extends ChainedMap {
@@ -15,6 +16,7 @@ module.exports = class extends ChainedMap {
     this.entryPoints = new ChainedMap(this);
     this.module = new Module(this);
     this.node = new ChainedMap(this);
+    this.optimization = new Optimization(this);
     this.output = new Output(this);
     this.performance = new Performance(this);
     this.plugins = new ChainedMap(this);
@@ -28,6 +30,7 @@ module.exports = class extends ChainedMap {
       'context',
       'externals',
       'loader',
+      'mode',
       'parallelism',
       'profile',
       'recordsPath',
@@ -66,6 +69,7 @@ module.exports = class extends ChainedMap {
       resolveLoader: this.resolveLoader.toConfig(),
       devServer: this.devServer.toConfig(),
       module: this.module.toConfig(),
+      optimization: this.optimization.entries(),
       plugins: this.plugins.values().map(plugin => plugin.toConfig()),
       performance: this.performance.entries(),
       entry: Object
@@ -81,6 +85,7 @@ module.exports = class extends ChainedMap {
       'resolve',
       'resolveLoader',
       'devServer',
+      'optimization',
       'performance',
       'module'
     ];

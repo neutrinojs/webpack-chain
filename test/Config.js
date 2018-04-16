@@ -1,6 +1,6 @@
 import test from 'ava';
 import Config from '../src/Config';
-import { validate } from 'webpack';
+import { validateSchema } from 'webpack';
 
 class StringifyPlugin {
   constructor(...args) {
@@ -85,14 +85,24 @@ test('toConfig with values', t => {
     .output
       .path('build')
       .end()
+    .mode("development")
     .node
       .set('__dirname', 'mock')
+      .end()
+    .optimization
+      .nodeEnv("PRODUCTION")
       .end()
     .target('node')
     .plugin('stringify')
       .use(StringifyPlugin)
       .end()
     .module
+      .defaultRule('inline')
+        .use('banner')
+          .loader('banner-loader')
+          .options({ prefix: "banner-prefix.txt" })
+          .end()
+        .end()
       .rule('compile')
         .include
           .add('alpha')
@@ -110,8 +120,12 @@ test('toConfig with values', t => {
           .options({ presets: ['alpha'] });
 
   t.deepEqual(config.toConfig(), {
+    mode: "development",
     node: {
       __dirname: 'mock'
+    },
+    optimization: {
+      nodeEnv: "PRODUCTION",
     },
     output: {
       path: 'build'
@@ -119,6 +133,12 @@ test('toConfig with values', t => {
     target: 'node',
     plugins: [new StringifyPlugin()],
     module: {
+      defaultRules: [{
+        use: [{
+          loader: 'banner-loader',
+          options: { prefix: "banner-prefix.txt" },
+        }]
+      }],
       rules: [{
         include: ['alpha', 'beta'],
         exclude: ['alpha', 'beta'],
@@ -135,9 +155,10 @@ test('toConfig with values', t => {
 
 test('validate empty', t => {
   const config = new Config();
-  const errors = validate(config.toConfig());
 
-  t.is(errors.length, 1);
+  const errors = validateSchema(config.toConfig());
+
+  t.is(errors.length, 0);
 });
 
 test('validate with entry', t => {
@@ -145,7 +166,7 @@ test('validate with entry', t => {
 
   config.entry('index').add('src/index.js');
 
-  const errors = validate(config.toConfig());
+  const errors = validateSchema(config.toConfig());
 
   t.is(errors.length, 0);
 });
@@ -160,6 +181,10 @@ test('validate with values', t => {
       .end()
     .output
       .path('/build')
+      .end()
+    .mode("development")
+    .optimization
+      .nodeEnv("PRODUCTION")
       .end()
     .node
       .set('__dirname', 'mock')
@@ -178,6 +203,7 @@ test('validate with values', t => {
           .add('alpha')
           .add('beta')
           .end()
+        .sideEffects(false)
         .post()
         .pre()
         .test(/\.js$/)
@@ -185,7 +211,7 @@ test('validate with values', t => {
           .loader('babel-loader')
           .options({ presets: ['alpha'] });
 
-  const errors = validate(config.toConfig());
+  const errors = validateSchema(config.toConfig());
 
   t.is(errors.length, 0);
 });

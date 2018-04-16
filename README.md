@@ -347,6 +347,7 @@ config
   .context(context)
   .externals(externals)
   .loader(loader)
+  .mode(mode)
   .parallelism(parallelism)
   .profile(profile)
   .recordsPath(recordsPath)
