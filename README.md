@@ -1,7 +1,7 @@
 # webpack-chain
 
 Use a chaining API to generate and simplify the modification of
-Webpack 2 and 3 configurations.
+Webpack version 2-4 configurations.
 
 This documentation corresponds to v4 of webpack-chain.
 
@@ -30,7 +30,7 @@ This is easier explained through the examples following.
 ## Installation
 
 `webpack-chain` requires Node.js v6.9 and higher. `webpack-chain` also
-only creates configuration objects designed for use in Webpack 2 and 3.
+only creates configuration objects designed for use in Webpack version 2, 3, and 4.
 
 You may install this package using either Yarn or npm (choose one):
 
