@@ -30,7 +30,7 @@ test('defaultRule', t => {
 
   t.is(instance, module);
   t.true(module.defaultRules.has('banner'));
-})
+});
 
 test('toConfig empty', t => {
   const module = new Module();
@@ -44,5 +44,8 @@ test('toConfig with values', t => {
   module.rule('compile').test(/\.js$/);
   module.noParse(/.min.js/);
 
-  t.deepEqual(module.toConfig(), { rules: [{ test: /\.js$/ }], noParse: /.min.js/ });
+  t.deepEqual(module.toConfig(), {
+    rules: [{ test: /\.js$/ }],
+    noParse: /.min.js/,
+  });
 });

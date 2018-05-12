@@ -1,6 +1,6 @@
 import test from 'ava';
-import Config from '../src/Config';
 import { validate } from 'webpack';
+import Config from '../src/Config';
 
 class StringifyPlugin {
   constructor(...args) {
@@ -24,7 +24,7 @@ test('shorthand methods', t => {
   const config = new Config();
   const obj = {};
 
-  config.shorthands.map(method => {
+  config.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(config[method]('alpha'), config);
   });
@@ -46,17 +46,24 @@ test('node', t => {
 test('entry', t => {
   const config = new Config();
 
-  config.entry('index')
+  config
+    .entry('index')
     .add('babel-polyfill')
     .add('src/index.js');
 
   t.true(config.entryPoints.has('index'));
-  t.deepEqual(config.entryPoints.get('index').values(), ['babel-polyfill', 'src/index.js']);
+  t.deepEqual(config.entryPoints.get('index').values(), [
+    'babel-polyfill',
+    'src/index.js',
+  ]);
 });
 
 test('plugin empty', t => {
   const config = new Config();
-  const instance = config.plugin('stringify').use(StringifyPlugin).end();
+  const instance = config
+    .plugin('stringify')
+    .use(StringifyPlugin)
+    .end();
 
   t.is(instance, config);
   t.true(config.plugins.has('stringify'));
@@ -81,75 +88,77 @@ test('toConfig empty', t => {
 test('toConfig with values', t => {
   const config = new Config();
 
-  config
-    .output
-      .path('build')
-      .end()
+  config.output
+    .path('build')
+    .end()
     .mode('development')
-    .node
-      .set('__dirname', 'mock')
-      .end()
-    .optimization
-      .nodeEnv('PRODUCTION')
-      .end()
+    .node.set('__dirname', 'mock')
+    .end()
+    .optimization.nodeEnv('PRODUCTION')
+    .end()
     .target('node')
     .plugin('stringify')
-      .use(StringifyPlugin)
-      .end()
-    .module
-      .defaultRule('inline')
-        .use('banner')
-          .loader('banner-loader')
-          .options({ prefix: 'banner-prefix.txt' })
-          .end()
-        .end()
-      .rule('compile')
-        .include
-          .add('alpha')
-          .add('beta')
-          .end()
-        .exclude
-          .add('alpha')
-          .add('beta')
-          .end()
-        .post()
-        .pre()
-        .test(/\.js$/)
-        .use('babel')
-          .loader('babel-loader')
-          .options({ presets: ['alpha'] });
+    .use(StringifyPlugin)
+    .end()
+    .module.defaultRule('inline')
+    .use('banner')
+    .loader('banner-loader')
+    .options({ prefix: 'banner-prefix.txt' })
+    .end()
+    .end()
+    .rule('compile')
+    .include.add('alpha')
+    .add('beta')
+    .end()
+    .exclude.add('alpha')
+    .add('beta')
+    .end()
+    .post()
+    .pre()
+    .test(/\.js$/)
+    .use('babel')
+    .loader('babel-loader')
+    .options({ presets: ['alpha'] });
 
   t.deepEqual(config.toConfig(), {
     mode: 'development',
     node: {
-      __dirname: 'mock'
+      __dirname: 'mock',
     },
     optimization: {
       nodeEnv: 'PRODUCTION',
     },
     output: {
-      path: 'build'
+      path: 'build',
     },
     target: 'node',
     plugins: [new StringifyPlugin()],
     module: {
-      defaultRules: [{
-        use: [{
-          loader: 'banner-loader',
-          options: { prefix: 'banner-prefix.txt' },
-        }]
-      }],
-      rules: [{
-        include: ['alpha', 'beta'],
-        exclude: ['alpha', 'beta'],
-        enforce: 'pre',
-        test: /\.js$/,
-        use: [{
-          loader: 'babel-loader',
-          options: { presets: ['alpha'] }
-        }]
-      }]
-    }
+      defaultRules: [
+        {
+          use: [
+            {
+              loader: 'banner-loader',
+              options: { prefix: 'banner-prefix.txt' },
+            },
+          ],
+        },
+      ],
+      rules: [
+        {
+          include: ['alpha', 'beta'],
+          exclude: ['alpha', 'beta'],
+          enforce: 'pre',
+          test: /\.js$/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: { presets: ['alpha'] },
+            },
+          ],
+        },
+      ],
+    },
   });
 });
 
@@ -176,40 +185,34 @@ test('validate with values', t => {
 
   config
     .entry('index')
-      .add('babel-polyfill')
-      .add('src/index.js')
-      .end()
-    .output
-      .path('/build')
-      .end()
+    .add('babel-polyfill')
+    .add('src/index.js')
+    .end()
+    .output.path('/build')
+    .end()
     .mode('development')
-    .optimization
-      .nodeEnv('PRODUCTION')
-      .end()
-    .node
-      .set('__dirname', 'mock')
-      .end()
+    .optimization.nodeEnv('PRODUCTION')
+    .end()
+    .node.set('__dirname', 'mock')
+    .end()
     .target('node')
     .plugin('stringify')
-      .use(StringifyPlugin)
-      .end()
-    .module
-      .rule('compile')
-        .include
-          .add('alpha')
-          .add('beta')
-          .end()
-        .exclude
-          .add('alpha')
-          .add('beta')
-          .end()
-        .sideEffects(false)
-        .post()
-        .pre()
-        .test(/\.js$/)
-        .use('babel')
-          .loader('babel-loader')
-          .options({ presets: ['alpha'] });
+    .use(StringifyPlugin)
+    .end()
+    .module.rule('compile')
+    .include.add('alpha')
+    .add('beta')
+    .end()
+    .exclude.add('alpha')
+    .add('beta')
+    .end()
+    .sideEffects(false)
+    .post()
+    .pre()
+    .test(/\.js$/)
+    .use('babel')
+    .loader('babel-loader')
+    .options({ presets: ['alpha'] });
 
   const errors = validate(config.toConfig());
 

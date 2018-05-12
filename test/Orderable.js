@@ -6,9 +6,7 @@ const Ordered = Orderable(class Test extends ChainedMap {});
 
 test('before', t => {
   const ordered = new Ordered();
-  const instance = ordered
-    .set('gamma')
-    .before('beta');
+  const instance = ordered.set('gamma').before('beta');
 
   t.is(instance, ordered);
   t.is(ordered.__before, 'beta');
@@ -16,9 +14,7 @@ test('before', t => {
 
 test('after', t => {
   const ordered = new Ordered();
-  const instance = ordered
-    .set('gamma')
-    .after('alpha');
+  const instance = ordered.set('gamma').after('alpha');
 
   t.is(instance, ordered);
   t.is(ordered.__after, 'alpha');
@@ -61,16 +57,18 @@ test('ordering before and after', t => {
   map.set('gamma', new Ordered().set('gamma', 'gamma').after('beta'));
   map.set('alpha', new Ordered().set('alpha', 'alpha').before('beta'));
 
-  t.deepEqual(map.values().map(o => o.values()), [['alpha'], ['beta'], ['gamma']]);
+  t.deepEqual(map.values().map(o => o.values()), [
+    ['alpha'],
+    ['beta'],
+    ['gamma'],
+  ]);
 });
 
 test('merge with before', t => {
   const ordered = new Ordered();
-  const instance = ordered
-    .set('gamma')
-    .merge({
-      before: 'beta'
-    });
+  const instance = ordered.set('gamma').merge({
+    before: 'beta',
+  });
 
   t.is(instance, ordered);
   t.is(ordered.__before, 'beta');
@@ -78,11 +76,9 @@ test('merge with before', t => {
 
 test('merge with after', t => {
   const ordered = new Ordered();
-  const instance = ordered
-    .set('gamma')
-    .merge({
-      after: 'alpha'
-    });
+  const instance = ordered.set('gamma').merge({
+    after: 'alpha',
+  });
 
   t.is(instance, ordered);
   t.is(ordered.__after, 'alpha');

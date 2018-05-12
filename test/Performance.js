@@ -12,7 +12,7 @@ test('shorthand methods', t => {
   const performance = new Performance();
   const obj = {};
 
-  performance.shorthands.map(method => {
+  performance.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(performance[method]('alpha'), performance);
   });

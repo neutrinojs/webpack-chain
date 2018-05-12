@@ -12,7 +12,7 @@ test('shorthand methods', t => {
   const optimization = new Optimization();
   const obj = {};
 
-  optimization.shorthands.map(method => {
+  optimization.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(optimization[method]('alpha'), optimization);
   });

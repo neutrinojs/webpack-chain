@@ -10,7 +10,7 @@ test('Calling .end() returns parent', t => {
 
 test('Using .batch() receives context', t => {
   const chain = new Chainable();
-  const context = chain.batch((current) => {
+  const context = chain.batch(current => {
     t.is(current, chain);
   });
 

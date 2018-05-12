@@ -25,13 +25,14 @@ test('toConfig empty', t => {
 test('toConfig with values', t => {
   const resolveLoader = new ResolveLoader();
 
-  resolveLoader
-    .modules.add('src').end()
+  resolveLoader.modules
+    .add('src')
+    .end()
     .set('moduleExtensions', ['-loader']);
 
   t.deepEqual(resolveLoader.toConfig(), {
     modules: ['src'],
-    moduleExtensions: ['-loader']
+    moduleExtensions: ['-loader'],
   });
 });
 
@@ -39,7 +40,7 @@ test('merge empty', t => {
   const resolveLoader = new ResolveLoader();
   const obj = {
     modules: ['src'],
-    moduleExtensions: ['-loader']
+    moduleExtensions: ['-loader'],
   };
   const instance = resolveLoader.merge(obj);
 
@@ -50,35 +51,40 @@ test('merge empty', t => {
 test('merge with values', t => {
   const resolveLoader = new ResolveLoader();
 
-  resolveLoader
-    .modules.add('src').end()
+  resolveLoader.modules
+    .add('src')
+    .end()
     .moduleExtensions.add('-loader');
 
   resolveLoader.merge({
     modules: ['dist'],
-    moduleExtensions: ['-fake']
+    moduleExtensions: ['-fake'],
   });
 
   t.deepEqual(resolveLoader.toConfig(), {
     modules: ['src', 'dist'],
-    moduleExtensions: ['-loader', '-fake']
+    moduleExtensions: ['-loader', '-fake'],
   });
 });
 
 test('merge with omit', t => {
   const resolveLoader = new ResolveLoader();
 
-  resolveLoader
-    .modules.add('src').end()
+  resolveLoader.modules
+    .add('src')
+    .end()
     .moduleExtensions.add('-loader');
 
-  resolveLoader.merge({
-    modules: ['dist'],
-    moduleExtensions: ['-fake']
-  }, ['moduleExtensions']);
+  resolveLoader.merge(
+    {
+      modules: ['dist'],
+      moduleExtensions: ['-fake'],
+    },
+    ['moduleExtensions']
+  );
 
   t.deepEqual(resolveLoader.toConfig(), {
     modules: ['src', 'dist'],
-    moduleExtensions: ['-loader']
+    moduleExtensions: ['-loader'],
   });
 });

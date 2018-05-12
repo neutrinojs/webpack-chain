@@ -17,6 +17,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "test": "ava test",
+    "lint": "eslint src test .eslintrc.js",
     "changelog": "changelog mozilla-neutrino/webpack-chain all --markdown > CHANGELOG.md"
   },
   "dependencies": {
@@ -26,6 +27,12 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "changelog": "^1.4.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-ava": "^4.5.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.12.1",
     "webpack": "^4.5.0"
   }
 }

@@ -1,6 +1,5 @@
 const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
-const merge = require('deepmerge');
 
 module.exports = class extends ChainedMap {
   constructor(parent) {
@@ -12,12 +11,17 @@ module.exports = class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(Object.assign({
-      extensions: this.extensions.values(),
-      modules: this.modules.values(),
-      moduleExtensions: this.moduleExtensions.values(),
-      packageMains: this.packageMains.values()
-    }, this.entries() || {}));
+    return this.clean(
+      Object.assign(
+        {
+          extensions: this.extensions.values(),
+          modules: this.modules.values(),
+          moduleExtensions: this.moduleExtensions.values(),
+          packageMains: this.packageMains.values(),
+        },
+        this.entries() || {}
+      )
+    );
   }
 
   merge(obj, omit = []) {
@@ -25,7 +29,7 @@ module.exports = class extends ChainedMap {
       'extensions',
       'modules',
       'moduleExtensions',
-      'packageMains'
+      'packageMains',
     ];
 
     omissions.forEach(key => {

@@ -32,7 +32,7 @@ test('tap', t => {
 
   plugin.use(StringifyPlugin, ['alpha', 'beta']);
 
-  const instance = plugin.tap(args => ['gamma', 'delta']);
+  const instance = plugin.tap(() => ['gamma', 'delta']);
 
   t.is(instance, plugin);
   t.deepEqual(plugin.get('args'), ['gamma', 'delta']);
@@ -47,7 +47,10 @@ test('init', t => {
     t.deepEqual(args, []);
     return new Plugin('gamma', 'delta');
   });
-  const initialized = plugin.get('init')(plugin.get('plugin'), plugin.get('args'));
+  const initialized = plugin.get('init')(
+    plugin.get('plugin'),
+    plugin.get('args')
+  );
 
   t.is(instance, plugin);
   t.true(initialized instanceof StringifyPlugin);

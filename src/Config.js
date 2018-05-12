@@ -39,7 +39,7 @@ module.exports = class extends ChainedMap {
       'stats',
       'target',
       'watch',
-      'watchOptions'
+      'watchOptions',
     ]);
   }
 
@@ -62,20 +62,24 @@ module.exports = class extends ChainedMap {
   toConfig() {
     const entryPoints = this.entryPoints.entries() || {};
 
-    return this.clean(Object.assign(this.entries() || {}, {
-      node: this.node.entries(),
-      output: this.output.entries(),
-      resolve: this.resolve.toConfig(),
-      resolveLoader: this.resolveLoader.toConfig(),
-      devServer: this.devServer.toConfig(),
-      module: this.module.toConfig(),
-      optimization: this.optimization.entries(),
-      plugins: this.plugins.values().map(plugin => plugin.toConfig()),
-      performance: this.performance.entries(),
-      entry: Object
-        .keys(entryPoints)
-        .reduce((acc, key) => Object.assign(acc, { [key]: entryPoints[key].values() }), {})
-    }));
+    return this.clean(
+      Object.assign(this.entries() || {}, {
+        node: this.node.entries(),
+        output: this.output.entries(),
+        resolve: this.resolve.toConfig(),
+        resolveLoader: this.resolveLoader.toConfig(),
+        devServer: this.devServer.toConfig(),
+        module: this.module.toConfig(),
+        optimization: this.optimization.entries(),
+        plugins: this.plugins.values().map(plugin => plugin.toConfig()),
+        performance: this.performance.entries(),
+        entry: Object.keys(entryPoints).reduce(
+          (acc, key) =>
+            Object.assign(acc, { [key]: entryPoints[key].values() }),
+          {}
+        ),
+      })
+    );
   }
 
   toString({
@@ -136,19 +140,19 @@ module.exports = class extends ChainedMap {
       'devServer',
       'optimization',
       'performance',
-      'module'
+      'module',
     ];
 
     if (!omit.includes('entry') && 'entry' in obj) {
-      Object
-        .keys(obj.entry)
-        .forEach(name => this.entry(name).merge(obj.entry[name]));
+      Object.keys(obj.entry).forEach(name =>
+        this.entry(name).merge(obj.entry[name])
+      );
     }
 
     if (!omit.includes('plugin') && 'plugin' in obj) {
-      Object
-        .keys(obj.plugin)
-        .forEach(name => this.plugin(name).merge(obj.plugin[name]));
+      Object.keys(obj.plugin).forEach(name =>
+        this.plugin(name).merge(obj.plugin[name])
+      );
     }
 
     omissions.forEach(key => {

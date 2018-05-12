@@ -12,7 +12,7 @@ test('shorthand methods', t => {
   const resolve = new Resolve();
   const obj = {};
 
-  resolve.shorthands.map(method => {
+  resolve.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(resolve[method]('alpha'), resolve);
   });
@@ -22,9 +22,11 @@ test('shorthand methods', t => {
 
 test('sets methods', t => {
   const resolve = new Resolve();
-  const instance = resolve
-    .modules.add('src').end()
-    .extensions.add('.js').end();
+  const instance = resolve.modules
+    .add('src')
+    .end()
+    .extensions.add('.js')
+    .end();
 
   t.is(instance, resolve);
 });
@@ -38,15 +40,17 @@ test('toConfig empty', t => {
 test('toConfig with values', t => {
   const resolve = new Resolve();
 
-  resolve
-    .modules.add('src').end()
-    .extensions.add('.js').end()
+  resolve.modules
+    .add('src')
+    .end()
+    .extensions.add('.js')
+    .end()
     .alias.set('React', 'src/react');
 
   t.deepEqual(resolve.toConfig(), {
     modules: ['src'],
     extensions: ['.js'],
-    alias: { React: 'src/react' }
+    alias: { React: 'src/react' },
   });
 });
 
@@ -55,7 +59,7 @@ test('merge empty', t => {
   const obj = {
     modules: ['src'],
     extensions: ['.js'],
-    alias: { React: 'src/react' }
+    alias: { React: 'src/react' },
   };
   const instance = resolve.merge(obj);
 
@@ -66,42 +70,49 @@ test('merge empty', t => {
 test('merge with values', t => {
   const resolve = new Resolve();
 
-  resolve
-    .modules.add('src').end()
-    .extensions.add('.js').end()
+  resolve.modules
+    .add('src')
+    .end()
+    .extensions.add('.js')
+    .end()
     .alias.set('React', 'src/react');
 
   resolve.merge({
     modules: ['dist'],
     extensions: ['.jsx'],
-    alias: { ReactDOM: 'src/react-dom' }
+    alias: { ReactDOM: 'src/react-dom' },
   });
 
   t.deepEqual(resolve.toConfig(), {
     modules: ['src', 'dist'],
     extensions: ['.js', '.jsx'],
-    alias: { React: 'src/react', ReactDOM: 'src/react-dom' }
+    alias: { React: 'src/react', ReactDOM: 'src/react-dom' },
   });
 });
 
 test('merge with omit', t => {
   const resolve = new Resolve();
 
-  resolve
-    .modules.add('src').end()
-    .extensions.add('.js').end()
+  resolve.modules
+    .add('src')
+    .end()
+    .extensions.add('.js')
+    .end()
     .alias.set('React', 'src/react');
 
-  resolve.merge({
-    modules: ['dist'],
-    extensions: ['.jsx'],
-    alias: { ReactDOM: 'src/react-dom' }
-  }, ['alias']);
+  resolve.merge(
+    {
+      modules: ['dist'],
+      extensions: ['.jsx'],
+      alias: { ReactDOM: 'src/react-dom' },
+    },
+    ['alias']
+  );
 
   t.deepEqual(resolve.toConfig(), {
     modules: ['src', 'dist'],
     extensions: ['.js', '.jsx'],
-    alias: { React: 'src/react' }
+    alias: { React: 'src/react' },
   });
 });
 
