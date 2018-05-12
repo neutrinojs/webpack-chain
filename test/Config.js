@@ -215,3 +215,47 @@ test('validate with values', t => {
 
   t.is(errors.length, 0);
 });
+
+test('toString', t => {
+  const config = new Config();
+
+  config
+    .module
+      .rule('alpha')
+        .oneOf('beta')
+          .use('babel')
+            .loader('babel-loader');
+
+  config
+    .plugin('gamma')
+      .use(class TestPlugin {}, ['foo']);
+
+  const string = config.toString();
+
+  t.is(config.toString().trim(), `
+{
+  module: {
+    rules: [
+      /* config.module.rule('alpha') */
+      {
+        oneOf: [
+          /* config.module.rule('alpha').oneOf('beta') */
+          {
+            use: [
+              /* config.module.rule('alpha').oneOf('beta').use('babel') */
+              {
+                loader: 'babel-loader'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    /* config.plugin('gamma') */
+    new TestPlugin('foo')
+  ]
+}
+`.trim())
+});

@@ -53,7 +53,7 @@ module.exports = class extends ChainedMap {
 
   plugin(name) {
     if (!this.plugins.has(name)) {
-      this.plugins.set(name, new Plugin(this));
+      this.plugins.set(name, new Plugin(this, name));
     }
 
     return this.plugins.get(name);
@@ -76,6 +76,58 @@ module.exports = class extends ChainedMap {
         .keys(entryPoints)
         .reduce((acc, key) => Object.assign(acc, { [key]: entryPoints[key].values() }), {})
     }));
+  }
+
+  toString(verbose = false) {
+    const stringify = require('javascript-stringify');
+    const pluginRE = /(?:function|class) (\w+Plugin)/;
+
+    const config = this.toConfig();
+
+    return stringify(config, (value, indent, stringify) => {
+      // shorten long functions
+      if (!verbose && typeof value === 'function' && value.toString().length > 100) {
+        return `function () { /* omitted long function */ }`;
+      }
+
+      // improve plugin output
+      if (value && value.__pluginName) {
+        let match = (
+          value.constructor &&
+          value.constructor.toString().match(pluginRE)
+        );
+        // special case for copy-webpack-plugin which uses a non-standard constructor
+        if (value.__pluginName === 'copy') {
+          match = [null, `CopyWebpackPlugin`];
+        }
+        const name = match[1];
+        const prefix = `/* config.plugin('${value.__pluginName}') */\n`;
+
+        if (name) {
+          return prefix + `new ${name}(${
+            value.__pluginArgs.map(arg => stringify(arg)).join(',\n')
+          })`;
+        } else {
+          return prefix + stringify({
+            args: value.__pluginArgs || []
+          });
+        }
+      }
+
+      // improve rule/use output
+      if (value && value.__ruleNames) {
+        const prefix = `/* config.module.rule('${
+          value.__ruleNames[0]
+        }')${
+          value.__ruleNames.slice(1).map(r => `.oneOf('${r}')`).join('')
+        }${
+          value.__useName ? `.use('${value.__useName}')` : ``
+        } */\n`;
+        return prefix + stringify(value);
+      }
+
+      return stringify(value);
+    }, 2)
   }
 
   merge(obj = {}, omit = []) {

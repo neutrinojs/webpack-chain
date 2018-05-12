@@ -55,7 +55,7 @@ test('init', t => {
 });
 
 test('toConfig', t => {
-  const plugin = new Plugin();
+  const plugin = new Plugin(null, 'gamma');
 
   plugin.use(StringifyPlugin);
 
@@ -63,4 +63,5 @@ test('toConfig', t => {
 
   t.true(initialized instanceof StringifyPlugin);
   t.deepEqual(initialized.values, []);
+  t.is(initialized.__pluginName, 'gamma')
 });

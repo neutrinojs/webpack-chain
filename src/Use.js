@@ -3,8 +3,9 @@ const Orderable = require('./Orderable');
 const merge = require('deepmerge');
 
 module.exports = Orderable(class extends ChainedMap {
-  constructor(parent) {
+  constructor(parent, name) {
     super(parent);
+    this.name = name;
     this.extend(['loader', 'options']);
   }
 
@@ -26,6 +27,13 @@ module.exports = Orderable(class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(this.entries() || {});
+    const config = this.clean(this.entries() || {});
+
+    Object.defineProperties(config, {
+      __useName: { value: this.name },
+      __ruleNames: { value: this.parent && this.parent.names }
+    });
+
+    return config;
   }
 });

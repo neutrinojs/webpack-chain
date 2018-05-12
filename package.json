@@ -20,7 +20,8 @@
     "changelog": "changelog mozilla-neutrino/webpack-chain all --markdown > CHANGELOG.md"
   },
   "dependencies": {
-    "deepmerge": "^1.5.2"
+    "deepmerge": "^1.5.2",
+    "javascript-stringify": "^1.6.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",

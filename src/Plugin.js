@@ -2,8 +2,9 @@ const ChainedMap = require('./ChainedMap');
 const Orderable = require('./Orderable');
 
 module.exports = Orderable(class extends ChainedMap {
-  constructor(parent) {
+  constructor(parent, name) {
     super(parent);
+    this.name = name;
     this.extend(['init']);
 
     this.init((Plugin, args = []) => new Plugin(...args));
@@ -35,6 +36,13 @@ module.exports = Orderable(class extends ChainedMap {
   toConfig() {
     const init = this.get('init');
 
-    return init(this.get('plugin'), this.get('args'));
+    const config = init(this.get('plugin'), this.get('args'));
+
+    Object.defineProperties(config, {
+      __pluginName: { value: this.name },
+      __pluginArgs: { value: this.get('args') }
+    });
+
+    return config;
   }
 });

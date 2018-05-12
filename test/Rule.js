@@ -69,6 +69,16 @@ test('toConfig empty', t => {
   t.deepEqual(rule.toConfig(), {});
 });
 
+test('toConfig with name', t => {
+  const parent = new Rule(null, 'alpha');
+  const child = parent.oneOf('beta');
+  const grandChild = child.oneOf('gamma')
+
+  t.deepEqual(parent.toConfig().__ruleNames, ['alpha']);
+  t.deepEqual(child.toConfig().__ruleNames, ['alpha', 'beta']);
+  t.deepEqual(grandChild.toConfig().__ruleNames, ['alpha', 'beta', 'gamma']);
+});
+
 test('toConfig with values', t => {
   const rule = new Rule();
 
