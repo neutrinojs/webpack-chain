@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "config:base",
+    ":maintainLockFilesWeekly",
+    ":prNotPending",
+    ":semanticCommitsDisabled",
+    ":unpublishSafe"
+  ],
+  "reviewers": [
+    "mozilla-neutrino/core-contributors"
+  ],
+  "pinVersions": false
+}
