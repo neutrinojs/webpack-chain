@@ -57,11 +57,13 @@ test('init', t => {
 test('toConfig', t => {
   const plugin = new Plugin(null, 'gamma');
 
-  plugin.use(StringifyPlugin);
+  plugin.use(StringifyPlugin, ['delta']);
 
   const initialized = plugin.toConfig();
 
   t.true(initialized instanceof StringifyPlugin);
-  t.deepEqual(initialized.values, []);
-  t.is(initialized.__pluginName, 'gamma')
+  t.deepEqual(initialized.values, ['delta']);
+  t.is(initialized.__pluginName, 'gamma');
+  t.deepEqual(initialized.__pluginArgs, ['delta']);
+  t.is(initialized.__pluginConstructorName, 'StringifyPlugin');
 });

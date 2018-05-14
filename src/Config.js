@@ -78,45 +78,43 @@ module.exports = class extends ChainedMap {
     }));
   }
 
-  toString(verbose = false) {
+  toString({
+    verbose = false,
+    configPrefix = 'config'
+  } = {}) {
     const stringify = require('javascript-stringify');
-    const pluginRE = /(?:function|class) (\w+Plugin)/;
 
     const config = this.toConfig();
 
     return stringify(config, (value, indent, stringify) => {
       // shorten long functions
-      if (!verbose && typeof value === 'function' && value.toString().length > 100) {
+      if (
+        typeof value === 'function' &&
+        !verbose &&
+        !value.hasOwnProperty('toString') &&
+        value.toString().length > 100
+      ) {
         return `function () { /* omitted long function */ }`;
       }
 
       // improve plugin output
       if (value && value.__pluginName) {
-        let match = (
-          value.constructor &&
-          value.constructor.toString().match(pluginRE)
-        );
-        // special case for copy-webpack-plugin which uses a non-standard constructor
-        if (value.__pluginName === 'copy') {
-          match = [null, `CopyWebpackPlugin`];
-        }
-        const name = match[1];
-        const prefix = `/* config.plugin('${value.__pluginName}') */\n`;
+        const prefix = `/* ${configPrefix}.plugin('${value.__pluginName}') */\n`;
+        const constructorName = value.__pluginConstructorName;
 
-        if (name) {
-          return prefix + `new ${name}(${
-            value.__pluginArgs.map(arg => stringify(arg)).join(',\n')
-          })`;
+        if (constructorName) {
+          // get correct indentation for args by stringifying the args array and
+          // discarding the square brackets.
+          const args = stringify(value.__pluginArgs).slice(1, -1);
+          return prefix + `new ${constructorName}(${args})`;
         } else {
-          return prefix + stringify({
-            args: value.__pluginArgs || []
-          });
+          return prefix + stringify({ args: value.__pluginArgs || [] });
         }
       }
 
       // improve rule/use output
       if (value && value.__ruleNames) {
-        const prefix = `/* config.module.rule('${
+        const prefix = `/* ${configPrefix}.module.rule('${
           value.__ruleNames[0]
         }')${
           value.__ruleNames.slice(1).map(r => `.oneOf('${r}')`).join('')
@@ -127,7 +125,7 @@ module.exports = class extends ChainedMap {
       }
 
       return stringify(value);
-    }, 2)
+    }, 2);
   }
 
   merge(obj = {}, omit = []) {

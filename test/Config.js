@@ -228,7 +228,13 @@ test('toString', t => {
 
   config
     .plugin('gamma')
-      .use(class TestPlugin {}, ['foo']);
+      .use(class FooPlugin {})
+      .end()
+    .plugin('delta')
+      .use(class BarPlugin {}, ['bar'])
+      .end()
+    .plugin('epsilon')
+      .use(class BazPlugin {}, [{ n: 1 }, [2, 3]])
 
   const string = config.toString();
 
@@ -254,8 +260,50 @@ test('toString', t => {
   },
   plugins: [
     /* config.plugin('gamma') */
-    new TestPlugin('foo')
+    new FooPlugin(),
+    /* config.plugin('delta') */
+    new BarPlugin(
+      'bar'
+    ),
+    /* config.plugin('epsilon') */
+    new BazPlugin(
+      {
+        n: 1
+      },
+      [
+        2,
+        3
+      ]
+    )
   ]
 }
-`.trim())
+  `.trim())
+});
+
+test('toString for functions with custom toString', t => {
+  const fn = function foo () {};
+  fn.toString = () => `require('foo')`;
+
+  const config = new Config();
+
+  config
+    .module
+      .rule('alpha')
+        .include
+          .add(fn);
+
+  t.is(config.toString().trim(), `
+{
+  module: {
+    rules: [
+      /* config.module.rule('alpha') */
+      {
+        include: [
+          require('foo')
+        ]
+      }
+    ]
+  }
+}
+  `.trim());
 });

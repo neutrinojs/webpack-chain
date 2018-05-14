@@ -40,7 +40,8 @@ module.exports = Orderable(class extends ChainedMap {
 
     Object.defineProperties(config, {
       __pluginName: { value: this.name },
-      __pluginArgs: { value: this.get('args') }
+      __pluginArgs: { value: this.get('args') },
+      __pluginConstructorName: { value: this.get('plugin').name }
     });
 
     return config;
