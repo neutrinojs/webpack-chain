@@ -87,16 +87,6 @@ module.exports = class extends ChainedMap {
     const config = this.toConfig();
 
     return stringify(config, (value, indent, stringify) => {
-      // shorten long functions
-      if (
-        typeof value === 'function' &&
-        !verbose &&
-        !value.hasOwnProperty('toString') &&
-        value.toString().length > 100
-      ) {
-        return `function () { /* omitted long function */ }`;
-      }
-
       // improve plugin output
       if (value && value.__pluginName) {
         const prefix = `/* ${configPrefix}.plugin('${value.__pluginName}') */\n`;
@@ -122,6 +112,15 @@ module.exports = class extends ChainedMap {
           value.__useName ? `.use('${value.__useName}')` : ``
         } */\n`;
         return prefix + stringify(value);
+      }
+
+      // shorten long functions
+      if (typeof value === 'function') {
+        if (value.__expression) {
+          return value.__expression;
+        } else if (!verbose && value.toString().length > 100) {
+          return `function () { /* omitted long function */ }`;
+        }
       }
 
       return stringify(value);

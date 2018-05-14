@@ -283,9 +283,9 @@ test('toString', t => {
   `.trim())
 });
 
-test('toString for functions with custom toString', t => {
+test('toString for functions with custom expression', t => {
   const fn = function foo () {};
-  fn.toString = () => `require('foo')`;
+  fn.__expression = `require('foo')`;
 
   const config = new Config();
 
