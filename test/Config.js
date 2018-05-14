@@ -226,9 +226,12 @@ test('toString', t => {
           .use('babel')
             .loader('babel-loader');
 
+  class FooPlugin {}
+  FooPlugin.__expression = `require('foo-plugin')`;
+
   config
     .plugin('gamma')
-      .use(class FooPlugin {})
+      .use(FooPlugin)
       .end()
     .plugin('delta')
       .use(class BarPlugin {}, ['bar'])
@@ -260,7 +263,7 @@ test('toString', t => {
   },
   plugins: [
     /* config.plugin('gamma') */
-    new FooPlugin(),
+    new (require('foo-plugin'))(),
     /* config.plugin('delta') */
     new BarPlugin(
       'bar'

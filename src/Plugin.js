@@ -35,13 +35,17 @@ module.exports = Orderable(class extends ChainedMap {
 
   toConfig() {
     const init = this.get('init');
+    const plugin = this.get('plugin');
+    const constructorName = plugin.__expression
+      ? `(${plugin.__expression})`
+      : plugin.name;
 
     const config = init(this.get('plugin'), this.get('args'));
 
     Object.defineProperties(config, {
       __pluginName: { value: this.name },
       __pluginArgs: { value: this.get('args') },
-      __pluginConstructorName: { value: this.get('plugin').name }
+      __pluginConstructorName: { value: constructorName }
     });
 
     return config;

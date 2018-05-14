@@ -67,3 +67,16 @@ test('toConfig', t => {
   t.deepEqual(initialized.__pluginArgs, ['delta']);
   t.is(initialized.__pluginConstructorName, 'StringifyPlugin');
 });
+
+test('toConfig with custom expression', t => {
+  const plugin = new Plugin(null, 'gamma');
+
+  class TestPlugin {}
+  TestPlugin.__expression = `require('my-plugin')`;
+
+  plugin.use(TestPlugin);
+
+  const initialized = plugin.toConfig();
+
+  t.is(initialized.__pluginConstructorName, `(require('my-plugin'))`);
+});
