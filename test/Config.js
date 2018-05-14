@@ -307,3 +307,20 @@ test('toString for functions with custom toString', t => {
 }
   `.trim());
 });
+
+test('toString with custom prefix', t => {
+  const config = new Config();
+
+  config
+    .plugin('foo')
+    .use(class TestPlugin {});
+
+  t.is(config.toString({ configPrefix: 'neutrino.config' }).trim(), `
+{
+  plugins: [
+    /* neutrino.config.plugin('foo') */
+    new TestPlugin()
+  ]
+}
+  `.trim());
+});
