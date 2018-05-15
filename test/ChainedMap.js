@@ -81,7 +81,7 @@ test('entries with values', t => {
   map.set('b', 'beta');
   map.set('c', 'gamma');
 
-  t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma'});
+  t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma' });
 });
 
 test('entries with no values', t => {
@@ -92,7 +92,7 @@ test('entries with no values', t => {
 
 test('merge with no values', t => {
   const map = new ChainedMap();
-  const obj = { a: 'alpha', b: 'beta', c: 'gamma'};
+  const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   t.is(map.merge(obj), map);
   t.deepEqual(map.entries(), obj);
@@ -100,7 +100,7 @@ test('merge with no values', t => {
 
 test('merge with existing values', t => {
   const map = new ChainedMap();
-  const obj = { a: 'alpha', b: 'beta', c: 'gamma'};
+  const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   map.set('d', 'delta');
 
@@ -110,7 +110,7 @@ test('merge with existing values', t => {
 
 test('merge with overriding values', t => {
   const map = new ChainedMap();
-  const obj = { a: 'alpha', b: 'beta', c: 'gamma'};
+  const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   map.set('b', 'delta');
 
@@ -120,7 +120,7 @@ test('merge with overriding values', t => {
 
 test('merge with omitting keys', t => {
   const map = new ChainedMap();
-  const obj = { a: 'alpha', b: 'beta', c: 'gamma'};
+  const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   map.merge(obj, ['b']);
 

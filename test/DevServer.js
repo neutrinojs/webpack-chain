@@ -20,11 +20,10 @@ test('shorthand methods', t => {
   const devServer = new DevServer();
   const obj = {};
 
-  devServer.shorthands.map(method => {
+  devServer.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(devServer[method]('alpha'), devServer);
   });
 
   t.deepEqual(devServer.entries(), obj);
 });
-

@@ -12,7 +12,7 @@ test('shorthand methods', t => {
   const rule = new Rule();
   const obj = {};
 
-  rule.shorthands.map(method => {
+  rule.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(rule[method]('alpha'), rule);
   });
@@ -54,9 +54,13 @@ test('post', t => {
 
 test('sets methods', t => {
   const rule = new Rule();
-  const instance = rule
-    .include.add('alpha').add('beta').end()
-    .exclude.add('alpha').add('beta').end();
+  const instance = rule.include
+    .add('alpha')
+    .add('beta')
+    .end()
+    .exclude.add('alpha')
+    .add('beta')
+    .end();
 
   t.is(instance, rule);
   t.deepEqual(rule.include.values(), ['alpha', 'beta']);
@@ -72,7 +76,7 @@ test('toConfig empty', t => {
 test('toConfig with name', t => {
   const parent = new Rule(null, 'alpha');
   const child = parent.oneOf('beta');
-  const grandChild = child.oneOf('gamma')
+  const grandChild = child.oneOf('gamma');
 
   t.deepEqual(parent.toConfig().__ruleNames, ['alpha']);
   t.deepEqual(child.toConfig().__ruleNames, ['alpha', 'beta']);
@@ -82,44 +86,48 @@ test('toConfig with name', t => {
 test('toConfig with values', t => {
   const rule = new Rule();
 
-  rule
-    .include
-      .add('alpha')
-      .add('beta')
-      .end()
-    .exclude
-      .add('alpha')
-      .add('beta')
-      .end()
+  rule.include
+    .add('alpha')
+    .add('beta')
+    .end()
+    .exclude.add('alpha')
+    .add('beta')
+    .end()
     .post()
     .pre()
     .test(/\.js$/)
     .use('babel')
-      .loader('babel-loader')
-      .options({ presets: ['alpha'] })
-      .end()
+    .loader('babel-loader')
+    .options({ presets: ['alpha'] })
+    .end()
     .oneOf('inline')
-      .resourceQuery(/inline/)
-      .use('url')
-        .loader('url-loader');
+    .resourceQuery(/inline/)
+    .use('url')
+    .loader('url-loader');
 
   t.deepEqual(rule.toConfig(), {
     test: /\.js$/,
     enforce: 'pre',
     include: ['alpha', 'beta'],
     exclude: ['alpha', 'beta'],
-    oneOf: [{
-      resourceQuery: /inline/,
-      use: [{
-        loader: 'url-loader'
-      }]
-    }],
-    use: [{
-      loader: 'babel-loader',
-      options: {
-        presets: ['alpha']
-      }
-    }]
+    oneOf: [
+      {
+        resourceQuery: /inline/,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      },
+    ],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: ['alpha'],
+        },
+      },
+    ],
   });
 });
 
@@ -135,19 +143,19 @@ test('merge empty', t => {
         resourceQuery: /inline/,
         use: {
           url: {
-            loader: 'url-loader'
-          }
-        }
-      }
+            loader: 'url-loader',
+          },
+        },
+      },
     },
     use: {
       babel: {
         loader: 'babel-loader',
         options: {
-          presets: ['alpha']
-        }
-      }
-    }
+          presets: ['alpha'],
+        },
+      },
+    },
   };
   const instance = rule.merge(obj);
 
@@ -157,18 +165,24 @@ test('merge empty', t => {
     test: /\.js$/,
     include: ['alpha', 'beta'],
     exclude: ['alpha', 'beta'],
-    oneOf: [{
-      resourceQuery: /inline/,
-      use: [{
-        loader: 'url-loader'
-      }]
-    }],
-    use: [{
-      loader: 'babel-loader',
-      options: {
-        presets: ['alpha']
-      }
-    }]
+    oneOf: [
+      {
+        resourceQuery: /inline/,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      },
+    ],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: ['alpha'],
+        },
+      },
+    ],
   });
 });
 
@@ -178,10 +192,12 @@ test('merge with values', t => {
   rule
     .test(/\.js$/)
     .post()
-    .include.add('gamma').add('delta').end()
+    .include.add('gamma')
+    .add('delta')
+    .end()
     .use('babel')
-      .loader('babel-loader')
-      .options({ presets: ['alpha'] });
+    .loader('babel-loader')
+    .options({ presets: ['alpha'] });
 
   rule.merge({
     test: /\.jsx$/,
@@ -193,18 +209,18 @@ test('merge with values', t => {
         resourceQuery: /inline/,
         use: {
           url: {
-            loader: 'url-loader'
-          }
-        }
-      }
+            loader: 'url-loader',
+          },
+        },
+      },
     },
     use: {
       babel: {
         options: {
-          presets: ['beta']
-        }
-      }
-    }
+          presets: ['beta'],
+        },
+      },
+    },
   });
 
   t.deepEqual(rule.toConfig(), {
@@ -212,18 +228,24 @@ test('merge with values', t => {
     enforce: 'pre',
     include: ['gamma', 'delta', 'alpha', 'beta'],
     exclude: ['alpha', 'beta'],
-    oneOf: [{
-      resourceQuery: /inline/,
-      use: [{
-        loader: 'url-loader'
-      }]
-    }],
-    use: [{
-      loader: 'babel-loader',
-      options: {
-        presets: ['alpha', 'beta']
-      }
-    }]
+    oneOf: [
+      {
+        resourceQuery: /inline/,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      },
+    ],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: ['alpha', 'beta'],
+        },
+      },
+    ],
   });
 });
 
@@ -233,45 +255,52 @@ test('merge with omit', t => {
   rule
     .test(/\.js$/)
     .post()
-    .include.add('gamma').add('delta').end()
+    .include.add('gamma')
+    .add('delta')
+    .end()
     .use('babel')
-      .loader('babel-loader')
-      .options({ presets: ['alpha'] });
+    .loader('babel-loader')
+    .options({ presets: ['alpha'] });
 
-  rule.merge({
-    test: /\.jsx$/,
-    enforce: 'pre',
-    include: ['alpha', 'beta'],
-    exclude: ['alpha', 'beta'],
-    oneOf: {
-      inline: {
-        resourceQuery: /inline/,
-        use: {
-          url: {
-            loader: 'url-loader'
-          }
-        }
-      }
+  rule.merge(
+    {
+      test: /\.jsx$/,
+      enforce: 'pre',
+      include: ['alpha', 'beta'],
+      exclude: ['alpha', 'beta'],
+      oneOf: {
+        inline: {
+          resourceQuery: /inline/,
+          use: {
+            url: {
+              loader: 'url-loader',
+            },
+          },
+        },
+      },
+      use: {
+        babel: {
+          options: {
+            presets: ['beta'],
+          },
+        },
+      },
     },
-    use: {
-      babel: {
-        options: {
-          presets: ['beta']
-        }
-      }
-    }
-  }, ['use', 'oneOf']);
+    ['use', 'oneOf']
+  );
 
   t.deepEqual(rule.toConfig(), {
     test: /\.jsx$/,
     enforce: 'pre',
     include: ['gamma', 'delta', 'alpha', 'beta'],
     exclude: ['alpha', 'beta'],
-    use: [{
-      loader: 'babel-loader',
-      options: {
-        presets: ['alpha']
-      }
-    }]
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: ['alpha'],
+        },
+      },
+    ],
   });
 });

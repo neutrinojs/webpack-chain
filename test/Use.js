@@ -13,7 +13,7 @@ test('shorthand methods', t => {
   const use = new Use();
   const obj = {};
 
-  use.shorthands.map(method => {
+  use.shorthands.forEach(method => {
     obj[method] = 'alpha';
     t.is(use[method]('alpha'), use);
   });
@@ -24,9 +24,7 @@ test('shorthand methods', t => {
 test('tap', t => {
   const use = new Use();
 
-  use
-    .loader('babel-loader')
-    .options({ presets: ['alpha'] });
+  use.loader('babel-loader').options({ presets: ['alpha'] });
 
   use.tap(options => {
     t.deepEqual(options, { presets: ['alpha'] });
@@ -47,9 +45,9 @@ test('toConfig', t => {
 
   t.deepEqual(config, {
     loader: 'babel-loader',
-    options: { presets: ['alpha'] }
+    options: { presets: ['alpha'] },
   });
 
-  t.deepEqual(config.__ruleNames, ['alpha'])
-  t.is(config.__useName, 'beta')
+  t.deepEqual(config.__ruleNames, ['alpha']);
+  t.is(config.__useName, 'beta');
 });

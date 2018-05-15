@@ -1,6 +1,5 @@
 const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
-const merge = require('deepmerge');
 
 module.exports = class extends ChainedMap {
   constructor(parent) {
@@ -44,14 +43,19 @@ module.exports = class extends ChainedMap {
       'stdin',
       'useLocalIp',
       'watchContentBase',
-      'watchOptions'
+      'watchOptions',
     ]);
   }
 
   toConfig() {
-    return this.clean(Object.assign({
-      allowedHosts: this.allowedHosts.values(),
-    }, this.entries() || {}));
+    return this.clean(
+      Object.assign(
+        {
+          allowedHosts: this.allowedHosts.values(),
+        },
+        this.entries() || {}
+      )
+    );
   }
 
   merge(obj, omit = []) {

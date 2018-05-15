@@ -9,7 +9,7 @@ module.exports = class extends Chainable {
 
   extend(methods) {
     this.shorthands = methods;
-    methods.map(method => {
+    methods.forEach(method => {
       this[method] = value => this.set(method, value);
     });
     return this;
@@ -58,6 +58,8 @@ module.exports = class extends Chainable {
     if (order.length) {
       return entries;
     }
+
+    return undefined;
   }
 
   values() {
@@ -80,50 +82,57 @@ module.exports = class extends Chainable {
   }
 
   merge(obj, omit = []) {
-    Object
-      .keys(obj)
-      .forEach(key => {
-        if (omit.includes(key)) {
-          return;
-        }
+    Object.keys(obj).forEach(key => {
+      if (omit.includes(key)) {
+        return;
+      }
 
-        const value = obj[key];
+      const value = obj[key];
 
-        if ((!Array.isArray(value) && typeof value !== 'object') || value === null || !this.has(key)) {
-          this.set(key, value);
-        } else {
-          this.set(key, merge(this.get(key), value));
-        }
-      });
+      if (
+        (!Array.isArray(value) && typeof value !== 'object') ||
+        value === null ||
+        !this.has(key)
+      ) {
+        this.set(key, value);
+      } else {
+        this.set(key, merge(this.get(key), value));
+      }
+    });
 
     return this;
   }
 
   clean(obj) {
-    return Object
-      .keys(obj)
-      .reduce((acc, key) => {
-        const value = obj[key];
+    return Object.keys(obj).reduce((acc, key) => {
+      const value = obj[key];
 
-        if (value === undefined) {
-          return acc;
-        }
-
-        if (Array.isArray(value) && !value.length) {
-          return acc;
-        }
-
-        if (Object.prototype.toString.call(value) === '[object Object]' && !Object.keys(value).length) {
-          return acc;
-        }
-
-        acc[key] = value;
-
+      if (value === undefined) {
         return acc;
-      }, {});
+      }
+
+      if (Array.isArray(value) && !value.length) {
+        return acc;
+      }
+
+      if (
+        Object.prototype.toString.call(value) === '[object Object]' &&
+        !Object.keys(value).length
+      ) {
+        return acc;
+      }
+
+      acc[key] = value;
+
+      return acc;
+    }, {});
   }
 
-  when(condition, whenTruthy = Function.prototype, whenFalsy = Function.prototype) {
+  when(
+    condition,
+    whenTruthy = Function.prototype,
+    whenFalsy = Function.prototype
+  ) {
     if (condition) {
       whenTruthy(this);
     } else {

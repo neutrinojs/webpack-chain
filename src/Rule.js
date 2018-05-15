@@ -26,7 +26,7 @@ module.exports = class Rule extends ChainedMap {
       'resourceQuery',
       'sideEffects',
       'test',
-      'type'
+      'type',
     ]);
   }
 
@@ -55,15 +55,17 @@ module.exports = class Rule extends ChainedMap {
   }
 
   toConfig() {
-    const config = this.clean(Object.assign(this.entries() || {}, {
-      include: this.include.values(),
-      exclude: this.exclude.values(),
-      oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
-      use: this.uses.values().map(use => use.toConfig())
-    }));
+    const config = this.clean(
+      Object.assign(this.entries() || {}, {
+        include: this.include.values(),
+        exclude: this.exclude.values(),
+        oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
+        use: this.uses.values().map(use => use.toConfig()),
+      })
+    );
 
     Object.defineProperties(config, {
-      __ruleNames: { value: this.names }
+      __ruleNames: { value: this.names },
     });
 
     return config;
@@ -79,21 +81,26 @@ module.exports = class Rule extends ChainedMap {
     }
 
     if (!omit.includes('use') && 'use' in obj) {
-      Object
-        .keys(obj.use)
-        .forEach(name => this.use(name).merge(obj.use[name]));
+      Object.keys(obj.use).forEach(name => this.use(name).merge(obj.use[name]));
     }
 
     if (!omit.includes('oneOf') && 'oneOf' in obj) {
-      Object
-        .keys(obj.oneOf)
-        .forEach(name => this.oneOf(name).merge(obj.oneOf[name]));
+      Object.keys(obj.oneOf).forEach(name =>
+        this.oneOf(name).merge(obj.oneOf[name])
+      );
     }
 
     if (!omit.includes('test') && 'test' in obj) {
       this.test(obj.test instanceof RegExp ? obj.test : new RegExp(obj.test));
     }
 
-    return super.merge(obj, [...omit, 'include', 'exclude', 'use', 'oneOf', 'test']);
+    return super.merge(obj, [
+      ...omit,
+      'include',
+      'exclude',
+      'use',
+      'oneOf',
+      'test',
+    ]);
   }
 };
