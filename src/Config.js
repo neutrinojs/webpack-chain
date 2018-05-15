@@ -53,7 +53,7 @@ module.exports = class extends ChainedMap {
 
   plugin(name) {
     if (!this.plugins.has(name)) {
-      this.plugins.set(name, new Plugin(this));
+      this.plugins.set(name, new Plugin(this, name));
     }
 
     return this.plugins.get(name);
@@ -76,6 +76,55 @@ module.exports = class extends ChainedMap {
         .keys(entryPoints)
         .reduce((acc, key) => Object.assign(acc, { [key]: entryPoints[key].values() }), {})
     }));
+  }
+
+  toString({
+    verbose = false,
+    configPrefix = 'config'
+  } = {}) {
+    const stringify = require('javascript-stringify');
+
+    const config = this.toConfig();
+
+    return stringify(config, (value, indent, stringify) => {
+      // improve plugin output
+      if (value && value.__pluginName) {
+        const prefix = `/* ${configPrefix}.plugin('${value.__pluginName}') */\n`;
+        const constructorName = value.__pluginConstructorName;
+
+        if (constructorName) {
+          // get correct indentation for args by stringifying the args array and
+          // discarding the square brackets.
+          const args = stringify(value.__pluginArgs).slice(1, -1);
+          return prefix + `new ${constructorName}(${args})`;
+        } else {
+          return prefix + stringify({ args: value.__pluginArgs || [] });
+        }
+      }
+
+      // improve rule/use output
+      if (value && value.__ruleNames) {
+        const prefix = `/* ${configPrefix}.module.rule('${
+          value.__ruleNames[0]
+        }')${
+          value.__ruleNames.slice(1).map(r => `.oneOf('${r}')`).join('')
+        }${
+          value.__useName ? `.use('${value.__useName}')` : ``
+        } */\n`;
+        return prefix + stringify(value);
+      }
+
+      // shorten long functions
+      if (typeof value === 'function') {
+        if (value.__expression) {
+          return value.__expression;
+        } else if (!verbose && value.toString().length > 100) {
+          return `function () { /* omitted long function */ }`;
+        }
+      }
+
+      return stringify(value);
+    }, 2);
   }
 
   merge(obj = {}, omit = []) {

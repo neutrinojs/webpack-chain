@@ -215,3 +215,115 @@ test('validate with values', t => {
 
   t.is(errors.length, 0);
 });
+
+test('toString', t => {
+  const config = new Config();
+
+  config
+    .module
+      .rule('alpha')
+        .oneOf('beta')
+          .use('babel')
+            .loader('babel-loader');
+
+  class FooPlugin {}
+  FooPlugin.__expression = `require('foo-plugin')`;
+
+  config
+    .plugin('gamma')
+      .use(FooPlugin)
+      .end()
+    .plugin('delta')
+      .use(class BarPlugin {}, ['bar'])
+      .end()
+    .plugin('epsilon')
+      .use(class BazPlugin {}, [{ n: 1 }, [2, 3]])
+
+  const string = config.toString();
+
+  t.is(config.toString().trim(), `
+{
+  module: {
+    rules: [
+      /* config.module.rule('alpha') */
+      {
+        oneOf: [
+          /* config.module.rule('alpha').oneOf('beta') */
+          {
+            use: [
+              /* config.module.rule('alpha').oneOf('beta').use('babel') */
+              {
+                loader: 'babel-loader'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    /* config.plugin('gamma') */
+    new (require('foo-plugin'))(),
+    /* config.plugin('delta') */
+    new BarPlugin(
+      'bar'
+    ),
+    /* config.plugin('epsilon') */
+    new BazPlugin(
+      {
+        n: 1
+      },
+      [
+        2,
+        3
+      ]
+    )
+  ]
+}
+  `.trim())
+});
+
+test('toString for functions with custom expression', t => {
+  const fn = function foo () {};
+  fn.__expression = `require('foo')`;
+
+  const config = new Config();
+
+  config
+    .module
+      .rule('alpha')
+        .include
+          .add(fn);
+
+  t.is(config.toString().trim(), `
+{
+  module: {
+    rules: [
+      /* config.module.rule('alpha') */
+      {
+        include: [
+          require('foo')
+        ]
+      }
+    ]
+  }
+}
+  `.trim());
+});
+
+test('toString with custom prefix', t => {
+  const config = new Config();
+
+  config
+    .plugin('foo')
+    .use(class TestPlugin {});
+
+  t.is(config.toString({ configPrefix: 'neutrino.config' }).trim(), `
+{
+  plugins: [
+    /* neutrino.config.plugin('foo') */
+    new TestPlugin()
+  ]
+}
+  `.trim());
+});

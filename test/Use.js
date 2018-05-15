@@ -1,4 +1,5 @@
 import test from 'ava';
+import Rule from '../src/Rule';
 import Use from '../src/Use';
 
 test('is Chainable', t => {
@@ -33,4 +34,22 @@ test('tap', t => {
   });
 
   t.deepEqual(use.store.get('options'), { presets: ['beta'] });
+});
+
+test('toConfig', t => {
+  const rule = new Rule(null, 'alpha');
+  const use = rule
+    .use('beta')
+    .loader('babel-loader')
+    .options({ presets: ['alpha'] });
+
+  const config = use.toConfig();
+
+  t.deepEqual(config, {
+    loader: 'babel-loader',
+    options: { presets: ['alpha'] }
+  });
+
+  t.deepEqual(config.__ruleNames, ['alpha'])
+  t.is(config.__useName, 'beta')
 });

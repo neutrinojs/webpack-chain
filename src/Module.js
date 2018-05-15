@@ -11,7 +11,7 @@ module.exports = class extends ChainedMap {
 
   defaultRule(name) {
     if (!this.defaultRules.has(name)) {
-      this.defaultRules.set(name, new Rule(this));
+      this.defaultRules.set(name, new Rule(this, name));
     }
 
     return this.defaultRules.get(name);
@@ -19,7 +19,7 @@ module.exports = class extends ChainedMap {
 
   rule(name) {
     if (!this.rules.has(name)) {
-      this.rules.set(name, new Rule(this));
+      this.rules.set(name, new Rule(this, name));
     }
 
     return this.rules.get(name);

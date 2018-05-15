@@ -104,3 +104,12 @@ test('merge with omit', t => {
     alias: { React: 'src/react' }
   });
 });
+
+test('plugin with name', t => {
+  const resolve = new Resolve();
+
+  resolve
+    .plugin('alpha');
+
+  t.is(resolve.plugins.get('alpha').name, 'alpha');
+});

@@ -55,12 +55,28 @@ test('init', t => {
 });
 
 test('toConfig', t => {
-  const plugin = new Plugin();
+  const plugin = new Plugin(null, 'gamma');
 
-  plugin.use(StringifyPlugin);
+  plugin.use(StringifyPlugin, ['delta']);
 
   const initialized = plugin.toConfig();
 
   t.true(initialized instanceof StringifyPlugin);
-  t.deepEqual(initialized.values, []);
+  t.deepEqual(initialized.values, ['delta']);
+  t.is(initialized.__pluginName, 'gamma');
+  t.deepEqual(initialized.__pluginArgs, ['delta']);
+  t.is(initialized.__pluginConstructorName, 'StringifyPlugin');
+});
+
+test('toConfig with custom expression', t => {
+  const plugin = new Plugin(null, 'gamma');
+
+  class TestPlugin {}
+  TestPlugin.__expression = `require('my-plugin')`;
+
+  plugin.use(TestPlugin);
+
+  const initialized = plugin.toConfig();
+
+  t.is(initialized.__pluginConstructorName, `(require('my-plugin'))`);
 });

@@ -662,7 +662,7 @@ You cannot use both `.before()` and `.after()` on the same plugin.
 config
   .plugin(name)
     .before(otherName)
-    
+
 // Example
 
 config
@@ -1135,4 +1135,64 @@ config
     config => config.plugin('minify').use(BabiliWebpackPlugin),
     config => config.devtool('source-map')
   );
+```
+
+### Inspecting generated configuration
+
+You can inspect the generated webpack config using `config.toString()`. This will generate a stringified version of the config with comment hints for named rules, uses and plugins:
+
+``` js
+config
+  .module
+    .rule('compile')
+      .test(/\.js$/)
+      .use('babel')
+        .loader('babel-loader');
+
+config.toString();
+
+/*
+{
+  module: {
+    rules: [
+      /* config.module.rule('compile') */
+      {
+        test: /\.js$/,
+        use: [
+          /* config.module.rule('compile').use('babel') */
+          {
+            loader: 'babel-loader'
+          }
+        ]
+      }
+    ]
+  }
+}
+*/
+```
+
+By default the generated string cannot be used directly as real webpack config if it contains functions and plugins that need to be required. In order to generate usable config, you can customize how functions and plugins are stringified by setting a special `__expression` property on them:
+
+``` js
+class MyPlugin {}
+MyPlugin.__expression = `require('my-plugin')`;
+
+function myFunction () {}
+myFunction.__expression = `require('my-function')`;
+
+config
+  .plugin('example')
+    .use(MyPlugin, [{ fn: myFunction }]);
+
+config.toString();
+
+/*
+{
+  plugins: [
+    new (require('my-plugin'))({
+      fn: require('my-function')
+    })
+  ]
+}
+*/
 ```

@@ -3,8 +3,17 @@ const ChainedSet = require('./ChainedSet');
 const Use = require('./Use');
 
 module.exports = class Rule extends ChainedMap {
-  constructor(parent) {
+  constructor(parent, name) {
     super(parent);
+    this.name = name;
+    this.names = [];
+
+    let rule = this;
+    while (rule instanceof Rule) {
+      this.names.unshift(rule.name);
+      rule = rule.parent;
+    }
+
     this.uses = new ChainedMap(this);
     this.include = new ChainedSet(this);
     this.exclude = new ChainedSet(this);
@@ -23,7 +32,7 @@ module.exports = class Rule extends ChainedMap {
 
   use(name) {
     if (!this.uses.has(name)) {
-      this.uses.set(name, new Use(this));
+      this.uses.set(name, new Use(this, name));
     }
 
     return this.uses.get(name);
@@ -31,7 +40,7 @@ module.exports = class Rule extends ChainedMap {
 
   oneOf(name) {
     if (!this.oneOfs.has(name)) {
-      this.oneOfs.set(name, new Rule(this));
+      this.oneOfs.set(name, new Rule(this, name));
     }
 
     return this.oneOfs.get(name);
@@ -46,12 +55,18 @@ module.exports = class Rule extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(Object.assign(this.entries() || {}, {
+    const config = this.clean(Object.assign(this.entries() || {}, {
       include: this.include.values(),
       exclude: this.exclude.values(),
       oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
       use: this.uses.values().map(use => use.toConfig())
     }));
+
+    Object.defineProperties(config, {
+      __ruleNames: { value: this.names }
+    });
+
+    return config;
   }
 
   merge(obj, omit = []) {
