@@ -45,9 +45,9 @@ test('toConfig', t => {
 
   t.deepEqual(config, {
     loader: 'babel-loader',
-    options: { presets: ['alpha'] }
+    options: { presets: ['alpha'] },
   });
 
-  t.deepEqual(config.__ruleNames, ['alpha'])
-  t.is(config.__useName, 'beta')
+  t.deepEqual(config.__ruleNames, ['alpha']);
+  t.is(config.__useName, 'beta');
 });

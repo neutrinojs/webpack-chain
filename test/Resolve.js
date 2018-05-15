@@ -119,8 +119,7 @@ test('merge with omit', t => {
 test('plugin with name', t => {
   const resolve = new Resolve();
 
-  resolve
-    .plugin('alpha');
+  resolve.plugin('alpha');
 
   t.is(resolve.plugins.get('alpha').name, 'alpha');
 });
