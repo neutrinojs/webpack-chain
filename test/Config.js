@@ -330,3 +330,49 @@ test('toString with custom prefix', t => {
   `.trim()
   );
 });
+
+test('static Config.toString', t => {
+  const config = new Config();
+
+  config.plugin('foo').use(class TestPlugin {});
+
+  t.is(
+    Config.toString({
+      ...config.toConfig(),
+      module: {
+        defaultRules: [
+          {
+            use: [
+              {
+                loader: 'banner-loader',
+                options: { prefix: 'banner-prefix.txt' },
+              },
+            ],
+          },
+        ],
+      },
+    }).trim(),
+    `
+{
+  plugins: [
+    /* config.plugin('foo') */
+    new TestPlugin()
+  ],
+  module: {
+    defaultRules: [
+      {
+        use: [
+          {
+            loader: 'banner-loader',
+            options: {
+              prefix: 'banner-prefix.txt'
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+  `.trim()
+  );
+});
