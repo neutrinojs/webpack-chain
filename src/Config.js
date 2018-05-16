@@ -43,49 +43,9 @@ module.exports = class extends ChainedMap {
     ]);
   }
 
-  entry(name) {
-    if (!this.entryPoints.has(name)) {
-      this.entryPoints.set(name, new ChainedSet(this));
-    }
-
-    return this.entryPoints.get(name);
-  }
-
-  plugin(name) {
-    if (!this.plugins.has(name)) {
-      this.plugins.set(name, new Plugin(this, name));
-    }
-
-    return this.plugins.get(name);
-  }
-
-  toConfig() {
-    const entryPoints = this.entryPoints.entries() || {};
-
-    return this.clean(
-      Object.assign(this.entries() || {}, {
-        node: this.node.entries(),
-        output: this.output.entries(),
-        resolve: this.resolve.toConfig(),
-        resolveLoader: this.resolveLoader.toConfig(),
-        devServer: this.devServer.toConfig(),
-        module: this.module.toConfig(),
-        optimization: this.optimization.entries(),
-        plugins: this.plugins.values().map(plugin => plugin.toConfig()),
-        performance: this.performance.entries(),
-        entry: Object.keys(entryPoints).reduce(
-          (acc, key) =>
-            Object.assign(acc, { [key]: entryPoints[key].values() }),
-          {}
-        ),
-      })
-    );
-  }
-
-  toString({ verbose = false, configPrefix = 'config' } = {}) {
+  static toString(config, { verbose = false, configPrefix = 'config' } = {}) {
     // eslint-disable-next-line global-require
     const stringify = require('javascript-stringify');
-    const config = this.toConfig();
 
     return stringify(
       config,
@@ -132,6 +92,49 @@ module.exports = class extends ChainedMap {
       },
       2
     );
+  }
+
+  entry(name) {
+    if (!this.entryPoints.has(name)) {
+      this.entryPoints.set(name, new ChainedSet(this));
+    }
+
+    return this.entryPoints.get(name);
+  }
+
+  plugin(name) {
+    if (!this.plugins.has(name)) {
+      this.plugins.set(name, new Plugin(this, name));
+    }
+
+    return this.plugins.get(name);
+  }
+
+  toConfig() {
+    const entryPoints = this.entryPoints.entries() || {};
+
+    return this.clean(
+      Object.assign(this.entries() || {}, {
+        node: this.node.entries(),
+        output: this.output.entries(),
+        resolve: this.resolve.toConfig(),
+        resolveLoader: this.resolveLoader.toConfig(),
+        devServer: this.devServer.toConfig(),
+        module: this.module.toConfig(),
+        optimization: this.optimization.entries(),
+        plugins: this.plugins.values().map(plugin => plugin.toConfig()),
+        performance: this.performance.entries(),
+        entry: Object.keys(entryPoints).reduce(
+          (acc, key) =>
+            Object.assign(acc, { [key]: entryPoints[key].values() }),
+          {}
+        ),
+      })
+    );
+  }
+
+  toString(options) {
+    return module.exports.toString(this.toConfig(), options);
   }
 
   merge(obj = {}, omit = []) {
