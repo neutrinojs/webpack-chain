@@ -1201,8 +1201,6 @@ You can also call `toString` as a static method on `Config` in order to
 modify the configuration object prior to stringifying.
 
 ```js
-const webpackConfig = config.toConfig();
-
 Config.toString({
   ...config.toConfig(),
   module: {

@@ -337,8 +337,7 @@ test('static Config.toString', t => {
   config.plugin('foo').use(class TestPlugin {});
 
   t.is(
-    Config.toString({
-      ...config.toConfig(),
+    Config.toString(Object.assign(config.toConfig(), {
       module: {
         defaultRules: [
           {
@@ -351,7 +350,7 @@ test('static Config.toString', t => {
           },
         ],
       },
-    }).trim(),
+    })).trim(),
     `
 {
   plugins: [
