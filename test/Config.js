@@ -337,20 +337,22 @@ test('static Config.toString', t => {
   config.plugin('foo').use(class TestPlugin {});
 
   t.is(
-    Config.toString(Object.assign(config.toConfig(), {
-      module: {
-        defaultRules: [
-          {
-            use: [
-              {
-                loader: 'banner-loader',
-                options: { prefix: 'banner-prefix.txt' },
-              },
-            ],
-          },
-        ],
-      },
-    })).trim(),
+    Config.toString(
+      Object.assign(config.toConfig(), {
+        module: {
+          defaultRules: [
+            {
+              use: [
+                {
+                  loader: 'banner-loader',
+                  options: { prefix: 'banner-prefix.txt' },
+                },
+              ],
+            },
+          ],
+        },
+      })
+    ).trim(),
     `
 {
   plugins: [
