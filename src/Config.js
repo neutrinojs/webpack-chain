@@ -134,7 +134,10 @@ module.exports = class extends ChainedMap {
   }
 
   toString(options) {
-    return module.exports.toString(this.toConfig(), options);
+    return module.exports.toString(
+      this.toConfig(),
+      options
+    );
   }
 
   merge(obj = {}, omit = []) {
