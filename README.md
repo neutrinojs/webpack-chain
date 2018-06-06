@@ -169,6 +169,15 @@ get(key)
 ```
 
 ```js
+// Fetch the value from a Map located at the corresponding key.
+// If the key is missing, the key is set to the result of function fn.
+// key: *
+// fn: Function () -> value
+// returns: value
+getOrCompute(key, fn)
+```
+
+```js
 // Set a value on the Map stored at the `key` location.
 // key: *
 // value: *

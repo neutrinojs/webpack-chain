@@ -72,6 +72,13 @@ module.exports = class extends Chainable {
     return this.store.get(key);
   }
 
+  getOrCompute(key, fn) {
+    if (!this.has(key)) {
+      this.set(key, fn());
+    }
+    return this.get(key);
+  }
+
   has(key) {
     return this.store.has(key);
   }

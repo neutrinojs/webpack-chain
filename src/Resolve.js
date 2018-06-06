@@ -25,11 +25,7 @@ module.exports = class extends ChainedMap {
   }
 
   plugin(name) {
-    if (!this.plugins.has(name)) {
-      this.plugins.set(name, new Plugin(this, name));
-    }
-
-    return this.plugins.get(name);
+    return this.plugins.getOrCompute(name, () => new Plugin(this, name));
   }
 
   toConfig() {
