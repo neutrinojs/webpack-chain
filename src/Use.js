@@ -1,6 +1,6 @@
+const merge = require('deepmerge');
 const ChainedMap = require('./ChainedMap');
 const Orderable = require('./Orderable');
-const merge = require('deepmerge');
 
 module.exports = Orderable(
   class extends ChainedMap {
