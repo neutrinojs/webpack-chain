@@ -83,7 +83,8 @@ module.exports = class extends ChainedMap {
         if (typeof value === 'function') {
           if (value.__expression) {
             return value.__expression;
-          } else if (!verbose && value.toString().length > 100) {
+          }
+          if (!verbose && value.toString().length > 100) {
             return `function () { /* omitted long function */ }`;
           }
         }
