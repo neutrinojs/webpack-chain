@@ -134,7 +134,6 @@ test('plugin with name', t => {
   t.is(resolve.plugins.get('alpha').name, 'alpha');
 });
 
-
 test('plugin empty', t => {
   const resolve = new Resolve();
   const instance = resolve
