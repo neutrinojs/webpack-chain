@@ -8,7 +8,13 @@ module.exports = Orderable(
       this.name = name;
       this.extend(['init']);
 
-      this.init((Plugin, args = []) => new Plugin(...args));
+      this.init((Plugin, args = []) => {
+        if (typeof Plugin === 'function') {
+          return new Plugin(...args)
+        } else {
+          return Plugin
+        }
+      });
     }
 
     use(plugin, args = []) {

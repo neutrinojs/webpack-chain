@@ -83,3 +83,17 @@ test('toConfig with custom expression', t => {
 
   t.is(initialized.__pluginConstructorName, `(require('my-plugin'))`);
 });
+
+test('toConfig with object literal plugin', t => {
+  const plugin = new Plugin(null, 'gamma');
+
+  const TestPlugin = {
+    apply () {}
+  };
+
+  plugin.use(TestPlugin);
+
+  const initialized = plugin.toConfig();
+
+  t.is(initialized, TestPlugin);
+});
