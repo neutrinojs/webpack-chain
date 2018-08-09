@@ -88,7 +88,7 @@ test('toConfig with object literal plugin', t => {
   const plugin = new Plugin(null, 'gamma');
 
   const TestPlugin = {
-    apply () {}
+    apply() {},
   };
 
   plugin.use(TestPlugin);

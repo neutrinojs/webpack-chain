@@ -10,10 +10,9 @@ module.exports = Orderable(
 
       this.init((Plugin, args = []) => {
         if (typeof Plugin === 'function') {
-          return new Plugin(...args)
-        } else {
-          return Plugin
+          return new Plugin(...args);
         }
+        return Plugin;
       });
     }
 

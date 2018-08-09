@@ -63,10 +63,13 @@ module.exports = class extends ChainedMap {
             const args = stringify(value.__pluginArgs).slice(1, -1);
             return `${prefix}new ${constructorName}(${args})`;
           }
-          return prefix + stringify(
-            value.__pluginArgs && value.__pluginArgs.length
-              ? { args: value.__pluginArgs }
-              : {}
+          return (
+            prefix +
+            stringify(
+              value.__pluginArgs && value.__pluginArgs.length
+                ? { args: value.__pluginArgs }
+                : {}
+            )
           );
         }
 
