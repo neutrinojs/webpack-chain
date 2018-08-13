@@ -31,19 +31,11 @@ module.exports = class Rule extends ChainedMap {
   }
 
   use(name) {
-    if (!this.uses.has(name)) {
-      this.uses.set(name, new Use(this, name));
-    }
-
-    return this.uses.get(name);
+    return this.uses.getOrCompute(name, () => new Use(this, name));
   }
 
   oneOf(name) {
-    if (!this.oneOfs.has(name)) {
-      this.oneOfs.set(name, new Rule(this, name));
-    }
-
-    return this.oneOfs.get(name);
+    return this.oneOfs.getOrCompute(name, () => new Rule(this, name));
   }
 
   pre() {

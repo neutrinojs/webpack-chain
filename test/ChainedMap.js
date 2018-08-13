@@ -28,6 +28,14 @@ test('get', t => {
   t.is(map.get('a'), 'alpha');
 });
 
+test('getOrCompute', t => {
+  const map = new ChainedMap();
+
+  t.is(map.get('a'), undefined);
+  t.is(map.getOrCompute('a', () => 'alpha'), 'alpha');
+  t.is(map.get('a'), 'alpha');
+});
+
 test('clear', t => {
   const map = new ChainedMap();
 

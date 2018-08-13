@@ -103,19 +103,11 @@ module.exports = class extends ChainedMap {
   }
 
   entry(name) {
-    if (!this.entryPoints.has(name)) {
-      this.entryPoints.set(name, new ChainedSet(this));
-    }
-
-    return this.entryPoints.get(name);
+    return this.entryPoints.getOrCompute(name, () => new ChainedSet(this));
   }
 
   plugin(name) {
-    if (!this.plugins.has(name)) {
-      this.plugins.set(name, new Plugin(this, name));
-    }
-
-    return this.plugins.get(name);
+    return this.plugins.getOrCompute(name, () => new Plugin(this, name));
   }
 
   toConfig() {
