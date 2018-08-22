@@ -102,7 +102,7 @@ config.module
       .loader('babel-loader')
       .options({
         presets: [
-          ['babel-preset-es2015', { modules: false }]
+          ['@babel/preset-env', { modules: false }]
         ]
       });
 
@@ -907,7 +907,7 @@ config.module
   .rule('compile')
     .use('babel')
       .loader('babel-loader')
-      .options({ presets: ['babel-preset-es2015'] });
+      .options({ presets: ['@babel/preset-env'] });
 ```
 
 #### Config module rules uses (loaders): modifying options
@@ -924,7 +924,7 @@ config.module
   .rule('compile')
     .use('babel')
       .tap(options => merge(options, {
-        plugins: ['babel-plugin-syntax-object-rest-spread']
+        plugins: ['@babel/plugin-proposal-class-properties']
       }));
 ```
 
