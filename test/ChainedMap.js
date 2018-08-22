@@ -164,3 +164,26 @@ test('when false', t => {
   t.false(map.has('alpha'));
   t.true(map.has('beta'));
 });
+
+test('clean undefined', t => {
+  const map = new ChainedMap();
+  map.set('alpha', undefined);
+  map.set('beta', 'b');
+  t.true('alpha' in map.entries());
+  t.false('alpha' in map.clean(map.entries()));
+  t.true('beta' in map.clean(map.entries()));
+});
+
+test('clean empty array', t => {
+  const map = new ChainedMap();
+  map.set('alpha', []);
+  t.true('alpha' in map.entries());
+  t.false('alpha' in map.clean(map.entries()));
+});
+
+test('clean empty object', t => {
+  const map = new ChainedMap();
+  map.set('alpha', {});
+  t.true('alpha' in map.entries());
+  t.false('alpha' in map.clean(map.entries()));
+});
