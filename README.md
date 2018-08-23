@@ -1,20 +1,20 @@
 # webpack-chain
 
 Use a chaining API to generate and simplify the modification of
-Webpack version 2-4 configurations.
+webpack version 2-4 configurations.
 
 This documentation corresponds to v4 of webpack-chain.
 
-* [v3 docs](https://github.com/mozilla-neutrino/webpack-chain/tree/v3)
-* [v2 docs](https://github.com/mozilla-neutrino/webpack-chain/tree/v2)
-* [v1 docs](https://github.com/mozilla-neutrino/webpack-chain/tree/v1.4.3)
+* [v3 docs](https://github.com/neutrinojs/webpack-chain/tree/v3)
+* [v2 docs](https://github.com/neutrinojs/webpack-chain/tree/v2)
+* [v1 docs](https://github.com/neutrinojs/webpack-chain/tree/v1.4.3)
 
-_Note: while webpack-chain is utilized extensively in Neutrino, this package is completely
-standalone and can be used by any project._
+_Note: while webpack-chain is utilized extensively in Neutrino, this package is
+completely standalone and can be used by any project._
 
 ## Introduction
 
-Webpack's core configuration is based on creating and modifying a
+webpack's core configuration is based on creating and modifying a
 potentially unwieldy JavaScript object. While this is OK for configurations
 on individual projects, trying to share these objects across projects and
 make subsequent modifications gets messy, as you need to have a deep
@@ -30,7 +30,8 @@ This is easier explained through the examples following.
 ## Installation
 
 `webpack-chain` requires Node.js v6.9 and higher. `webpack-chain` also
-only creates configuration objects designed for use in Webpack version 2, 3, and 4.
+only creates configuration objects designed for use in webpack versions 2, 3,
+and 4.
 
 You may install this package using either Yarn or npm (choose one):
 
@@ -49,7 +50,7 @@ npm install --save-dev webpack-chain
 ## Getting Started
 
 Once you have `webpack-chain` installed, you can start creating a
-Webpack configuration. For this guide, our example base configuration will
+webpack configuration. For this guide, our example base configuration will
 be `webpack.config.js` in the root of our project directory.
 
 ```js
@@ -101,7 +102,7 @@ config.module
       .loader('babel-loader')
       .options({
         presets: [
-          ['babel-preset-es2015', { modules: false }]
+          ['@babel/preset-env', { modules: false }]
         ]
       });
 
@@ -115,7 +116,7 @@ module.exports = config.toConfig();
 ```
 
 Having shared configurations is also simple. Just export the configuration
-and call `.toConfig()` prior to passing to Webpack.
+and call `.toConfig()` prior to passing to webpack.
 
 ```js
 // webpack.core.js
@@ -144,11 +145,13 @@ module.exports = config.toConfig();
 
 ## ChainedMap
 
-One of the core API interfaces in webpack-chain is a `ChainedMap`. A `ChainedMap` operates
-similar to a JavaScript Map, with some conveniences for chaining and generating configuration.
-If a property is marked as being a `ChainedMap`, it will have an API and methods as described below:
+One of the core API interfaces in webpack-chain is a `ChainedMap`. A
+`ChainedMap` operates similar to a JavaScript Map, with some conveniences for
+chaining and generating configuration. If a property is marked as being a
+`ChainedMap`, it will have an API and methods as described below:
 
-**Unless stated otherwise, these methods will return the `ChainedMap`, allowing you to chain these methods.**
+**Unless stated otherwise, these methods will return the `ChainedMap`, allowing
+you to chain these methods.**
 
 ```js
 // Remove all entries from a Map.
@@ -185,7 +188,8 @@ set(key, value)
 ```
 
 ```js
-// Returns `true` or `false` based on whether a Map as has a value set at a particular key.
+// Returns `true` or `false` based on whether a Map as has a value set at a
+// particular key.
 // key: *
 // returns: Boolean
 has(key)
@@ -237,11 +241,13 @@ when(condition, whenTruthy, whenFalsy)
 
 ## ChainedSet
 
-Another of the core API interfaces in webpack-chain is a `ChainedSet`. A `ChainedSet` operates
-similar to a JavaScript Set, with some conveniences for chaining and generating configuration.
-If a property is marked as being a `ChainedSet`, it will have an API and methods as described below:
+Another of the core API interfaces in webpack-chain is a `ChainedSet`. A
+`ChainedSet` operates similar to a JavaScript Set, with some conveniences for
+chaining and generating configuration. If a property is marked as being a
+`ChainedSet`, it will have an API and methods as described below:
 
-**Unless stated otherwise, these methods will return the `ChainedSet`, allowing you to chain these methods.**
+**Unless stated otherwise, these methods will return the `ChainedSet`, allowing
+you to chain these methods.**
 
 ```js
 // Add/append a value to the end of a Set.
@@ -317,8 +323,8 @@ devServer.hot(true);
 devServer.set('hot', true);
 ```
 
-A shorthand method is chainable, so calling it will return the original instance,
-allowing you to continue to chain.
+A shorthand method is chainable, so calling it will return the original
+instance, allowing you to continue to chain.
 
 ### Config
 
@@ -337,9 +343,9 @@ If you are familiar with jQuery, `.end()` works similarly. All API calls
 will return the API instance at the current context unless otherwise
 specified. This is so you may chain API calls continuously if desired.
 
-For details on the specific values that are valid for all shorthand and low-level methods,
-please refer to their corresponding name in the
-[Webpack docs hierarchy](https://webpack.js.org/configuration/).
+For details on the specific values that are valid for all shorthand and
+low-level methods, please refer to their corresponding name in the
+[webpack docs hierarchy](https://webpack.js.org/configuration/).
 
 ```js
 Config : ChainedMap
@@ -664,8 +670,8 @@ config.plugins.delete(name)
 
 #### Config plugins: ordering before
 
-Specify that the current `plugin` context should operate before another named `plugin`.
-You cannot use both `.before()` and `.after()` on the same plugin.
+Specify that the current `plugin` context should operate before another named
+`plugin`. You cannot use both `.before()` and `.after()` on the same plugin.
 
 ```js
 config
@@ -685,8 +691,8 @@ config
 
 #### Config plugins: ordering after
 
-Specify that the current `plugin` context should operate after another named `plugin`.
-You cannot use both `.before()` and `.after()` on the same plugin.
+Specify that the current `plugin` context should operate after another named
+`plugin`. You cannot use both `.before()` and `.after()` on the same plugin.
 
 ```js
 config
@@ -745,8 +751,9 @@ config.resolve.plugins.delete(name)
 
 #### Config resolve plugins: ordering before
 
-Specify that the current `plugin` context should operate before another named `plugin`.
-You cannot use both `.before()` and `.after()` on the same resolve plugin.
+Specify that the current `plugin` context should operate before another named
+`plugin`. You cannot use both `.before()` and `.after()` on the same resolve
+plugin.
 
 ```js
 config.resolve
@@ -766,8 +773,9 @@ config.resolve
 
 #### Config resolve plugins: ordering after
 
-Specify that the current `plugin` context should operate after another named `plugin`.
-You cannot use both `.before()` and `.after()` on the same resolve plugin.
+Specify that the current `plugin` context should operate after another named
+`plugin`. You cannot use both `.before()` and `.after()` on the same resolve
+plugin.
 
 ```js
 config.resolve
@@ -899,7 +907,7 @@ config.module
   .rule('compile')
     .use('babel')
       .loader('babel-loader')
-      .options({ presets: ['babel-preset-es2015'] });
+      .options({ presets: ['@babel/preset-env'] });
 ```
 
 #### Config module rules uses (loaders): modifying options
@@ -915,7 +923,9 @@ config.module
 config.module
   .rule('compile')
     .use('babel')
-      .tap(options => merge(options, { plugins: ['babel-plugin-syntax-object-rest-spread'] }));
+      .tap(options => merge(options, {
+        plugins: ['@babel/plugin-proposal-class-properties']
+      }));
 ```
 
 #### Config module rules oneOfs (conditional rules):
@@ -947,10 +957,10 @@ config.module
 
 ### Merging Config
 
-webpack-chain supports merging in an object to the configuration instance which matches a layout
-similar to how the webpack-chain schema is laid out. Note that this is not a Webpack configuration
-object, but you may transform a Webpack configuration object before providing it to webpack-chain
-to match its layout.
+webpack-chain supports merging in an object to the configuration instance which
+matches a layout similar to how the webpack-chain schema is laid out. Note that
+this is not a webpack configuration object, but you may transform a webpack
+configuration object before providing it to webpack-chain to match its layout.
 
 ```js
 config.merge({ devtool: 'source-map' });
@@ -1121,10 +1131,13 @@ config.merge({
 
 ### Conditional configuration
 
-When working with instances of `ChainedMap` and `ChainedSet`, you can perform conditional configuration using `when`.
-You must specify an expression to `when()` which will be evaluated for truthiness or falsiness. If the expression is
-truthy, the first function argument will be invoked with an instance of the current chained instance. You can optionally
-provide a second function to be invoked when the condition is falsy, which is also given the current chained instance.
+When working with instances of `ChainedMap` and `ChainedSet`, you can perform
+conditional configuration using `when`. You must specify an expression to
+`when()` which will be evaluated for truthiness or falsiness. If the expression
+is truthy, the first function argument will be invoked with an instance of the
+current chained instance. You can optionally provide a second function to be
+invoked when the condition is falsy, which is also given the current chained
+instance.
 
 ```js
 // Example: Only add minify plugin during production
@@ -1148,7 +1161,9 @@ config
 
 ### Inspecting generated configuration
 
-You can inspect the generated webpack config using `config.toString()`. This will generate a stringified version of the config with comment hints for named rules, uses and plugins:
+You can inspect the generated webpack config using `config.toString()`. This
+will generate a stringified version of the config with comment hints for named
+rules, uses and plugins:
 
 ``` js
 config
@@ -1180,7 +1195,10 @@ config.toString();
 */
 ```
 
-By default the generated string cannot be used directly as real webpack config if it contains functions and plugins that need to be required. In order to generate usable config, you can customize how functions and plugins are stringified by setting a special `__expression` property on them:
+By default the generated string cannot be used directly as real webpack config
+if it contains functions and plugins that need to be required. In order to
+generate usable config, you can customize how functions and plugins are
+stringified by setting a special `__expression` property on them:
 
 ``` js
 class MyPlugin {}

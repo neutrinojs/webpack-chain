@@ -2,7 +2,7 @@
   "name": "webpack-chain",
   "version": "4.9.0",
   "main": "src/Config.js",
-  "repository": "mozilla-neutrino/webpack-chain",
+  "repository": "neutrinojs/webpack-chain",
   "keywords": [
     "webpack",
     "config",
@@ -18,7 +18,7 @@
   "scripts": {
     "test": "ava test",
     "lint": "eslint src test .eslintrc.js",
-    "changelog": "changelog mozilla-neutrino/webpack-chain all --markdown > CHANGELOG.md"
+    "changelog": "changelog neutrinojs/webpack-chain all --markdown > CHANGELOG.md"
   },
   "dependencies": {
     "deepmerge": "^1.5.2",
