@@ -529,31 +529,8 @@ config.resolve.mainFiles
 
 #### Config resolveLoader
 
-```js
-config.resolveLoader : ChainedMap
-```
-
-#### Config resolveLoader extensions
-
-```js
-config.resolveLoader.extensions : ChainedSet
-
-config.resolveLoader.extensions
-  .add(value)
-  .prepend(value)
-  .clear()
-```
-
-#### Config resolveLoader modules
-
-```js
-config.resolveLoader.modules : ChainedSet
-
-config.resolveLoader.modules
-  .add(value)
-  .prepend(value)
-  .clear()
-```
+The API for `config.resolveLoader` is identical to `config.resolve` with
+the following additions:
 
 #### Config resolveLoader moduleExtensions
 
@@ -1088,10 +1065,26 @@ config.merge({
   resolveLoader: {
     [key]: value,
 
+    alias: {
+      [key]: value
+    },
+    aliasFields: [...values],
+    descriptionFields: [...values],
     extensions: [...values],
+    mainFields: [...values],
+    mainFiles: [...values],
     modules: [...values],
     moduleExtensions: [...values],
-    packageMains: [...values]
+    packageMains: [...values],
+
+    plugin: {
+      [name]: {
+        plugin: WebpackPlugin,
+        args: [...args],
+        before,
+        after
+      }
+    }
   },
 
   module: {
