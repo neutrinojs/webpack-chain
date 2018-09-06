@@ -1,11 +1,9 @@
-const ChainedMap = require('./ChainedMap');
+const Resolve = require('./Resolve');
 const ChainedSet = require('./ChainedSet');
 
-module.exports = class extends ChainedMap {
+module.exports = class extends Resolve {
   constructor(parent) {
     super(parent);
-    this.extensions = new ChainedSet(this);
-    this.modules = new ChainedSet(this);
     this.moduleExtensions = new ChainedSet(this);
     this.packageMains = new ChainedSet(this);
   }
@@ -14,23 +12,16 @@ module.exports = class extends ChainedMap {
     return this.clean(
       Object.assign(
         {
-          extensions: this.extensions.values(),
-          modules: this.modules.values(),
           moduleExtensions: this.moduleExtensions.values(),
           packageMains: this.packageMains.values(),
         },
-        this.entries() || {}
+        super.toConfig()
       )
     );
   }
 
   merge(obj, omit = []) {
-    const omissions = [
-      'extensions',
-      'modules',
-      'moduleExtensions',
-      'packageMains',
-    ];
+    const omissions = ['moduleExtensions', 'packageMains'];
 
     omissions.forEach(key => {
       if (!omit.includes(key) && key in obj) {

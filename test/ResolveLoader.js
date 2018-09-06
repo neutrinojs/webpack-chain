@@ -8,6 +8,18 @@ test('is Chainable', t => {
   t.is(resolveLoader.end(), parent);
 });
 
+test('shorthand methods', t => {
+  const resolveLoader = new ResolveLoader();
+  const obj = {};
+
+  resolveLoader.shorthands.forEach(method => {
+    obj[method] = 'alpha';
+    t.is(resolveLoader[method]('alpha'), resolveLoader);
+  });
+
+  t.deepEqual(resolveLoader.entries(), obj);
+});
+
 test('sets methods', t => {
   const resolveLoader = new ResolveLoader();
   const instance = resolveLoader.modules.add('src').end();
@@ -87,4 +99,12 @@ test('merge with omit', t => {
     modules: ['src', 'dist'],
     moduleExtensions: ['-loader'],
   });
+});
+
+test('plugin with name', t => {
+  const resolveLoader = new ResolveLoader();
+
+  resolveLoader.plugin('alpha');
+
+  t.is(resolveLoader.plugins.get('alpha').name, 'alpha');
 });
