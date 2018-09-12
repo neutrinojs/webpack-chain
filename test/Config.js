@@ -1,5 +1,7 @@
 import test from 'ava';
 import { validate } from 'webpack';
+import EnvironmentPlugin from 'webpack/lib/EnvironmentPlugin';
+import stringify from 'javascript-stringify';
 import Config from '../src/Config';
 
 class StringifyPlugin {
@@ -100,6 +102,9 @@ test('toConfig with values', t => {
     .plugin('stringify')
     .use(StringifyPlugin)
     .end()
+    .plugin('env')
+    .use(require.resolve('webpack/lib/EnvironmentPlugin'))
+    .end()
     .module.defaultRule('inline')
     .use('banner')
     .loader('banner-loader')
@@ -132,7 +137,7 @@ test('toConfig with values', t => {
       path: 'build',
     },
     target: 'node',
-    plugins: [new StringifyPlugin()],
+    plugins: [new StringifyPlugin(), new EnvironmentPlugin()],
     module: {
       defaultRules: [
         {
@@ -199,6 +204,9 @@ test('validate with values', t => {
     .plugin('stringify')
     .use(StringifyPlugin)
     .end()
+    .plugin('env')
+    .use(require.resolve('webpack/lib/EnvironmentPlugin'), [{ VAR: false }])
+    .end()
     .module.rule('compile')
     .include.add('alpha')
     .add('beta')
@@ -228,10 +236,16 @@ test('toString', t => {
     .use('babel')
     .loader('babel-loader');
 
+  const envPluginPath = require.resolve('webpack/lib/EnvironmentPlugin');
+  const stringifiedEnvPluginPath = stringify(envPluginPath);
+
   class FooPlugin {}
   FooPlugin.__expression = `require('foo-plugin')`;
 
   config
+    .plugin('env')
+    .use(envPluginPath, [{ VAR: false }])
+    .end()
     .plugin('gamma')
     .use(FooPlugin)
     .end()
@@ -264,6 +278,12 @@ test('toString', t => {
     ]
   },
   plugins: [
+    /* config.plugin('env') */
+    new (require(${stringifiedEnvPluginPath}))(
+      {
+        VAR: false
+      }
+    ),
     /* config.plugin('gamma') */
     new (require('foo-plugin'))(),
     /* config.plugin('delta') */

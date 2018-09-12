@@ -39,17 +39,30 @@ module.exports = Orderable(
 
     toConfig() {
       const init = this.get('init');
-      const plugin = this.get('plugin');
+      let plugin = this.get('plugin');
+      const args = this.get('args');
+      let pluginPath = null;
+
+      // Support using the path to a plugin rather than the plugin itself,
+      // allowing expensive require()s to be skipped in cases where the plugin
+      // or webpack configuration won't end up being used.
+      if (typeof plugin === 'string') {
+        pluginPath = plugin;
+        // eslint-disable-next-line global-require, import/no-dynamic-require
+        plugin = require(pluginPath);
+      }
+
       const constructorName = plugin.__expression
         ? `(${plugin.__expression})`
         : plugin.name;
 
-      const config = init(this.get('plugin'), this.get('args'));
+      const config = init(plugin, args);
 
       Object.defineProperties(config, {
         __pluginName: { value: this.name },
-        __pluginArgs: { value: this.get('args') },
+        __pluginArgs: { value: args },
         __pluginConstructorName: { value: constructorName },
+        __pluginPath: { value: pluginPath },
       });
 
       return config;
