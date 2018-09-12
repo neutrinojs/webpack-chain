@@ -1,4 +1,5 @@
 import test from 'ava';
+import EnvironmentPlugin from 'webpack/lib/EnvironmentPlugin';
 import Plugin from '../src/Plugin';
 
 class StringifyPlugin {
@@ -96,4 +97,17 @@ test('toConfig with object literal plugin', t => {
   const initialized = plugin.toConfig();
 
   t.is(initialized, TestPlugin);
+});
+
+test('toConfig with plugin as path', t => {
+  const plugin = new Plugin(null, 'gamma');
+  const envPluginPath = require.resolve('webpack/lib/EnvironmentPlugin');
+
+  plugin.use(envPluginPath);
+
+  const initialized = plugin.toConfig();
+
+  t.true(initialized instanceof EnvironmentPlugin);
+  t.is(initialized.__pluginConstructorName, 'EnvironmentPlugin');
+  t.is(initialized.__pluginPath, envPluginPath);
 });

@@ -609,13 +609,16 @@ config
   .use(WebpackPlugin, args)
 
 // Examples
+
 config
   .plugin('hot')
   .use(webpack.HotModuleReplacementPlugin);
 
+// Plugins can also be specified by their path, allowing the expensive require()s to be
+// skipped in cases where the plugin or webpack configuration won't end up being used.
 config
   .plugin('env')
-  .use(webpack.EnvironmentPlugin, ['NODE_ENV']);
+  .use(require.resolve('webpack/lib/EnvironmentPlugin'), [{ 'VAR': false }]);
 ```
 
 #### Config plugins: modify arguments
@@ -1212,6 +1215,29 @@ config.toString();
     new (require('my-plugin'))({
       fn: require('my-function')
     })
+  ]
+}
+*/
+```
+
+Plugins specified via their path will have their `require()` statement generated
+automatically:
+
+``` js
+config
+  .plugin('env')
+    .use(require.resolve('webpack/lib/ProvidePlugin'), [{ jQuery: 'jquery' }])
+
+config.toString();
+
+/*
+{
+  plugins: [
+    new (require('/foo/bar/src/node_modules/webpack/lib/EnvironmentPlugin.js'))(
+      {
+        jQuery: 'jquery'
+      }
+    )
   ]
 }
 */
