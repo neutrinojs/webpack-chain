@@ -1,3 +1,47 @@
+2018-09-13
+==========
+
+  * 4.11.0
+
+2018-09-11
+==========
+
+  * Support specifying plugins by path ([#102](https://github.com/neutrinojs/webpack-chain/issues/102))
+    This allows the expensive require()s to be skipped in cases where the
+    plugin or webpack configuration won't end up being used. For example,
+    using this feature in Neutrino reduces the overhead of dynamically
+    generating `.eslintrc.js` from 1800ms to 250ms.
+    As an added bonus, plugins specified by path will also have their
+    `require()` statement generated automatically when using `toString()`,
+    saving the need for callers to manually do so using `__expression`.
+
+2018-09-10
+==========
+
+  * Lock file maintenance ([#100](https://github.com/neutrinojs/webpack-chain/issues/100))
+
+2018-09-05
+==========
+
+  * Lock file maintenance ([#96](https://github.com/neutrinojs/webpack-chain/issues/96))
+  * 4.10.0
+  * Use the Resolve API to define ResolveLoader according to webpack ([#99](https://github.com/neutrinojs/webpack-chain/issues/99))
+    * Use the Resolve API to define ResolveLoader according to webpack
+    * Fix linting error
+    * Test shorthands and plugins with ResolveLoader
+
+2018-08-26
+==========
+
+  * Lock file maintenance
+
+2018-08-22
+==========
+
+  * Migrate to new org ([#92](https://github.com/neutrinojs/webpack-chain/issues/92))
+    * Migrate to new org
+    * Update changelog, use newer babel packages in README
+
 2018-08-21
 ==========
 
