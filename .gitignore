@@ -43,6 +43,3 @@ jspm_packages
 
 # Webstorm project metadata
 .idea
-
-# macOS
-.DS_Store
