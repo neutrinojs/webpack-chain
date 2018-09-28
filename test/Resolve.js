@@ -1,6 +1,16 @@
 import test from 'ava';
 import Resolve from '../src/Resolve';
 
+class StringifyPlugin {
+  constructor(...args) {
+    this.values = args;
+  }
+
+  apply() {
+    return JSON.stringify(this.values);
+  }
+}
+
 test('is Chainable', t => {
   const parent = { parent: true };
   const resolve = new Resolve(parent);
@@ -122,4 +132,25 @@ test('plugin with name', t => {
   resolve.plugin('alpha');
 
   t.is(resolve.plugins.get('alpha').name, 'alpha');
+});
+
+test('plugin empty', t => {
+  const resolve = new Resolve();
+  const instance = resolve
+    .plugin('stringify')
+    .use(StringifyPlugin)
+    .end();
+
+  t.is(instance, resolve);
+  t.true(resolve.plugins.has('stringify'));
+  t.deepEqual(resolve.plugins.get('stringify').get('args'), []);
+});
+
+test('plugin with args', t => {
+  const resolve = new Resolve();
+
+  resolve.plugin('stringify').use(StringifyPlugin, ['alpha', 'beta']);
+
+  t.true(resolve.plugins.has('stringify'));
+  t.deepEqual(resolve.plugins.get('stringify').get('args'), ['alpha', 'beta']);
 });
