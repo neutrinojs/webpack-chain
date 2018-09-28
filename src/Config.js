@@ -155,7 +155,7 @@ module.exports = class extends ChainedMap {
 
     if (!omit.includes('entry') && 'entry' in obj) {
       Object.keys(obj.entry).forEach(name =>
-        this.entry(name).merge(obj.entry[name])
+        this.entry(name).merge([].concat(obj.entry[name]))
       );
     }
 
