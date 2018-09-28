@@ -27,11 +27,7 @@ module.exports = class extends ChainedMap {
   }
 
   minimizer(name) {
-    if (!this.minimizers.has(name)) {
-      this.minimizers.set(name, new Plugin(this, name));
-    }
-
-    return this.minimizers.get(name);
+    return this.minimizers.getOrCompute(name, () => new Plugin(this, name));
   }
 
   toConfig() {
@@ -43,20 +39,12 @@ module.exports = class extends ChainedMap {
   }
 
   merge(obj, omit = []) {
-    const omissions = [];
-
     if (!omit.includes('minimizer') && 'minimizer' in obj) {
       Object.keys(obj.minimizer).forEach(name =>
         this.minimizer(name).merge(obj.minimizer[name])
       );
     }
 
-    omissions.forEach(key => {
-      if (!omit.includes(key) && key in obj) {
-        this[key].merge(obj[key]);
-      }
-    });
-
-    return super.merge(obj, [...omit, ...omissions, 'minimizer']);
+    return super.merge(obj, [...omit, 'minimizer']);
   }
 };

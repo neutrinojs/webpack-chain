@@ -576,7 +576,7 @@ config.optimization
   .flagIncludedChunks(flagIncludedChunks)
   .mergeDuplicateChunks(mergeDuplicateChunks)
   .minimize(minimize)
-  .minimizer(minimizer)
+  .minimizer(plugin)
   .namedChunks(namedChunks)
   .namedModules(namedModules)
   .nodeEnv(nodeEnv)
@@ -590,6 +590,58 @@ config.optimization
   .sideEffects(sideEffects)
   .splitChunks(splitChunks)
   .usedExports(usedExports)
+```
+
+#### Config optimization minimizers
+
+```js
+// Backed at config.optimization.minimizers
+config.optimization
+  minimizer(name) : ChainedMap
+```
+
+#### Config optimization minimizers: adding
+
+_NOTE: Do not use `new` to create the minimizer plugin, as this will be done for you._
+
+```js
+config.optimization
+  .minimizer(name)
+  .use(WebpackPlugin, args)
+
+// Examples
+
+config.optimization
+  .minimizer('optimizeCSSAssets')
+  .use(OptimizeCSSAssetsPlugin, [{ cssProcessorOptions: { safe: true } }])
+
+```
+
+#### Config optimization minimizers: modify arguments
+
+```js
+config.optimization
+  .minimizer(name)
+  .tap(args => newArgs)
+
+// Example
+config
+  .minimizer('optimizeCSSAssets')
+  .tap(args => [...args, { cssProcessorOptions: { safe: false } }])
+```
+
+#### Config optimization minimizers: modify instantiation
+
+```js
+config.optimization
+  .minimizer(name)
+  .init((Plugin, args) => new Plugin(...args));
+```
+
+#### Config optimization minimizers: removing
+
+```js
+config.optimization.minimizers.delete(name)
 ```
 
 #### Config plugins
