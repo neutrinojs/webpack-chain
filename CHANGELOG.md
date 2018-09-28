@@ -1,4 +1,11 @@
-2018-09-13
+2018-09-27
+==========
+
+  * Merge branch 'OffGridNetworks-patch-resolve-plugins'
+  * Revert changes to gitignore
+  * Merge branch 'patch-resolve-plugins' of https://github.com/OffGridNetworks/webpack-chain into OffGridNetworks-patch-resolve-plugins
+
+2018-09-12
 ==========
 
   * 4.11.0
@@ -14,6 +21,10 @@
     As an added bonus, plugins specified by path will also have their
     `require()` statement generated automatically when using `toString()`,
     saving the need for callers to manually do so using `__expression`.
+    The plugin path is passed back to `toString()` separately, since it
+    needs stringifying to ensure special characters are escaped (such as
+    the backslashes in Windows-style paths) - and I'd prefer to avoid
+    importing `javascript-stringify` outside of `toString()`.
 
 2018-09-10
 ==========
@@ -82,6 +93,12 @@
 ==========
 
   * Support Object literal plugin usage ([#86](https://github.com/neutrinojs/webpack-chain/issues/86))
+
+2018-08-03
+==========
+
+  * linted
+  * merge resolve plugins just like config
 
 2018-07-29
 ==========
@@ -349,36 +366,3 @@
 ==========
 
   * MPL license, moving to mozilla-neutrino
-  * Merge pull request [#14](https://github.com/neutrinojs/webpack-chain/issues/14) from eliperelman/testing
-    Adding testing, which informed v2 API, updated docs to reflect
-  * Adding testing, which informed v2 API, updated docs to reflect
-
-2017-03-03
-==========
-
-  * Merge pull request [#13](https://github.com/neutrinojs/webpack-chain/issues/13) from eliperelman/plugin-api
-    Make Plugin API consistent with Loader API
-  * Make Plugin API consistent with Loader API
-  * Removing empty entities from cluttering configuration object
-  * Docs: getConfig -> toConfig
-
-2017-03-02
-==========
-
-  * Adding ChainedMap and ChainedSet documentation
-
-2017-03-01
-==========
-
-  * Bumping to v1.4.2
-  * Merge pull request [#7](https://github.com/neutrinojs/webpack-chain/issues/7) from tauren/patch-1
-    Fix bug where `exclude` doesn't return `this`
-  * Fix bug where `exclude` doesn't return `this`
-
-2017-02-25
-==========
-
-  * v1.4.1
-  * Merge pull request [#3](https://github.com/neutrinojs/webpack-chain/issues/3) from eliperelman/merge-rule-loaders
-    Allowing config merge to append to existing rule loaders
-  * Allowing config merge to append to existing rule loaders
