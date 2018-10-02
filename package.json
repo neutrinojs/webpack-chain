@@ -17,7 +17,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "test": "ava test",
-    "lint": "eslint src test .eslintrc.js",
+    "lint": "eslint --cache --report-unused-disable-directives --format codeframe \".*.js\" src test",
     "changelog": "changelog neutrinojs/webpack-chain all --markdown > CHANGELOG.md"
   },
   "dependencies": {
