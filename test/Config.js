@@ -167,6 +167,158 @@ test('toConfig with values', t => {
   });
 });
 
+test('merge empty', t => {
+  const config = new Config();
+
+  const obj = {
+    mode: 'development',
+    node: {
+      __dirname: 'mock',
+    },
+    optimization: {
+      nodeEnv: 'PRODUCTION',
+    },
+    output: {
+      path: 'build',
+    },
+    target: 'node',
+    entry: {
+      index: ['babel-polyfill', 'src/index.js'],
+    },
+    plugin: { stringify: { plugin: new StringifyPlugin(), args: [] } },
+  };
+
+  const instance = config.merge(obj);
+
+  t.is(instance, config);
+
+  t.deepEqual(config.toConfig(), {
+    mode: 'development',
+    node: {
+      __dirname: 'mock',
+    },
+    optimization: {
+      nodeEnv: 'PRODUCTION',
+    },
+    output: {
+      path: 'build',
+    },
+    target: 'node',
+    entry: {
+      index: ['babel-polyfill', 'src/index.js'],
+    },
+    plugins: [new StringifyPlugin()],
+  });
+});
+
+test('merge with values', t => {
+  const config = new Config();
+
+  config.output
+    .path('build')
+    .end()
+    .mode('development')
+    .node.set('__dirname', 'mock')
+    .end()
+    .optimization.nodeEnv('PRODUCTION')
+    .end()
+    .entry('index')
+    .add('babel-polyfill')
+    .end()
+    .target('node')
+    .plugin('stringify')
+    .use(StringifyPlugin)
+    .end();
+
+  const obj = {
+    mode: 'production',
+    output: {
+      path: 'build',
+    },
+    target: 'browser',
+    entry: {
+      index: 'src/index.js',
+    },
+    plugin: { env: { plugin: new EnvironmentPlugin() } },
+  };
+
+  const instance = config.merge(obj);
+
+  t.is(instance, config);
+
+  t.deepEqual(config.toConfig(), {
+    mode: 'production',
+    node: {
+      __dirname: 'mock',
+    },
+    optimization: {
+      nodeEnv: 'PRODUCTION',
+    },
+    output: {
+      path: 'build',
+    },
+    target: 'browser',
+    entry: {
+      index: ['babel-polyfill', 'src/index.js'],
+    },
+    plugins: [new StringifyPlugin(), new EnvironmentPlugin()],
+  });
+});
+
+test('merge with omit', t => {
+  const config = new Config();
+
+  config.output
+    .path('build')
+    .end()
+    .mode('development')
+    .node.set('__dirname', 'mock')
+    .end()
+    .optimization.nodeEnv('PRODUCTION')
+    .end()
+    .entry('index')
+    .add('babel-polyfill')
+    .end()
+    .target('node')
+    .plugin('stringify')
+    .use(StringifyPlugin)
+    .end();
+
+  const obj = {
+    mode: 'production',
+    output: {
+      path: 'build',
+    },
+    target: 'browser',
+    entry: {
+      index: 'src/index.js',
+    },
+    plugin: { env: { plugin: new EnvironmentPlugin() } },
+  };
+
+  const instance = config.merge(obj, ['target']);
+
+  t.is(instance, config);
+
+  t.deepEqual(config.toConfig(), {
+    mode: 'production',
+    node: {
+      __dirname: 'mock',
+    },
+    optimization: {
+      nodeEnv: 'PRODUCTION',
+    },
+    output: {
+      path: 'build',
+    },
+    target: 'node',
+    entry: {
+      index: ['babel-polyfill', 'src/index.js'],
+    },
+    plugins: [new StringifyPlugin(), new EnvironmentPlugin()],
+  });
+});
+
 test('validate empty', t => {
   const config = new Config();
 
