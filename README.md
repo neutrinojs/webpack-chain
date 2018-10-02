@@ -576,7 +576,6 @@ config.optimization
   .flagIncludedChunks(flagIncludedChunks)
   .mergeDuplicateChunks(mergeDuplicateChunks)
   .minimize(minimize)
-  .minimizer(plugin)
   .namedChunks(namedChunks)
   .namedModules(namedModules)
   .nodeEnv(nodeEnv)
@@ -597,7 +596,7 @@ config.optimization
 ```js
 // Backed at config.optimization.minimizers
 config.optimization
-  minimizer(name) : ChainedMap
+  .minimizer(name) : ChainedMap
 ```
 
 #### Config optimization minimizers: adding
@@ -612,8 +611,14 @@ config.optimization
 // Examples
 
 config.optimization
-  .minimizer('optimizeCSSAssets')
+  .minimizer('css')
   .use(OptimizeCSSAssetsPlugin, [{ cssProcessorOptions: { safe: true } }])
+
+// Minimizer plugins can also be specified by their path, allowing the expensive require()s to be
+// skipped in cases where the plugin or webpack configuration won't end up being used.
+config.optimization
+  .minimizer('css')
+  .use(require.resolve('optimize-css-assets-webpack-plugin'), [{ cssProcessorOptions: { safe: true } }])
 
 ```
 
@@ -626,7 +631,7 @@ config.optimization
 
 // Example
 config
-  .minimizer('optimizeCSSAssets')
+  .minimizer('css')
   .tap(args => [...args, { cssProcessorOptions: { safe: false } }])
 ```
 
