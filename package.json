@@ -18,15 +18,16 @@
   "scripts": {
     "test": "ava test",
     "lint": "eslint --cache --report-unused-disable-directives --format codeframe \".*.js\" src test",
-    "changelog": "changelog neutrinojs/webpack-chain all --markdown > CHANGELOG.md"
+    "changelog": "auto-changelog --remote upstream --commit-limit false",
+    "version": "yarn changelog --package && git add CHANGELOG.md"
   },
   "dependencies": {
     "deepmerge": "^1.5.2",
     "javascript-stringify": "^1.6.0"
   },
   "devDependencies": {
+    "auto-changelog": "^1.8.0",
     "ava": "^0.25.0",
-    "changelog": "^1.4.2",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
