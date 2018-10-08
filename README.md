@@ -1,5 +1,9 @@
 # webpack-chain
 
+[![NPM version][npm-image]][npm-url]
+[![NPM downloads][npm-downloads]][npm-url]
+[![Build Status][travis-image]][travis-url]
+
 Use a chaining API to generate and simplify the modification of
 webpack version 2-4 configurations.
 
@@ -1343,3 +1347,9 @@ Config.toString({
 }
 */
 ```
+
+[npm-image]: https://img.shields.io/npm/v/webpack-chain.svg
+[npm-downloads]: https://img.shields.io/npm/dt/webpack-chain.svg
+[npm-url]: https://www.npmjs.com/package/webpack-chain
+[travis-image]: https://api.travis-ci.org/neutrinojs/webpack-chain.svg?branch=master
+[travis-url]: https://travis-ci.org/neutrinojs/webpack-chain
