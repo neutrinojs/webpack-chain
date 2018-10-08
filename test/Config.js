@@ -97,6 +97,9 @@ test('toConfig with values', t => {
     .node.set('__dirname', 'mock')
     .end()
     .optimization.nodeEnv('PRODUCTION')
+    .minimizer('stringify')
+    .use(StringifyPlugin)
+    .end()
     .end()
     .target('node')
     .plugin('stringify')
@@ -132,6 +135,7 @@ test('toConfig with values', t => {
     },
     optimization: {
       nodeEnv: 'PRODUCTION',
+      minimizer: [new StringifyPlugin()],
     },
     output: {
       path: 'build',

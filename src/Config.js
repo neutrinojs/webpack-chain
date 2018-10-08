@@ -125,7 +125,7 @@ module.exports = class extends ChainedMap {
         resolveLoader: this.resolveLoader.toConfig(),
         devServer: this.devServer.toConfig(),
         module: this.module.toConfig(),
-        optimization: this.optimization.entries(),
+        optimization: this.optimization.toConfig(),
         plugins: this.plugins.values().map(plugin => plugin.toConfig()),
         performance: this.performance.entries(),
         entry: Object.keys(entryPoints).reduce(

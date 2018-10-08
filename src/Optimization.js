@@ -1,14 +1,15 @@
 const ChainedMap = require('./ChainedMap');
+const Plugin = require('./Plugin');
 
 module.exports = class extends ChainedMap {
   constructor(parent) {
     super(parent);
+    this.minimizers = new ChainedMap(this);
     this.extend([
       'concatenateModules',
       'flagIncludedChunks',
       'mergeDuplicateChunks',
       'minimize',
-      'minimizer',
       'namedChunks',
       'namedModules',
       'nodeEnv',
@@ -23,5 +24,27 @@ module.exports = class extends ChainedMap {
       'splitChunks',
       'usedExports',
     ]);
+  }
+
+  minimizer(name) {
+    return this.minimizers.getOrCompute(name, () => new Plugin(this, name));
+  }
+
+  toConfig() {
+    return this.clean(
+      Object.assign(this.entries() || {}, {
+        minimizer: this.minimizers.values().map(plugin => plugin.toConfig()),
+      })
+    );
+  }
+
+  merge(obj, omit = []) {
+    if (!omit.includes('minimizer') && 'minimizer' in obj) {
+      Object.keys(obj.minimizer).forEach(name =>
+        this.minimizer(name).merge(obj.minimizer[name])
+      );
+    }
+
+    return super.merge(obj, [...omit, 'minimizer']);
   }
 };
