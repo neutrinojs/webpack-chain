@@ -52,7 +52,7 @@ module.exports = class extends ChainedMap {
       (value, indent, stringify) => {
         // improve plugin output
         if (value && value.__pluginName) {
-          const prefix = `/* ${configPrefix}.plugin('${
+          const prefix = `/* ${configPrefix}.${value.__pluginType}('${
             value.__pluginName
           }') */\n`;
           const constructorExpression = value.__pluginPath

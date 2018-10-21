@@ -30,6 +30,14 @@ test('shorthand methods', t => {
   t.deepEqual(optimization.entries(), obj);
 });
 
+test('minimizer plugin with name', t => {
+  const optimization = new Optimization();
+  optimization.minimizer('alpha');
+
+  t.is(optimization.minimizers.get('alpha').name, 'alpha');
+  t.is(optimization.minimizers.get('alpha').type, 'optimization.minimizer');
+});
+
 test('minimizer plugin empty', t => {
   const optimization = new Optimization();
   const instance = optimization
@@ -71,4 +79,29 @@ test('optimization merge', t => {
     'alpha',
     'beta',
   ]);
+});
+
+test('toConfig empty', t => {
+  const optimization = new Optimization();
+
+  t.deepEqual(optimization.toConfig(), {});
+});
+
+test('toConfig with values', t => {
+  const optimization = new Optimization();
+
+  optimization
+    .minimizer('foo')
+    .use(StringifyPlugin)
+    .end()
+    .splitChunks({
+      chunks: 'all',
+    });
+
+  t.deepEqual(optimization.toConfig(), {
+    minimizer: [new StringifyPlugin()],
+    splitChunks: {
+      chunks: 'all',
+    },
+  });
 });
