@@ -25,7 +25,10 @@ module.exports = class extends ChainedMap {
   }
 
   plugin(name) {
-    return this.plugins.getOrCompute(name, () => new Plugin(this, name));
+    return this.plugins.getOrCompute(
+      name,
+      () => new Plugin(this, name, 'resolve.plugin')
+    );
   }
 
   toConfig() {

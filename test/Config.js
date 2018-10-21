@@ -411,10 +411,19 @@ test('toString', t => {
     .plugin('epsilon')
     .use(class BazPlugin {}, [{ n: 1 }, [2, 3]]);
 
+  config.resolve.plugin('resolver').use(FooPlugin);
+  config.optimization.minimizer('minifier').use(FooPlugin);
+
   t.is(
     config.toString().trim(),
     `
 {
+  resolve: {
+    plugins: [
+      /* config.resolve.plugin('resolver') */
+      new (require('foo-plugin'))()
+    ]
+  },
   module: {
     rules: [
       /* config.module.rule('alpha') */
@@ -431,6 +440,12 @@ test('toString', t => {
           }
         ]
       }
+    ]
+  },
+  optimization: {
+    minimizer: [
+      /* config.optimization.minimizer('minifier') */
+      new (require('foo-plugin'))()
     ]
   },
   plugins: [

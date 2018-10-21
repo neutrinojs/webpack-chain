@@ -68,8 +68,16 @@ test('toConfig', t => {
   t.true(initialized instanceof StringifyPlugin);
   t.deepEqual(initialized.values, ['delta']);
   t.is(initialized.__pluginName, 'gamma');
+  t.is(initialized.__pluginType, 'plugin');
   t.deepEqual(initialized.__pluginArgs, ['delta']);
   t.is(initialized.__pluginConstructorName, 'StringifyPlugin');
+});
+
+test('toConfig with custom type', t => {
+  const plugin = new Plugin(null, 'gamma', 'optimization.minimizer');
+  plugin.use(StringifyPlugin);
+
+  t.is(plugin.toConfig().__pluginType, 'optimization.minimizer');
 });
 
 test('toConfig with custom expression', t => {

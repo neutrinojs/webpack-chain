@@ -3,9 +3,10 @@ const Orderable = require('./Orderable');
 
 module.exports = Orderable(
   class extends ChainedMap {
-    constructor(parent, name) {
+    constructor(parent, name, type = 'plugin') {
       super(parent);
       this.name = name;
+      this.type = type;
       this.extend(['init']);
 
       this.init((Plugin, args = []) => {
@@ -60,6 +61,7 @@ module.exports = Orderable(
 
       Object.defineProperties(config, {
         __pluginName: { value: this.name },
+        __pluginType: { value: this.type },
         __pluginArgs: { value: args },
         __pluginConstructorName: { value: constructorName },
         __pluginPath: { value: pluginPath },

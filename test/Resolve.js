@@ -50,14 +50,18 @@ test('toConfig empty', t => {
 test('toConfig with values', t => {
   const resolve = new Resolve();
 
-  resolve.modules
-    .add('src')
+  resolve
+    .plugin('stringify')
+    .use(StringifyPlugin)
+    .end()
+    .modules.add('src')
     .end()
     .extensions.add('.js')
     .end()
     .alias.set('React', 'src/react');
 
   t.deepEqual(resolve.toConfig(), {
+    plugins: [new StringifyPlugin()],
     modules: ['src'],
     extensions: ['.js'],
     alias: { React: 'src/react' },
@@ -132,6 +136,7 @@ test('plugin with name', t => {
   resolve.plugin('alpha');
 
   t.is(resolve.plugins.get('alpha').name, 'alpha');
+  t.is(resolve.plugins.get('alpha').type, 'resolve.plugin');
 });
 
 test('plugin empty', t => {

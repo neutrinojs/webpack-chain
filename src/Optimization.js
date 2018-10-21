@@ -27,7 +27,10 @@ module.exports = class extends ChainedMap {
   }
 
   minimizer(name) {
-    return this.minimizers.getOrCompute(name, () => new Plugin(this, name));
+    return this.minimizers.getOrCompute(
+      name,
+      () => new Plugin(this, name, 'optimization.minimizer')
+    );
   }
 
   toConfig() {
