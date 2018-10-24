@@ -887,7 +887,7 @@ config.devServer
   .openPage(openPage)
   .overlay(overlay)
   .pfx(pfx)
-  .pfxPassphrase(pfsPassphrase)
+  .pfxPassphrase(pfxPassphrase)
   .port(port)
   .progress(progress)
   .proxy(proxy)
