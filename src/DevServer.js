@@ -10,7 +10,6 @@ module.exports = class extends ChainedMap {
     this.extend([
       'bonjour',
       'clientLogLevel',
-      'color',
       'compress',
       'contentBase',
       'disableHostCheck',
