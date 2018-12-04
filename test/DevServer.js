@@ -1,36 +1,36 @@
-import test from "ava";
-import DevServer from "../src/DevServer";
+import test from 'ava';
+import DevServer from '../src/DevServer';
 
-test("is Chainable", t => {
+test('is Chainable', t => {
   const parent = { parent: true };
   const devServer = new DevServer(parent);
 
   t.is(devServer.end(), parent);
 });
 
-test("sets allowed hosts", t => {
+test('sets allowed hosts', t => {
   const devServer = new DevServer();
-  const instance = devServer.allowedHosts.add("https://github.com").end();
+  const instance = devServer.allowedHosts.add('https://github.com').end();
 
   t.is(instance, devServer);
-  t.deepEqual(devServer.toConfig(), { allowedHosts: ["https://github.com"] });
+  t.deepEqual(devServer.toConfig(), { allowedHosts: ['https://github.com'] });
 });
 
-test("shorthand methods", t => {
+test('shorthand methods', t => {
   const devServer = new DevServer();
   const obj = {};
 
   devServer.shorthands.forEach(method => {
-    obj[method] = "alpha";
-    t.is(devServer[method]("alpha"), devServer);
+    obj[method] = 'alpha';
+    t.is(devServer[method]('alpha'), devServer);
   });
 
   t.deepEqual(devServer.entries(), obj);
 });
 
-test("CLI only apis should not be supported", t => {
+test('CLI only apis should not be supported', t => {
   const devServer = new DevServer();
-  ["color", "info", "progress", "stdin"].forEach(api =>
+  ['color', 'info', 'progress', 'stdin'].forEach(api =>
     t.is(devServer[api], undefined)
   );
 });
