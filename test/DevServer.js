@@ -28,7 +28,8 @@ test('shorthand methods', t => {
   t.deepEqual(devServer.entries(), obj);
 });
 
-test('`color` should not be supported', t => {
+test('CLI only apis should not be supported', t => {
   const devServer = new DevServer();
-  t.is(devServer.color, undefined);
+  ['color', 'info', 'progress', 'stdin'].forEach(api => t.is(devServer[api], undefined));
+  
 });
