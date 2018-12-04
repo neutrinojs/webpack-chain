@@ -28,7 +28,7 @@ test('shorthand methods', t => {
   t.deepEqual(devServer.entries(), obj);
 });
 
-test('`color` method not support', t => {
+test('`color` should not be supported', t => {
   const devServer = new DevServer();
   t.is(devServer.color, undefined);
 });
