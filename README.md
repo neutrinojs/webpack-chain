@@ -868,7 +868,6 @@ config.devServer.allowedHosts
 config.devServer
   .bonjour(bonjour)
   .clientLogLevel(clientLogLevel)
-  .color(color)
   .compress(compress)
   .contentBase(contentBase)
   .disableHostCheck(disableHostCheck)
