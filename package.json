@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "auto-changelog": "^1.8.0",
-    "ava": "^0.25.0",
+    "ava": "^1.0.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
