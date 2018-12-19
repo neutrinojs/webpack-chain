@@ -2,6 +2,7 @@
   "name": "webpack-chain",
   "version": "5.1.0",
   "main": "src/Config.js",
+  "typings": "types/index.d.ts",
   "repository": "neutrinojs/webpack-chain",
   "keywords": [
     "webpack",
@@ -11,12 +12,14 @@
     "api"
   ],
   "files": [
-    "src"
+    "src",
+    "types/*.d.ts"
   ],
   "author": "Eli Perelman <eli@eliperelman.com>",
   "license": "MPL-2.0",
   "scripts": {
     "test": "ava test",
+    "test:types": "tsc -p ./types/test/tsconfig.json",
     "lint": "eslint --cache --report-unused-disable-directives --format codeframe \".*.js\" src test",
     "changelog": "auto-changelog --remote upstream --commit-limit false",
     "version": "yarn changelog --package && git add CHANGELOG.md"
@@ -26,6 +29,8 @@
     "javascript-stringify": "^1.6.0"
   },
   "devDependencies": {
+    "@types/node": "^10.12.17",
+    "@types/webpack": "^4.4.21",
     "auto-changelog": "^1.8.0",
     "ava": "^1.0.0",
     "eslint": "^5.6.1",
@@ -35,6 +40,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "prettier": "^1.14.3",
+    "typescript": "^3.2.2",
     "webpack": "^4.20.2"
   }
 }
