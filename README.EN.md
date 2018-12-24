@@ -4,69 +4,82 @@
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
-应用一个链式API来生成和简化 2-4版本的webpack的配置的修改。
+Use a chaining API to generate and simplify the modification of
+webpack version 2-4 configurations.
 
-此文档对应于webpack-chain的v5版本，对于以前的版本，请参阅：
+This documentation corresponds to v5 of webpack-chain. For previous versions, see:
 
 * [v4 docs](https://github.com/neutrinojs/webpack-chain/tree/v4)
 * [v3 docs](https://github.com/neutrinojs/webpack-chain/tree/v3)
 * [v2 docs](https://github.com/neutrinojs/webpack-chain/tree/v2)
 * [v1 docs](https://github.com/neutrinojs/webpack-chain/tree/v1)
 
-_注意: 虽然 webpack-chain 被广泛应用在Neutrino中，然而本软件包完全独立，可供任何项目使用。_
+_Note: while webpack-chain is utilized extensively in Neutrino, this package is
+completely standalone and can be used by any project._
 
-## 介绍
+## Introduction
 
-webpack 的核心配置的创建和修改基于一个有潜在难于处理的 JavaScript 对象。虽然这对于配置单个项目来说还是 OK 的，但当你尝试跨项目共享这些对象并使其进行后续的修改就会变的混乱不堪，因为您需要深入了解底层对象的结构以进行这些更改。
+webpack's core configuration is based on creating and modifying a
+potentially unwieldy JavaScript object. While this is OK for configurations
+on individual projects, trying to share these objects across projects and
+make subsequent modifications gets messy, as you need to have a deep
+understanding of the underlying object structure to make those changes.
 
-`webpack-chain` 尝试通过提供可链式或顺流式的 API 创建和修改webpack 配置。API的 Key 部分可以由用户指定的名称引用，这有助于 跨项目修改配置方式 的标准化。
+`webpack-chain` attempts to improve this process by providing a chainable or
+fluent API for creating and modifying webpack configurations. Key portions
+of the API can be referenced by user-specified names, which helps to
+standardize how to modify a configuration across projects.
 
-通过以下示例可以更容易地解释这一点。
+This is easier explained through the examples following.
 
-## 安装
+## Installation
 
-`webpack-chain` 需要 Node.js v6.9及更高版本.  
-`webpack-chain` 也只创建并被设计于使用webpack的2，3，4版本的配置对象。
+`webpack-chain` requires Node.js v6.9 and higher. `webpack-chain` also
+only creates configuration objects designed for use in webpack versions 2, 3,
+and 4.
 
-你可以使用Yarn或者npm来安装此软件包（俩个包管理工具选一个就行）：
+You may install this package using either Yarn or npm (choose one):
 
-### **Yarn方式**
+**Yarn**
 
 ```bash
 yarn add --dev webpack-chain
 ```
 
-### **npm方式**
+**npm**
 
 ```bash
 npm install --save-dev webpack-chain
 ```
 
-## 入门
+## Getting Started
 
-当你安装了 `webpack-chain`， 你就可以开始创建一个webpack的配置。 对于本指南，我们的示例基本配置 `webpack.config.js` 将位于我们项目的根目录。
+Once you have `webpack-chain` installed, you can start creating a
+webpack configuration. For this guide, our example base configuration will
+be `webpack.config.js` in the root of our project directory.
 
 ```js
-// 导入 webpack-chain 模块，该模块导出了一个用于创建一个webpack配置API的单一构造函数。
+// Require the webpack-chain module. This module exports a single
+// constructor function for creating a configuration API.
 const Config = require('webpack-chain');
 
-// 对该单一构造函数创建一个新的配置实例
+// Instantiate the configuration with a new API
 const config = new Config();
 
-// 用链式API改变配置
-// 每个API的调用都会跟踪对存储配置的更改。
+// Make configuration changes using the chain API.
+// Every API call tracks a change to the stored configuration.
 
 config
-  // 修改 entry 配置
+  // Interact with entry points
   .entry('index')
     .add('src/index.js')
     .end()
-  // 修改 output 配置
+  // Modify output settings
   .output
     .path('dist')
     .filename('[name].bundle.js');
 
-// 创建一个具名规则，以后用来修改规则
+// Create named rules which can be modified later
 config.module
   .rule('lint')
     .test(/\.js$/)
@@ -74,7 +87,7 @@ config.module
     .include
       .add('src')
       .end()
-    // 还可以创建具名use (loaders)
+    // Even create named uses (loaders)
     .use('eslint')
       .loader('eslint-loader')
       .options({
@@ -98,23 +111,23 @@ config.module
         ]
       });
 
-// 也可以创建一个具名的插件!
+// Create named plugins too!
 config
   .plugin('clean')
     .use(CleanPlugin, [['dist'], { root: '/dir' }]);
 
-// 导出这个修改完成的要被webpack使用的配置对象
+// Export the completed configuration object to be consumed by webpack
 module.exports = config.toConfig();
 ```
 
-共享配置也很简单。仅仅导出配置 和 在传递给webpack之前调用 `.toConfig()` 方法将配置导出给webpack使用。
+Having shared configurations is also simple. Just export the configuration
+and call `.toConfig()` prior to passing to webpack.
 
 ```js
 // webpack.core.js
 const Config = require('webpack-chain');
 const config = new Config();
 
-// 跨目标共享配置
 // Make configuration shared across targets
 // ...
 
@@ -124,7 +137,6 @@ module.exports = config;
 const config = require('./webpack.core');
 
 // Dev-specific configuration
-// 开发具体配置
 // ...
 module.exports = config.toConfig();
 
@@ -132,38 +144,41 @@ module.exports = config.toConfig();
 const config = require('./webpack.core');
 
 // Production-specific configuration
-// 生产具体配置
 // ...
 module.exports = config.toConfig();
 ```
 
 ## ChainedMap
 
-webpack-chain 中的核心API接口之一是 `ChainedMap`. 一个 `ChainedMap`的操作类似于JavaScript Map, 为链式和生成配置提供了一些便利。 如果一个属性被标记一个 `ChainedMap`, 则它将具有如下的API和方法:
+One of the core API interfaces in webpack-chain is a `ChainedMap`. A
+`ChainedMap` operates similar to a JavaScript Map, with some conveniences for
+chaining and generating configuration. If a property is marked as being a
+`ChainedMap`, it will have an API and methods as described below:
 
-**除非另有说明，否则这些方法将返回 `ChainedMap` , 允许链式调用这些方法。**
+**Unless stated otherwise, these methods will return the `ChainedMap`, allowing
+you to chain these methods.**
 
 ```js
-// 从 Map 移除所有配置.
+// Remove all entries from a Map.
 clear()
 ```
 
 ```js
-// 通过键值从 Map 移除单个配置.
+// Remove a single entry from a Map given its key.
 // key: *
 delete(key)
 ```
 
 ```js
-// 获取 Map 中相应键的值
+// Fetch the value from a Map located at the corresponding key.
 // key: *
 // returns: value
 get(key)
 ```
 
 ```js
-// 获取 Map 中相应键的值
-// 如果键在Map中不存在，则ChainedMap中该键的值会被配置为fn的返回值.
+// Fetch the value from a Map located at the corresponding key.
+// If the key is missing, the key is set to the result of function fn.
 // key: *
 // fn: Function () -> value
 // returns: value
@@ -171,142 +186,154 @@ getOrCompute(key, fn)
 ```
 
 ```js
-// 配置Map中已存在的键的值
+// Set a value on the Map stored at the `key` location.
 // key: *
 // value: *
 set(key, value)
 ```
 
 ```js
-// Map中是否存在一个配置值的特定键，返回 真或假
+// Returns `true` or `false` based on whether a Map as has a value set at a
+// particular key.
 // key: *
 // returns: Boolean
 has(key)
 ```
 
 ```js
-// 返回Map中已存储的所有值的数组
+// Returns an array of all the values stored in the Map.
 // returns: Array
 values()
 ```
 
 ```js
-// 返回Map中全部配置的一个对象, 其中 键是这个对象属性，值是相应键的值，
-// 如果Map是空，返回 `undefined`
-// 使用 `.before() 或 .after()` 的ChainedMap, 则将按照属性名进行排序。
+// Returns an object of all the entries in the backing Map
+// where the key is the object property, and the value
+// corresponding to the key. Will return `undefined` if the backing
+// Map is empty.
+// This will order properties by their name if the value is
+// a ChainedMap that used .before() or .after().
 // returns: Object, undefined if empty
 entries()
 ````
 
 ```js
-// 提供一个对象，这个对象的属性和值将映射进 Map。
-// 你也可以提供一个数组作为第二个参数以便忽略合并的属性名称。
+// Provide an object which maps its properties and values
+// into the backing Map as keys and values.
+// You can also provide an array as the second argument
+// for property names to omit from being merged.
 // obj: Object
 // omit: Optional Array
 merge(obj, omit)
 ```
 
 ```js
-// 对当前配置上下文执行函数。
+// Execute a function against the current configuration context
 // handler: Function -> ChainedMap
-  // 一个把ChainedMap实例作为单个参数的函数
+  // A function which is given a single argument of the ChainedMap instance
 batch(handler)
 ```
 
 ```js
-// 条件执行一个函数去继续配置
+// Conditionally execute a function to continue configuration
 // condition: Boolean
 // whenTruthy: Function -> ChainedMap
-  // 当条件为真，调用把ChainedMap实例作为单一参数传入的函数
+  // invoked when condition is truthy, given a single argument of the ChainedMap instance
 // whenFalsy: Optional Function -> ChainedMap
-  // 当条件为假，调用把ChainedMap实例作为单一参数传入的函数
+  // invoked when condition is falsy, given a single argument of the ChainedMap instance
 when(condition, whenTruthy, whenFalsy)
 ```
 
 ## ChainedSet
 
-webpack-chain 中的核心API接口另一个是 `ChainedSet`. 一个 `ChainedSet`的操作类似于JavaScript Map, 为链式和生成配置提供了一些便利。 如果一个属性被标记一个 `ChainedSet`, 则它将具有如下的API和方法:
+Another of the core API interfaces in webpack-chain is a `ChainedSet`. A
+`ChainedSet` operates similar to a JavaScript Set, with some conveniences for
+chaining and generating configuration. If a property is marked as being a
+`ChainedSet`, it will have an API and methods as described below:
 
-**除非另有说明，否则这些方法将返回 `ChainedSet` , 允许链式调用这些方法。**
+**Unless stated otherwise, these methods will return the `ChainedSet`, allowing
+you to chain these methods.**
 
 ```js
-// 添加/追加 给Set末尾位置一个值.
+// Add/append a value to the end of a Set.
 // value: *
 add(value)
 ```
 
 ```js
-// 添加 给Set开始位置一个值.
+// Add a value to the beginning of a Set.
 // value: *
 prepend(value)
 ```
 
 ```js
-// 移除Set中全部值.
+// Remove all values from a Set.
 clear()
 ```
 
 ```js
-// 移除Set中一个指定的值.
+// Remove a specific value from a Set.
 // value: *
 delete(value)
 ```
 
 ```js
-// 检测Set中是否存在一个值.
+// Returns `true` or `false` based on whether or not the
+// backing Set contains the specified value.
 // value: *
 // returns: Boolean
 has(value)
 ```
 
 ```js
-// 返回Set中值的数组.
+// Returns an array of values contained in the backing Set.
 // returns: Array
 values()
 ```
 
 ```js
-// 连接给定的数组到 Set 尾部。
+// Concatenates the given array to the end of the backing Set.
 // arr: Array
 merge(arr)
 ```
 
 ```js
-
-// 对当前配置上下文执行函数。
+// Execute a function against the current configuration context
 // handler: Function -> ChainedSet
-  // 一个把 ChainedSet 实例作为单个参数的函数
+  // A function which is given a single argument of the ChainedSet instance
 batch(handler)
 ```
 
 ```js
-// 条件执行一个函数去继续配置
+// Conditionally execute a function to continue configuration
 // condition: Boolean
 // whenTruthy: Function -> ChainedSet
-  // 当条件为真，调用把 ChainedSet 实例作为单一参数传入的函数
+  // invoked when condition is truthy, given a single argument of the ChainedSet instance
 // whenFalsy: Optional Function -> ChainedSet
-  // 当条件为假，调用把 ChainedSet 实例作为单一参数传入的函数
+  // invoked when condition is falsy, given a single argument of the ChainedSet instance
 when(condition, whenTruthy, whenFalsy)
 ```
 
-## 速记方法
+## Shorthand methods
 
-存在许多简写方法，用于 使用与简写方法名称相同的键在 ChainedMap 设置一个值
-例如, `devServer.hot` 是一个速记方法, 因此它可以用作:
+A number of shorthand methods exist for setting a value on a `ChainedMap`
+with the same key as the shorthand method name.
+For example, `devServer.hot` is a shorthand method, so it can be used as:
 
 ```js
-// 在 ChainedMap 上设置一个值的速记方法
+// A shorthand method for setting a value on a ChainedMap
 devServer.hot(true);
 
-// 上述方法等效于:
+// This would be equivalent to:
 devServer.set('hot', true);
 ```
 
-一个速记方法是可链式的，因此调用它将返回原实例，允许你继续链式使用
+A shorthand method is chainable, so calling it will return the original
+instance, allowing you to continue to chain.
 
-### 配置
+### Config
 
-创建一个新的配置对象
+Create a new configuration object.
 
 ```js
 const Config = require('webpack-chain');
@@ -314,15 +341,22 @@ const Config = require('webpack-chain');
 const config = new Config();
 ```
 
-移动到API的更深层将改变你正在修改的内容的上下文。 你可以通过 `config`在此引用顶级配置或者通过调用 `.end()` 方法向上移动一级 使你移回更高的上下文环境。
-如果你熟悉jQuery, 这里与其 `.end()` 工作原理类似。除非另有说明，否则全部的API调用都将在当前上下文中返回API实例。 这样，你可以根据需要连续 链式API调用.  
-有关对所有速记和低级房费有效的特定值的详细信息，请参阅 [webpack文档层次结构](https://webpack.js.org/configuration/) 中的相应名词。
+Moving to deeper points in the API will change the context of what you
+are modifying. You can move back to the higher context by either referencing
+the top-level `config` again, or by calling `.end()` to move up one level.
+If you are familiar with jQuery, `.end()` works similarly. All API calls
+will return the API instance at the current context unless otherwise
+specified. This is so you may chain API calls continuously if desired.
+
+For details on the specific values that are valid for all shorthand and
+low-level methods, please refer to their corresponding name in the
+[webpack docs hierarchy](https://webpack.js.org/configuration/).
 
 ```js
 Config : ChainedMap
 ```
 
-#### 配置速记方法
+#### Config shorthand methods
 
 ```js
 config
@@ -345,10 +379,10 @@ config
   .watchOptions(watchOptions)
 ```
 
-#### 配置 entryPoints
+#### Config entryPoints
 
 ```js
-// 回到 config.entryPoints : ChainedMap
+// Backed at config.entryPoints : ChainedMap
 config.entry(name) : ChainedSet
 
 config
@@ -360,7 +394,7 @@ config
   .entry(name)
     .clear()
 
-// 用低级别 config.entryPoints:
+// Using low-level config.entryPoints:
 
 config.entryPoints
   .get(name)
@@ -372,7 +406,7 @@ config.entryPoints
     .clear()
 ```
 
-#### 配置 output: 速记方法
+#### Config output: shorthand methods
 
 ```js
 config.output : ChainedMap
@@ -406,7 +440,7 @@ config.output
   .umdNamedDefine(umdNamedDefine)
 ```
 
-#### 配置 resolve（解析）: 速记方法
+#### Config resolve: shorthand methods
 
 ```js
 config.resolve : ChainedMap
@@ -420,7 +454,7 @@ config.resolve
   .symlinks(symlinks)
 ```
 
-#### 配置 resolve 别名
+#### Config resolve alias
 
 ```js
 config.resolve.alias : ChainedMap
@@ -432,7 +466,7 @@ config.resolve.alias
   .clear()
 ```
 
-#### 配置 resolve modules
+#### Config resolve modules
 
 ```js
 config.resolve.modules : ChainedSet
@@ -443,7 +477,7 @@ config.resolve.modules
   .clear()
 ```
 
-#### 配置 resolve aliasFields
+#### Config resolve aliasFields
 
 ```js
 config.resolve.aliasFields : ChainedSet
@@ -454,7 +488,7 @@ config.resolve.aliasFields
   .clear()
 ```
 
-#### 配置 resolve descriptionFields
+#### Config resolve descriptionFields
 
 ```js
 config.resolve.descriptionFields : ChainedSet
@@ -465,7 +499,7 @@ config.resolve.descriptionFields
   .clear()
 ```
 
-#### 配置 resolve extensions
+#### Config resolve extensions
 
 ```js
 config.resolve.extensions : ChainedSet
@@ -476,7 +510,7 @@ config.resolve.extensions
   .clear()
 ```
 
-#### 配置 resolve mainFields
+#### Config resolve mainFields
 
 ```js
 config.resolve.mainFields : ChainedSet
@@ -487,7 +521,7 @@ config.resolve.mainFields
   .clear()
 ```
 
-#### 配置 resolve mainFiles
+#### Config resolve mainFiles
 
 ```js
 config.resolve.mainFiles : ChainedSet
@@ -498,11 +532,12 @@ config.resolve.mainFiles
   .clear()
 ```
 
-#### 配置 resolveLoader
+#### Config resolveLoader
 
-当前API `config.resolveLoader` 相同于 配置 `config.resolve` 用下面的配置：
+The API for `config.resolveLoader` is identical to `config.resolve` with
+the following additions:
 
-##### 配置 resolveLoader moduleExtensions
+#### Config resolveLoader moduleExtensions
 
 ```js
 config.resolveLoader.moduleExtensions : ChainedSet
@@ -513,7 +548,7 @@ config.resolveLoader.moduleExtensions
   .clear()
 ```
 
-##### 配置 resolveLoader packageMains
+#### Config resolveLoader packageMains
 
 ```js
 config.resolveLoader.packageMains : ChainedSet
@@ -524,7 +559,7 @@ config.resolveLoader.packageMains
   .clear()
 ```
 
-#### 配置 performance（性能）: 速记方法
+#### Config performance: shorthand methods
 
 ```js
 config.performance : ChainedMap
@@ -536,7 +571,7 @@ config.performance
   .assetFilter(assetFilter)
 ```
 
-#### 配置 optimizations（优化）: 速记方法
+#### Configuring optimizations: shorthand methods
 
 ```js
 config.optimization : ChainedMap
@@ -561,50 +596,51 @@ config.optimization
   .usedExports(usedExports)
 ```
 
-#### 配置 optimization minimizers（最小优化器）
+#### Config optimization minimizers
 
 ```js
-// 回到 config.optimization.minimizers
+// Backed at config.optimization.minimizers
 config.optimization
   .minimizer(name) : ChainedMap
 ```
 
-#### 配置 optimization minimizers: 添加
+#### Config optimization minimizers: adding
 
-_注意: 不要用 `new` 去创建最小优化器插件，因为已经为你做好了。_
+_NOTE: Do not use `new` to create the minimizer plugin, as this will be done for you._
 
 ```js
 config.optimization
   .minimizer(name)
   .use(WebpackPlugin, args)
 
-// 例如
+// Examples
 
 config.optimization
   .minimizer('css')
   .use(OptimizeCSSAssetsPlugin, [{ cssProcessorOptions: { safe: true } }])
 
-// Minimizer 插件也可以由它们的路径指定，从而允许在不使用插件或webpack配置的情况下跳过昂贵的 require s。
+// Minimizer plugins can also be specified by their path, allowing the expensive require()s to be
+// skipped in cases where the plugin or webpack configuration won't end up being used.
 config.optimization
   .minimizer('css')
   .use(require.resolve('optimize-css-assets-webpack-plugin'), [{ cssProcessorOptions: { safe: true } }])
 
 ```
 
-#### 配置 optimization minimizers: 修改参数
+#### Config optimization minimizers: modify arguments
 
 ```js
 config.optimization
   .minimizer(name)
   .tap(args => newArgs)
 
-// 例如
+// Example
 config
   .minimizer('css')
   .tap(args => [...args, { cssProcessorOptions: { safe: false } }])
 ```
 
-#### 配置 optimization minimizers: 修改实例
+#### Config optimization minimizers: modify instantiation
 
 ```js
 config.optimization
@@ -612,53 +648,55 @@ config.optimization
   .init((Plugin, args) => new Plugin(...args));
 ```
 
-#### 配置 optimization minimizers: 移除
+#### Config optimization minimizers: removing
 
 ```js
 config.optimization.minimizers.delete(name)
 ```
 
-#### 配置插件
+#### Config plugins
 
 ```js
-// 回到 config.plugins
+// Backed at config.plugins
 config.plugin(name) : ChainedMap
 ```
 
-#### 配置插件: 添加
+#### Config plugins: adding
 
-_注意: 不要用 `new` 去创建插件，因为已经为你做好了。_
+_NOTE: Do not use `new` to create the plugin, as this will be done for you._
 
 ```js
 config
   .plugin(name)
   .use(WebpackPlugin, args)
 
-// 例如
+// Examples
+
 config
   .plugin('hot')
   .use(webpack.HotModuleReplacementPlugin);
 
-// 插件也可以由它们的路径指定，从而允许在不使用插件或webpack配置的情况下跳过昂贵的 require s。
+// Plugins can also be specified by their path, allowing the expensive require()s to be
+// skipped in cases where the plugin or webpack configuration won't end up being used.
 config
   .plugin('env')
   .use(require.resolve('webpack/lib/EnvironmentPlugin'), [{ 'VAR': false }]);
 ```
 
-#### 配置插件: 修改参数
+#### Config plugins: modify arguments
 
 ```js
 config
   .plugin(name)
   .tap(args => newArgs)
 
-// 例如
+// Example
 config
   .plugin('env')
   .tap(args => [...args, 'SECRET_KEY']);
 ```
 
-#### 配置插件: 修改实例
+#### Config plugins: modify instantiation
 
 ```js
 config
@@ -666,22 +704,24 @@ config
   .init((Plugin, args) => new Plugin(...args));
 ```
 
-#### 配置插件: 移除
+#### Config plugins: removing
 
 ```js
 config.plugins.delete(name)
 ```
 
-#### 配置插件: 在之前调用
+#### Config plugins: ordering before
 
-指定当前插件上下文应该在另一个指定插件之前执行，你不能在同一个插件上同时使用 `.before()` 和 `.after()`。  
+Specify that the current `plugin` context should operate before another named
+`plugin`. You cannot use both `.before()` and `.after()` on the same plugin.
 
 ```js
 config
   .plugin(name)
     .before(otherName)
 
-// 例如
+// Example
+
 config
   .plugin('html-template')
     .use(HtmlWebpackTemplate)
@@ -691,16 +731,18 @@ config
     .before('html-template');
 ```
 
-#### Config plugins: 在之后调用
+#### Config plugins: ordering after
 
-指定当前插件上下文应该在另一个指定插件之后执行，你不能在同一个插件上同时使用 `.before()` 和 `.after()`。  
+Specify that the current `plugin` context should operate after another named
+`plugin`. You cannot use both `.before()` and `.after()` on the same plugin.
 
 ```js
 config
   .plugin(name)
     .after(otherName)
 
-// 例如
+// Example
+
 config
   .plugin('html-template')
     .after('script-ext')
@@ -710,16 +752,16 @@ config
     .use(ScriptExtWebpackPlugin);
 ```
 
-#### 配置 resolve 插件
+#### Config resolve plugins
 
 ```js
-// 回到 config.resolve.plugins
+// Backed at config.resolve.plugins
 config.resolve.plugin(name) : ChainedMap
 ```
 
-#### 配置 resolve 插件: 添加
+#### Config resolve plugins: adding
 
-_注意: 不要用 `new` 去创建插件，因为已经为你做好了。_
+_NOTE: Do not use `new` to create the plugin, as this will be done for you._
 
 ```js
 config.resolve
@@ -793,7 +835,7 @@ config.resolve
     .use(AlphaWebpackPlugin);
 ```
 
-#### 配置 node
+#### Config node
 
 ```js
 config.node : ChainedMap
@@ -803,7 +845,7 @@ config.node
   .set('__filename', 'mock');
 ```
 
-#### 配置 devServer
+#### Config devServer
 
 ```js
 config.devServer : ChainedMap
@@ -928,7 +970,7 @@ config.module
       }));
 ```
 
-#### Config module rules oneOfs (conditional rules)
+#### Config module rules oneOfs (conditional rules):
 
 ```js
 config.module.rules{}.oneOfs : ChainedMap<Rule>
@@ -955,9 +997,12 @@ config.module
 
 ---
 
-### 合并配置
+### Merging Config
 
-webpack-chain 支持将对象合并到配置实例，改实例类似于 webpack-chain 模式布局的布局。 请注意，这不是 webpack 配置对象，但您可以再将webpack配置对象提供给webpack-chain 以匹配器布局之前对其进行转换。
+webpack-chain supports merging in an object to the configuration instance which
+matches a layout similar to how the webpack-chain schema is laid out. Note that
+this is not a webpack configuration object, but you may transform a webpack
+configuration object before providing it to webpack-chain to match its layout.
 
 ```js
 config.merge({ devtool: 'source-map' });
@@ -1142,12 +1187,18 @@ config.merge({
 })
 ```
 
-### 条件配置
+### Conditional configuration
 
-当使用的情况下工作ChainedMap和ChainedSet，则可以使用执行条件的配置when。您必须指定一个表达式 when()，以评估其真实性或虚假性。如果表达式是真实的，则将使用当前链接实例的实例调用第一个函数参数。您可以选择提供在条件为假时调用的第二个函数，该函数也是当前链接的实例。
+When working with instances of `ChainedMap` and `ChainedSet`, you can perform
+conditional configuration using `when`. You must specify an expression to
+`when()` which will be evaluated for truthiness or falsiness. If the expression
+is truthy, the first function argument will be invoked with an instance of the
+current chained instance. You can optionally provide a second function to be
+invoked when the condition is falsy, which is also given the current chained
+instance.
 
 ```js
-// 示例：仅在生产期间添加minify插件
+// Example: Only add minify plugin during production
 config
   .when(process.env.NODE_ENV === 'production', config => {
     config
@@ -1157,7 +1208,8 @@ config
 ```
 
 ```js
-// 例：只有在生产过程中添加缩小插件，否则设置devtool到源映射
+// Example: Only add minify plugin during production,
+// otherwise set devtool to source-map
 config
   .when(process.env.NODE_ENV === 'production',
     config => config.plugin('minify').use(BabiliWebpackPlugin),
@@ -1165,9 +1217,11 @@ config
   );
 ```
 
-### 检查生成的配置
+### Inspecting generated configuration
 
-您可以使用检查生成的webpack配置config.toString()。这将生成配置的字符串化版本，其中包含命名规则，用法和插件的注释提示：
+You can inspect the generated webpack config using `config.toString()`. This
+will generate a stringified version of the config with comment hints for named
+rules, uses and plugins:
 
 ``` js
 config
@@ -1179,7 +1233,7 @@ config
 
 config.toString();
 
-
+/*
 {
   module: {
     rules: [
@@ -1196,10 +1250,13 @@ config.toString();
     ]
   }
 }
-
+*/
 ```
 
-默认情况下，如果生成的字符串包含需要的函数和插件，则不能直接用作真正的webpack配置。为了生成可用的配置，您可以通过__expression在其上设置特殊属性来自定义函数和插件的字符串化方式：
+By default the generated string cannot be used directly as real webpack config
+if it contains functions and plugins that need to be required. In order to
+generate usable config, you can customize how functions and plugins are
+stringified by setting a special `__expression` property on them:
 
 ``` js
 class MyPlugin {}
@@ -1225,7 +1282,8 @@ config.toString();
 */
 ```
 
-通过其路径指定的插件将require()自动生成其语句：
+Plugins specified via their path will have their `require()` statement generated
+automatically:
 
 ``` js
 config
@@ -1234,7 +1292,7 @@ config
 
 config.toString();
 
-
+/*
 {
   plugins: [
     new (require('/foo/bar/src/node_modules/webpack/lib/EnvironmentPlugin.js'))(
@@ -1244,9 +1302,11 @@ config.toString();
     )
   ]
 }
+*/
 ```
 
-您还可以调用toString静态方法Config，以便在字符串化之前修改配置对象。
+You can also call `toString` as a static method on `Config` in order to
+modify the configuration object prior to stringifying.
 
 ```js
 Config.toString({
@@ -1265,7 +1325,7 @@ Config.toString({
   },
 })
 
-
+/*
 {
   plugins: [
     /* config.plugin('foo') */
@@ -1286,6 +1346,7 @@ Config.toString({
     ]
   }
 }
+*/
 ```
 
 [npm-image]: https://img.shields.io/npm/v/webpack-chain.svg
