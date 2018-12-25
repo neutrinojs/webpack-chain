@@ -727,7 +727,7 @@ config.resolve
   .use(WebpackPlugin, args)
 ```
 
-#### Config resolve plugins: modify arguments
+#### 配置 resolve 插件: 修改参数
 
 ```js
 config.resolve
@@ -735,7 +735,7 @@ config.resolve
   .tap(args => newArgs)
 ```
 
-#### Config resolve plugins: modify instantiation
+#### 配置 resolve 插件: 修改实例
 
 ```js
 config.resolve
@@ -743,24 +743,22 @@ config.resolve
   .init((Plugin, args) => new Plugin(...args))
 ```
 
-#### Config resolve plugins: removing
+#### 配置 resolve 插件: 移除
 
 ```js
 config.resolve.plugins.delete(name)
 ```
 
-#### Config resolve plugins: ordering before
+#### 配置 resolve 插件: 在之前调用
 
-Specify that the current `plugin` context should operate before another named
-`plugin`. You cannot use both `.before()` and `.after()` on the same resolve
-plugin.
+指定当前插件上下文应该在另一个指定插件之前执行，你不能在同一个插件上同时使用 `.before()` 和 `.after()`。  
 
 ```js
 config.resolve
   .plugin(name)
     .before(otherName)
 
-// Example
+// 例如
 
 config.resolve
   .plugin('beta')
@@ -771,19 +769,16 @@ config.resolve
     .before('beta');
 ```
 
-#### Config resolve plugins: ordering after
+#### 配置 resolve 插件: 在之后调用
 
-Specify that the current `plugin` context should operate after another named
-`plugin`. You cannot use both `.before()` and `.after()` on the same resolve
-plugin.
+指定当前插件上下文应该在另一个指定插件之后执行，你不能在同一个插件上同时使用 `.before()` 和 `.after()`。  
 
 ```js
 config.resolve
   .plugin(name)
     .after(otherName)
 
-// Example
-
+// 例如
 config.resolve
   .plugin('beta')
     .after('alpha')
@@ -809,7 +804,7 @@ config.node
 config.devServer : ChainedMap
 ```
 
-#### Config devServer allowedHosts
+#### 配置 devServer allowedHosts
 
 ```js
 config.devServer.allowedHosts : ChainedSet
@@ -820,7 +815,7 @@ config.devServer.allowedHosts
   .clear()
 ```
 
-#### Config devServer: shorthand methods
+#### 配置 devServer: 速记方法
 
 ```js
 config.devServer
@@ -862,13 +857,13 @@ config.devServer
   .watchOptions(watchOptions)
 ```
 
-#### Config module
+#### 配置 module
 
 ```js
 config.module : ChainedMap
 ```
 
-#### Config module: shorthand methods
+#### 配置 module: 速记方法
 
 ```js
 config.module : ChainedMap
@@ -877,7 +872,7 @@ config.module
   .noParse(noParse)
 ```
 
-#### Config module rules: shorthand methods
+#### 配置 module rules: 速记方法
 
 ```js
 config.module.rules : ChainedMap
@@ -890,7 +885,7 @@ config.module
     .enforce(preOrPost)
 ```
 
-#### Config module rules uses (loaders): creating
+#### 配置 module rules uses (loaders): 创建
 
 ```js
 config.module.rules{}.uses : ChainedMap
@@ -910,7 +905,7 @@ config.module
       .options({ presets: ['@babel/preset-env'] });
 ```
 
-#### Config module rules uses (loaders): modifying options
+#### 配置 module rules uses (loaders): 修改选项
 
 ```js
 config.module
@@ -918,7 +913,7 @@ config.module
     .use(name)
       .tap(options => newOptions)
 
-// Example
+// 例如
 
 config.module
   .rule('compile')
@@ -928,7 +923,7 @@ config.module
       }));
 ```
 
-#### Config module rules oneOfs (conditional rules)
+#### 配置 module rules oneOfs (条件 rules)
 
 ```js
 config.module.rules{}.oneOfs : ChainedMap<Rule>
@@ -937,7 +932,7 @@ config.module
   .rule(name)
     .oneOf(name)
 
-// Example
+// 例如
 
 config.module
   .rule('css')
