@@ -4,69 +4,69 @@
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
-Ó¦ÓÃÒ»¸öÁ´Ê½APIÀ´Éú³ÉºÍ¼ò»¯ 2-4°æ±¾µÄwebpackµÄÅäÖÃµÄÐÞ¸Ä¡£
+åº”ç”¨ä¸€ä¸ªé“¾å¼APIæ¥ç”Ÿæˆå’Œç®€åŒ– 2-4ç‰ˆæœ¬çš„webpackçš„é…ç½®çš„ä¿®æ”¹ã€‚
 
-´ËÎÄµµ¶ÔÓ¦ÓÚwebpack-chainµÄv5°æ±¾£¬¶ÔÓÚÒÔÇ°µÄ°æ±¾£¬Çë²ÎÔÄ£º
+æ­¤æ–‡æ¡£å¯¹åº”äºŽwebpack-chainçš„v5ç‰ˆæœ¬ï¼Œå¯¹äºŽä»¥å‰çš„ç‰ˆæœ¬ï¼Œè¯·å‚é˜…ï¼š
 
 * [v4 docs](https://github.com/neutrinojs/webpack-chain/tree/v4)
 * [v3 docs](https://github.com/neutrinojs/webpack-chain/tree/v3)
 * [v2 docs](https://github.com/neutrinojs/webpack-chain/tree/v2)
 * [v1 docs](https://github.com/neutrinojs/webpack-chain/tree/v1)
 
-_×¢Òâ: ËäÈ» webpack-chain ±»¹ã·ºÓ¦ÓÃÔÚNeutrinoÖÐ£¬È»¶ø±¾Èí¼þ°üÍêÈ«¶ÀÁ¢£¬¿É¹©ÈÎºÎÏîÄ¿Ê¹ÓÃ¡£_
+_æ³¨æ„: è™½ç„¶ webpack-chain è¢«å¹¿æ³›åº”ç”¨åœ¨Neutrinoä¸­ï¼Œç„¶è€Œæœ¬è½¯ä»¶åŒ…å®Œå…¨ç‹¬ç«‹ï¼Œå¯ä¾›ä»»ä½•é¡¹ç›®ä½¿ç”¨ã€‚_
 
-## ½éÉÜ
+## ä»‹ç»
 
-webpack µÄºËÐÄÅäÖÃµÄ´´½¨ºÍÐÞ¸Ä»ùÓÚÒ»¸öÓÐÇ±ÔÚÄÑÓÚ´¦ÀíµÄ JavaScript ¶ÔÏó¡£ËäÈ»Õâ¶ÔÓÚÅäÖÃµ¥¸öÏîÄ¿À´Ëµ»¹ÊÇ OK µÄ£¬µ«µ±Äã³¢ÊÔ¿çÏîÄ¿¹²ÏíÕâÐ©¶ÔÏó²¢Ê¹Æä½øÐÐºóÐøµÄÐÞ¸Ä¾Í»á±äµÄ»ìÂÒ²»¿°£¬ÒòÎªÄúÐèÒªÉîÈëÁË½âµ×²ã¶ÔÏóµÄ½á¹¹ÒÔ½øÐÐÕâÐ©¸ü¸Ä¡£
+webpack çš„æ ¸å¿ƒé…ç½®çš„åˆ›å»ºå’Œä¿®æ”¹åŸºäºŽä¸€ä¸ªæœ‰æ½œåœ¨éš¾äºŽå¤„ç†çš„ JavaScript å¯¹è±¡ã€‚è™½ç„¶è¿™å¯¹äºŽé…ç½®å•ä¸ªé¡¹ç›®æ¥è¯´è¿˜æ˜¯ OK çš„ï¼Œä½†å½“ä½ å°è¯•è·¨é¡¹ç›®å…±äº«è¿™äº›å¯¹è±¡å¹¶ä½¿å…¶è¿›è¡ŒåŽç»­çš„ä¿®æ”¹å°±ä¼šå˜çš„æ··ä¹±ä¸å ªï¼Œå› ä¸ºæ‚¨éœ€è¦æ·±å…¥äº†è§£åº•å±‚å¯¹è±¡çš„ç»“æž„ä»¥è¿›è¡Œè¿™äº›æ›´æ”¹ã€‚
 
-`webpack-chain` ³¢ÊÔÍ¨¹ýÌá¹©¿ÉÁ´Ê½»òË³Á÷Ê½µÄ API ´´½¨ºÍÐÞ¸Äwebpack ÅäÖÃ¡£APIµÄ Key ²¿·Ö¿ÉÒÔÓÉÓÃ»§Ö¸¶¨µÄÃû³ÆÒýÓÃ£¬ÕâÓÐÖúÓÚ ¿çÏîÄ¿ÐÞ¸ÄÅäÖÃ·½Ê½ µÄ±ê×¼»¯¡£
+`webpack-chain` å°è¯•é€šè¿‡æä¾›å¯é“¾å¼æˆ–é¡ºæµå¼çš„ API åˆ›å»ºå’Œä¿®æ”¹webpack é…ç½®ã€‚APIçš„ Key éƒ¨åˆ†å¯ä»¥ç”±ç”¨æˆ·æŒ‡å®šçš„åç§°å¼•ç”¨ï¼Œè¿™æœ‰åŠ©äºŽ è·¨é¡¹ç›®ä¿®æ”¹é…ç½®æ–¹å¼ çš„æ ‡å‡†åŒ–ã€‚
 
-Í¨¹ýÒÔÏÂÊ¾Àý¿ÉÒÔ¸üÈÝÒ×µØ½âÊÍÕâÒ»µã¡£
+é€šè¿‡ä»¥ä¸‹ç¤ºä¾‹å¯ä»¥æ›´å®¹æ˜“åœ°è§£é‡Šè¿™ä¸€ç‚¹ã€‚
 
-## °²×°
+## å®‰è£…
 
-`webpack-chain` ÐèÒª Node.js v6.9¼°¸ü¸ß°æ±¾.  
-`webpack-chain` Ò²Ö»´´½¨²¢±»Éè¼ÆÓÚÊ¹ÓÃwebpackµÄ2£¬3£¬4°æ±¾µÄÅäÖÃ¶ÔÏó¡£
+`webpack-chain` éœ€è¦ Node.js v6.9åŠæ›´é«˜ç‰ˆæœ¬.  
+`webpack-chain` ä¹Ÿåªåˆ›å»ºå¹¶è¢«è®¾è®¡äºŽä½¿ç”¨webpackçš„2ï¼Œ3ï¼Œ4ç‰ˆæœ¬çš„é…ç½®å¯¹è±¡ã€‚
 
-Äã¿ÉÒÔÊ¹ÓÃYarn»òÕßnpmÀ´°²×°´ËÈí¼þ°ü£¨Á©¸ö°ü¹ÜÀí¹¤¾ßÑ¡Ò»¸ö¾ÍÐÐ£©£º
+ä½ å¯ä»¥ä½¿ç”¨Yarnæˆ–è€…npmæ¥å®‰è£…æ­¤è½¯ä»¶åŒ…ï¼ˆä¿©ä¸ªåŒ…ç®¡ç†å·¥å…·é€‰ä¸€ä¸ªå°±è¡Œï¼‰ï¼š
 
-### **Yarn·½Ê½**
+### **Yarnæ–¹å¼**
 
 ```bash
 yarn add --dev webpack-chain
 ```
 
-### **npm·½Ê½**
+### **npmæ–¹å¼**
 
 ```bash
 npm install --save-dev webpack-chain
 ```
 
-## ÈëÃÅ
+## å…¥é—¨
 
-µ±Äã°²×°ÁË `webpack-chain`£¬ Äã¾Í¿ÉÒÔ¿ªÊ¼´´½¨Ò»¸öwebpackµÄÅäÖÃ¡£ ¶ÔÓÚ±¾Ö¸ÄÏ£¬ÎÒÃÇµÄÊ¾Àý»ù±¾ÅäÖÃ `webpack.config.js` ½«Î»ÓÚÎÒÃÇÏîÄ¿µÄ¸ùÄ¿Â¼¡£
+å½“ä½ å®‰è£…äº† `webpack-chain`ï¼Œ ä½ å°±å¯ä»¥å¼€å§‹åˆ›å»ºä¸€ä¸ªwebpackçš„é…ç½®ã€‚ å¯¹äºŽæœ¬æŒ‡å—ï¼Œæˆ‘ä»¬çš„ç¤ºä¾‹åŸºæœ¬é…ç½® `webpack.config.js` å°†ä½äºŽæˆ‘ä»¬é¡¹ç›®çš„æ ¹ç›®å½•ã€‚
 
 ```js
-// µ¼Èë webpack-chain Ä£¿é£¬¸ÃÄ£¿éµ¼³öÁËÒ»¸öÓÃÓÚ´´½¨Ò»¸öwebpackÅäÖÃAPIµÄµ¥Ò»¹¹Ôìº¯Êý¡£
+// å¯¼å…¥ webpack-chain æ¨¡å—ï¼Œè¯¥æ¨¡å—å¯¼å‡ºäº†ä¸€ä¸ªç”¨äºŽåˆ›å»ºä¸€ä¸ªwebpacké…ç½®APIçš„å•ä¸€æž„é€ å‡½æ•°ã€‚
 const Config = require('webpack-chain');
 
-// ¶Ô¸Ãµ¥Ò»¹¹Ôìº¯Êý´´½¨Ò»¸öÐÂµÄÅäÖÃÊµÀý
+// å¯¹è¯¥å•ä¸€æž„é€ å‡½æ•°åˆ›å»ºä¸€ä¸ªæ–°çš„é…ç½®å®žä¾‹
 const config = new Config();
 
-// ÓÃÁ´Ê½API¸Ä±äÅäÖÃ
-// Ã¿¸öAPIµÄµ÷ÓÃ¶¼»á¸ú×Ù¶Ô´æ´¢ÅäÖÃµÄ¸ü¸Ä¡£
+// ç”¨é“¾å¼APIæ”¹å˜é…ç½®
+// æ¯ä¸ªAPIçš„è°ƒç”¨éƒ½ä¼šè·Ÿè¸ªå¯¹å­˜å‚¨é…ç½®çš„æ›´æ”¹ã€‚
 
 config
-  // ÐÞ¸Ä entry ÅäÖÃ
+  // ä¿®æ”¹ entry é…ç½®
   .entry('index')
     .add('src/index.js')
     .end()
-  // ÐÞ¸Ä output ÅäÖÃ
+  // ä¿®æ”¹ output é…ç½®
   .output
     .path('dist')
     .filename('[name].bundle.js');
 
-// ´´½¨Ò»¸ö¾ßÃû¹æÔò£¬ÒÔºóÓÃÀ´ÐÞ¸Ä¹æÔò
+// åˆ›å»ºä¸€ä¸ªå…·åè§„åˆ™ï¼Œä»¥åŽç”¨æ¥ä¿®æ”¹è§„åˆ™
 config.module
   .rule('lint')
     .test(/\.js$/)
@@ -74,7 +74,7 @@ config.module
     .include
       .add('src')
       .end()
-    // »¹¿ÉÒÔ´´½¨¾ßÃûuse (loaders)
+    // è¿˜å¯ä»¥åˆ›å»ºå…·åuse (loaders)
     .use('eslint')
       .loader('eslint-loader')
       .options({
@@ -98,23 +98,23 @@ config.module
         ]
       });
 
-// Ò²¿ÉÒÔ´´½¨Ò»¸ö¾ßÃûµÄ²å¼þ!
+// ä¹Ÿå¯ä»¥åˆ›å»ºä¸€ä¸ªå…·åçš„æ’ä»¶!
 config
   .plugin('clean')
     .use(CleanPlugin, [['dist'], { root: '/dir' }]);
 
-// µ¼³öÕâ¸öÐÞ¸ÄÍê³ÉµÄÒª±»webpackÊ¹ÓÃµÄÅäÖÃ¶ÔÏó
+// å¯¼å‡ºè¿™ä¸ªä¿®æ”¹å®Œæˆçš„è¦è¢«webpackä½¿ç”¨çš„é…ç½®å¯¹è±¡
 module.exports = config.toConfig();
 ```
 
-¹²ÏíÅäÖÃÒ²ºÜ¼òµ¥¡£½ö½öµ¼³öÅäÖÃ ºÍ ÔÚ´«µÝ¸øwebpackÖ®Ç°µ÷ÓÃ `.toConfig()` ·½·¨½«ÅäÖÃµ¼³ö¸øwebpackÊ¹ÓÃ¡£
+å…±äº«é…ç½®ä¹Ÿå¾ˆç®€å•ã€‚ä»…ä»…å¯¼å‡ºé…ç½® å’Œ åœ¨ä¼ é€’ç»™webpackä¹‹å‰è°ƒç”¨ `.toConfig()` æ–¹æ³•å°†é…ç½®å¯¼å‡ºç»™webpackä½¿ç”¨ã€‚
 
 ```js
 // webpack.core.js
 const Config = require('webpack-chain');
 const config = new Config();
 
-// ¿çÄ¿±ê¹²ÏíÅäÖÃ
+// è·¨ç›®æ ‡å…±äº«é…ç½®
 // Make configuration shared across targets
 // ...
 
@@ -124,7 +124,7 @@ module.exports = config;
 const config = require('./webpack.core');
 
 // Dev-specific configuration
-// ¿ª·¢¾ßÌåÅäÖÃ
+// å¼€å‘å…·ä½“é…ç½®
 // ...
 module.exports = config.toConfig();
 
@@ -132,38 +132,38 @@ module.exports = config.toConfig();
 const config = require('./webpack.core');
 
 // Production-specific configuration
-// Éú²ú¾ßÌåÅäÖÃ
+// ç”Ÿäº§å…·ä½“é…ç½®
 // ...
 module.exports = config.toConfig();
 ```
 
 ## ChainedMap
 
-webpack-chain ÖÐµÄºËÐÄAPI½Ó¿ÚÖ®Ò»ÊÇ `ChainedMap`. Ò»¸ö `ChainedMap`µÄ²Ù×÷ÀàËÆÓÚJavaScript Map, ÎªÁ´Ê½ºÍÉú³ÉÅäÖÃÌá¹©ÁËÒ»Ð©±ãÀû¡£ Èç¹ûÒ»¸öÊôÐÔ±»±ê¼ÇÒ»¸ö `ChainedMap`, ÔòËü½«¾ßÓÐÈçÏÂµÄAPIºÍ·½·¨:
+webpack-chain ä¸­çš„æ ¸å¿ƒAPIæŽ¥å£ä¹‹ä¸€æ˜¯ `ChainedMap`. ä¸€ä¸ª `ChainedMap`çš„æ“ä½œç±»ä¼¼äºŽJavaScript Map, ä¸ºé“¾å¼å’Œç”Ÿæˆé…ç½®æä¾›äº†ä¸€äº›ä¾¿åˆ©ã€‚ å¦‚æžœä¸€ä¸ªå±žæ€§è¢«æ ‡è®°ä¸€ä¸ª `ChainedMap`, åˆ™å®ƒå°†å…·æœ‰å¦‚ä¸‹çš„APIå’Œæ–¹æ³•:
 
-**³ý·ÇÁíÓÐËµÃ÷£¬·ñÔòÕâÐ©·½·¨½«·µ»Ø `ChainedMap` , ÔÊÐíÁ´Ê½µ÷ÓÃÕâÐ©·½·¨¡£**
+**é™¤éžå¦æœ‰è¯´æ˜Žï¼Œå¦åˆ™è¿™äº›æ–¹æ³•å°†è¿”å›ž `ChainedMap` , å…è®¸é“¾å¼è°ƒç”¨è¿™äº›æ–¹æ³•ã€‚**
 
 ```js
-// ´Ó Map ÒÆ³ýËùÓÐÅäÖÃ.
+// ä»Ž Map ç§»é™¤æ‰€æœ‰é…ç½®.
 clear()
 ```
 
 ```js
-// Í¨¹ý¼üÖµ´Ó Map ÒÆ³ýµ¥¸öÅäÖÃ.
+// é€šè¿‡é”®å€¼ä»Ž Map ç§»é™¤å•ä¸ªé…ç½®.
 // key: *
 delete(key)
 ```
 
 ```js
-// »ñÈ¡ Map ÖÐÏàÓ¦¼üµÄÖµ
+// èŽ·å– Map ä¸­ç›¸åº”é”®çš„å€¼
 // key: *
 // returns: value
 get(key)
 ```
 
 ```js
-// »ñÈ¡ Map ÖÐÏàÓ¦¼üµÄÖµ
-// Èç¹û¼üÔÚMapÖÐ²»´æÔÚ£¬ÔòChainedMapÖÐ¸Ã¼üµÄÖµ»á±»ÅäÖÃÎªfnµÄ·µ»ØÖµ.
+// èŽ·å– Map ä¸­ç›¸åº”é”®çš„å€¼
+// å¦‚æžœé”®åœ¨Mapä¸­ä¸å­˜åœ¨ï¼Œåˆ™ChainedMapä¸­è¯¥é”®çš„å€¼ä¼šè¢«é…ç½®ä¸ºfnçš„è¿”å›žå€¼.
 // key: *
 // fn: Function () -> value
 // returns: value
@@ -171,142 +171,142 @@ getOrCompute(key, fn)
 ```
 
 ```js
-// ÅäÖÃMapÖÐÒÑ´æÔÚµÄ¼üµÄÖµ
+// é…ç½®Mapä¸­å·²å­˜åœ¨çš„é”®çš„å€¼
 // key: *
 // value: *
 set(key, value)
 ```
 
 ```js
-// MapÖÐÊÇ·ñ´æÔÚÒ»¸öÅäÖÃÖµµÄÌØ¶¨¼ü£¬·µ»Ø Õæ»ò¼Ù
+// Mapä¸­æ˜¯å¦å­˜åœ¨ä¸€ä¸ªé…ç½®å€¼çš„ç‰¹å®šé”®ï¼Œè¿”å›ž çœŸæˆ–å‡
 // key: *
 // returns: Boolean
 has(key)
 ```
 
 ```js
-// ·µ»ØMapÖÐÒÑ´æ´¢µÄËùÓÐÖµµÄÊý×é
+// è¿”å›žMapä¸­å·²å­˜å‚¨çš„æ‰€æœ‰å€¼çš„æ•°ç»„
 // returns: Array
 values()
 ```
 
 ```js
-// ·µ»ØMapÖÐÈ«²¿ÅäÖÃµÄÒ»¸ö¶ÔÏó, ÆäÖÐ ¼üÊÇÕâ¸ö¶ÔÏóÊôÐÔ£¬ÖµÊÇÏàÓ¦¼üµÄÖµ£¬
-// Èç¹ûMapÊÇ¿Õ£¬·µ»Ø `undefined`
-// Ê¹ÓÃ `.before() »ò .after()` µÄChainedMap, Ôò½«°´ÕÕÊôÐÔÃû½øÐÐÅÅÐò¡£
+// è¿”å›žMapä¸­å…¨éƒ¨é…ç½®çš„ä¸€ä¸ªå¯¹è±¡, å…¶ä¸­ é”®æ˜¯è¿™ä¸ªå¯¹è±¡å±žæ€§ï¼Œå€¼æ˜¯ç›¸åº”é”®çš„å€¼ï¼Œ
+// å¦‚æžœMapæ˜¯ç©ºï¼Œè¿”å›ž `undefined`
+// ä½¿ç”¨ `.before() æˆ– .after()` çš„ChainedMap, åˆ™å°†æŒ‰ç…§å±žæ€§åè¿›è¡ŒæŽ’åºã€‚
 // returns: Object, undefined if empty
 entries()
 ````
 
 ```js
-// Ìá¹©Ò»¸ö¶ÔÏó£¬Õâ¸ö¶ÔÏóµÄÊôÐÔºÍÖµ½«Ó³Éä½ø Map¡£
-// ÄãÒ²¿ÉÒÔÌá¹©Ò»¸öÊý×é×÷ÎªµÚ¶þ¸ö²ÎÊýÒÔ±ãºöÂÔºÏ²¢µÄÊôÐÔÃû³Æ¡£
+// æä¾›ä¸€ä¸ªå¯¹è±¡ï¼Œè¿™ä¸ªå¯¹è±¡çš„å±žæ€§å’Œå€¼å°†æ˜ å°„è¿› Mapã€‚
+// ä½ ä¹Ÿå¯ä»¥æä¾›ä¸€ä¸ªæ•°ç»„ä½œä¸ºç¬¬äºŒä¸ªå‚æ•°ä»¥ä¾¿å¿½ç•¥åˆå¹¶çš„å±žæ€§åç§°ã€‚
 // obj: Object
 // omit: Optional Array
 merge(obj, omit)
 ```
 
 ```js
-// ¶Ôµ±Ç°ÅäÖÃÉÏÏÂÎÄÖ´ÐÐº¯Êý¡£
+// å¯¹å½“å‰é…ç½®ä¸Šä¸‹æ–‡æ‰§è¡Œå‡½æ•°ã€‚
 // handler: Function -> ChainedMap
-  // Ò»¸ö°ÑChainedMapÊµÀý×÷Îªµ¥¸ö²ÎÊýµÄº¯Êý
+  // ä¸€ä¸ªæŠŠChainedMapå®žä¾‹ä½œä¸ºå•ä¸ªå‚æ•°çš„å‡½æ•°
 batch(handler)
 ```
 
 ```js
-// Ìõ¼þÖ´ÐÐÒ»¸öº¯ÊýÈ¥¼ÌÐøÅäÖÃ
+// æ¡ä»¶æ‰§è¡Œä¸€ä¸ªå‡½æ•°åŽ»ç»§ç»­é…ç½®
 // condition: Boolean
 // whenTruthy: Function -> ChainedMap
-  // µ±Ìõ¼þÎªÕæ£¬µ÷ÓÃ°ÑChainedMapÊµÀý×÷Îªµ¥Ò»²ÎÊý´«ÈëµÄº¯Êý
+  // å½“æ¡ä»¶ä¸ºçœŸï¼Œè°ƒç”¨æŠŠChainedMapå®žä¾‹ä½œä¸ºå•ä¸€å‚æ•°ä¼ å…¥çš„å‡½æ•°
 // whenFalsy: Optional Function -> ChainedMap
-  // µ±Ìõ¼þÎª¼Ù£¬µ÷ÓÃ°ÑChainedMapÊµÀý×÷Îªµ¥Ò»²ÎÊý´«ÈëµÄº¯Êý
+  // å½“æ¡ä»¶ä¸ºå‡ï¼Œè°ƒç”¨æŠŠChainedMapå®žä¾‹ä½œä¸ºå•ä¸€å‚æ•°ä¼ å…¥çš„å‡½æ•°
 when(condition, whenTruthy, whenFalsy)
 ```
 
 ## ChainedSet
 
-webpack-chain ÖÐµÄºËÐÄAPI½Ó¿ÚÁíÒ»¸öÊÇ `ChainedSet`. Ò»¸ö `ChainedSet`µÄ²Ù×÷ÀàËÆÓÚJavaScript Map, ÎªÁ´Ê½ºÍÉú³ÉÅäÖÃÌá¹©ÁËÒ»Ð©±ãÀû¡£ Èç¹ûÒ»¸öÊôÐÔ±»±ê¼ÇÒ»¸ö `ChainedSet`, ÔòËü½«¾ßÓÐÈçÏÂµÄAPIºÍ·½·¨:
+webpack-chain ä¸­çš„æ ¸å¿ƒAPIæŽ¥å£å¦ä¸€ä¸ªæ˜¯ `ChainedSet`. ä¸€ä¸ª `ChainedSet`çš„æ“ä½œç±»ä¼¼äºŽJavaScript Map, ä¸ºé“¾å¼å’Œç”Ÿæˆé…ç½®æä¾›äº†ä¸€äº›ä¾¿åˆ©ã€‚ å¦‚æžœä¸€ä¸ªå±žæ€§è¢«æ ‡è®°ä¸€ä¸ª `ChainedSet`, åˆ™å®ƒå°†å…·æœ‰å¦‚ä¸‹çš„APIå’Œæ–¹æ³•:
 
-**³ý·ÇÁíÓÐËµÃ÷£¬·ñÔòÕâÐ©·½·¨½«·µ»Ø `ChainedSet` , ÔÊÐíÁ´Ê½µ÷ÓÃÕâÐ©·½·¨¡£**
+**é™¤éžå¦æœ‰è¯´æ˜Žï¼Œå¦åˆ™è¿™äº›æ–¹æ³•å°†è¿”å›ž `ChainedSet` , å…è®¸é“¾å¼è°ƒç”¨è¿™äº›æ–¹æ³•ã€‚**
 
 ```js
-// Ìí¼Ó/×·¼Ó ¸øSetÄ©Î²Î»ÖÃÒ»¸öÖµ.
+// æ·»åŠ /è¿½åŠ  ç»™Setæœ«å°¾ä½ç½®ä¸€ä¸ªå€¼.
 // value: *
 add(value)
 ```
 
 ```js
-// Ìí¼Ó ¸øSet¿ªÊ¼Î»ÖÃÒ»¸öÖµ.
+// æ·»åŠ  ç»™Setå¼€å§‹ä½ç½®ä¸€ä¸ªå€¼.
 // value: *
 prepend(value)
 ```
 
 ```js
-// ÒÆ³ýSetÖÐÈ«²¿Öµ.
+// ç§»é™¤Setä¸­å…¨éƒ¨å€¼.
 clear()
 ```
 
 ```js
-// ÒÆ³ýSetÖÐÒ»¸öÖ¸¶¨µÄÖµ.
+// ç§»é™¤Setä¸­ä¸€ä¸ªæŒ‡å®šçš„å€¼.
 // value: *
 delete(value)
 ```
 
 ```js
-// ¼ì²âSetÖÐÊÇ·ñ´æÔÚÒ»¸öÖµ.
+// æ£€æµ‹Setä¸­æ˜¯å¦å­˜åœ¨ä¸€ä¸ªå€¼.
 // value: *
 // returns: Boolean
 has(value)
 ```
 
 ```js
-// ·µ»ØSetÖÐÖµµÄÊý×é.
+// è¿”å›žSetä¸­å€¼çš„æ•°ç»„.
 // returns: Array
 values()
 ```
 
 ```js
-// Á¬½Ó¸ø¶¨µÄÊý×éµ½ Set Î²²¿¡£
+// è¿žæŽ¥ç»™å®šçš„æ•°ç»„åˆ° Set å°¾éƒ¨ã€‚
 // arr: Array
 merge(arr)
 ```
 
 ```js
 
-// ¶Ôµ±Ç°ÅäÖÃÉÏÏÂÎÄÖ´ÐÐº¯Êý¡£
+// å¯¹å½“å‰é…ç½®ä¸Šä¸‹æ–‡æ‰§è¡Œå‡½æ•°ã€‚
 // handler: Function -> ChainedSet
-  // Ò»¸ö°Ñ ChainedSet ÊµÀý×÷Îªµ¥¸ö²ÎÊýµÄº¯Êý
+  // ä¸€ä¸ªæŠŠ ChainedSet å®žä¾‹ä½œä¸ºå•ä¸ªå‚æ•°çš„å‡½æ•°
 batch(handler)
 ```
 
 ```js
-// Ìõ¼þÖ´ÐÐÒ»¸öº¯ÊýÈ¥¼ÌÐøÅäÖÃ
+// æ¡ä»¶æ‰§è¡Œä¸€ä¸ªå‡½æ•°åŽ»ç»§ç»­é…ç½®
 // condition: Boolean
 // whenTruthy: Function -> ChainedSet
-  // µ±Ìõ¼þÎªÕæ£¬µ÷ÓÃ°Ñ ChainedSet ÊµÀý×÷Îªµ¥Ò»²ÎÊý´«ÈëµÄº¯Êý
+  // å½“æ¡ä»¶ä¸ºçœŸï¼Œè°ƒç”¨æŠŠ ChainedSet å®žä¾‹ä½œä¸ºå•ä¸€å‚æ•°ä¼ å…¥çš„å‡½æ•°
 // whenFalsy: Optional Function -> ChainedSet
-  // µ±Ìõ¼þÎª¼Ù£¬µ÷ÓÃ°Ñ ChainedSet ÊµÀý×÷Îªµ¥Ò»²ÎÊý´«ÈëµÄº¯Êý
+  // å½“æ¡ä»¶ä¸ºå‡ï¼Œè°ƒç”¨æŠŠ ChainedSet å®žä¾‹ä½œä¸ºå•ä¸€å‚æ•°ä¼ å…¥çš„å‡½æ•°
 when(condition, whenTruthy, whenFalsy)
 ```
 
-## ËÙ¼Ç·½·¨
+## é€Ÿè®°æ–¹æ³•
 
-´æÔÚÐí¶à¼òÐ´·½·¨£¬ÓÃÓÚ Ê¹ÓÃÓë¼òÐ´·½·¨Ãû³ÆÏàÍ¬µÄ¼üÔÚ ChainedMap ÉèÖÃÒ»¸öÖµ
-ÀýÈç, `devServer.hot` ÊÇÒ»¸öËÙ¼Ç·½·¨, Òò´ËËü¿ÉÒÔÓÃ×÷:
+å­˜åœ¨è®¸å¤šç®€å†™æ–¹æ³•ï¼Œç”¨äºŽ ä½¿ç”¨ä¸Žç®€å†™æ–¹æ³•åç§°ç›¸åŒçš„é”®åœ¨ ChainedMap è®¾ç½®ä¸€ä¸ªå€¼
+ä¾‹å¦‚, `devServer.hot` æ˜¯ä¸€ä¸ªé€Ÿè®°æ–¹æ³•, å› æ­¤å®ƒå¯ä»¥ç”¨ä½œ:
 
 ```js
-// ÔÚ ChainedMap ÉÏÉèÖÃÒ»¸öÖµµÄËÙ¼Ç·½·¨
+// åœ¨ ChainedMap ä¸Šè®¾ç½®ä¸€ä¸ªå€¼çš„é€Ÿè®°æ–¹æ³•
 devServer.hot(true);
 
-// ÉÏÊö·½·¨µÈÐ§ÓÚ:
+// ä¸Šè¿°æ–¹æ³•ç­‰æ•ˆäºŽ:
 devServer.set('hot', true);
 ```
 
-Ò»¸öËÙ¼Ç·½·¨ÊÇ¿ÉÁ´Ê½µÄ£¬Òò´Ëµ÷ÓÃËü½«·µ»ØÔ­ÊµÀý£¬ÔÊÐíÄã¼ÌÐøÁ´Ê½Ê¹ÓÃ
+ä¸€ä¸ªé€Ÿè®°æ–¹æ³•æ˜¯å¯é“¾å¼çš„ï¼Œå› æ­¤è°ƒç”¨å®ƒå°†è¿”å›žåŽŸå®žä¾‹ï¼Œå…è®¸ä½ ç»§ç»­é“¾å¼ä½¿ç”¨
 
-### ÅäÖÃ
+### é…ç½®
 
-´´½¨Ò»¸öÐÂµÄÅäÖÃ¶ÔÏó
+åˆ›å»ºä¸€ä¸ªæ–°çš„é…ç½®å¯¹è±¡
 
 ```js
 const Config = require('webpack-chain');
@@ -314,15 +314,15 @@ const Config = require('webpack-chain');
 const config = new Config();
 ```
 
-ÒÆ¶¯µ½APIµÄ¸üÉî²ã½«¸Ä±äÄãÕýÔÚÐÞ¸ÄµÄÄÚÈÝµÄÉÏÏÂÎÄ¡£ Äã¿ÉÒÔÍ¨¹ý `config`ÔÚ´ËÒýÓÃ¶¥¼¶ÅäÖÃ»òÕßÍ¨¹ýµ÷ÓÃ `.end()` ·½·¨ÏòÉÏÒÆ¶¯Ò»¼¶ Ê¹ÄãÒÆ»Ø¸ü¸ßµÄÉÏÏÂÎÄ»·¾³¡£
-Èç¹ûÄãÊìÏ¤jQuery, ÕâÀïÓëÆä `.end()` ¹¤×÷Ô­ÀíÀàËÆ¡£³ý·ÇÁíÓÐËµÃ÷£¬·ñÔòÈ«²¿µÄAPIµ÷ÓÃ¶¼½«ÔÚµ±Ç°ÉÏÏÂÎÄÖÐ·µ»ØAPIÊµÀý¡£ ÕâÑù£¬Äã¿ÉÒÔ¸ù¾ÝÐèÒªÁ¬Ðø Á´Ê½APIµ÷ÓÃ.  
-ÓÐ¹Ø¶ÔËùÓÐËÙ¼ÇºÍµÍ¼¶·¿·ÑÓÐÐ§µÄÌØ¶¨ÖµµÄÏêÏ¸ÐÅÏ¢£¬Çë²ÎÔÄ [webpackÎÄµµ²ã´Î½á¹¹](https://webpack.js.org/configuration/) ÖÐµÄÏàÓ¦Ãû´Ê¡£
+ç§»åŠ¨åˆ°APIçš„æ›´æ·±å±‚å°†æ”¹å˜ä½ æ­£åœ¨ä¿®æ”¹çš„å†…å®¹çš„ä¸Šä¸‹æ–‡ã€‚ ä½ å¯ä»¥é€šè¿‡ `config`åœ¨æ­¤å¼•ç”¨é¡¶çº§é…ç½®æˆ–è€…é€šè¿‡è°ƒç”¨ `.end()` æ–¹æ³•å‘ä¸Šç§»åŠ¨ä¸€çº§ ä½¿ä½ ç§»å›žæ›´é«˜çš„ä¸Šä¸‹æ–‡çŽ¯å¢ƒã€‚
+å¦‚æžœä½ ç†Ÿæ‚‰jQuery, è¿™é‡Œä¸Žå…¶ `.end()` å·¥ä½œåŽŸç†ç±»ä¼¼ã€‚é™¤éžå¦æœ‰è¯´æ˜Žï¼Œå¦åˆ™å…¨éƒ¨çš„APIè°ƒç”¨éƒ½å°†åœ¨å½“å‰ä¸Šä¸‹æ–‡ä¸­è¿”å›žAPIå®žä¾‹ã€‚ è¿™æ ·ï¼Œä½ å¯ä»¥æ ¹æ®éœ€è¦è¿žç»­ é“¾å¼APIè°ƒç”¨.  
+æœ‰å…³å¯¹æ‰€æœ‰é€Ÿè®°å’Œä½Žçº§æˆ¿è´¹æœ‰æ•ˆçš„ç‰¹å®šå€¼çš„è¯¦ç»†ä¿¡æ¯ï¼Œè¯·å‚é˜… [webpackæ–‡æ¡£å±‚æ¬¡ç»“æž„](https://webpack.js.org/configuration/) ä¸­çš„ç›¸åº”åè¯ã€‚
 
 ```js
 Config : ChainedMap
 ```
 
-#### ÅäÖÃËÙ¼Ç·½·¨
+#### é…ç½®é€Ÿè®°æ–¹æ³•
 
 ```js
 config
@@ -345,10 +345,10 @@ config
   .watchOptions(watchOptions)
 ```
 
-#### ÅäÖÃ entryPoints
+#### é…ç½® entryPoints
 
 ```js
-// »Øµ½ config.entryPoints : ChainedMap
+// å›žåˆ° config.entryPoints : ChainedMap
 config.entry(name) : ChainedSet
 
 config
@@ -360,7 +360,7 @@ config
   .entry(name)
     .clear()
 
-// ÓÃµÍ¼¶±ð config.entryPoints:
+// ç”¨ä½Žçº§åˆ« config.entryPoints:
 
 config.entryPoints
   .get(name)
@@ -372,7 +372,7 @@ config.entryPoints
     .clear()
 ```
 
-#### ÅäÖÃ output: ËÙ¼Ç·½·¨
+#### é…ç½® output: é€Ÿè®°æ–¹æ³•
 
 ```js
 config.output : ChainedMap
@@ -406,7 +406,7 @@ config.output
   .umdNamedDefine(umdNamedDefine)
 ```
 
-#### ÅäÖÃ resolve£¨½âÎö£©: ËÙ¼Ç·½·¨
+#### é…ç½® resolveï¼ˆè§£æžï¼‰: é€Ÿè®°æ–¹æ³•
 
 ```js
 config.resolve : ChainedMap
@@ -420,7 +420,7 @@ config.resolve
   .symlinks(symlinks)
 ```
 
-#### ÅäÖÃ resolve ±ðÃû
+#### é…ç½® resolve åˆ«å
 
 ```js
 config.resolve.alias : ChainedMap
@@ -432,7 +432,7 @@ config.resolve.alias
   .clear()
 ```
 
-#### ÅäÖÃ resolve modules
+#### é…ç½® resolve modules
 
 ```js
 config.resolve.modules : ChainedSet
@@ -443,7 +443,7 @@ config.resolve.modules
   .clear()
 ```
 
-#### ÅäÖÃ resolve aliasFields
+#### é…ç½® resolve aliasFields
 
 ```js
 config.resolve.aliasFields : ChainedSet
@@ -454,7 +454,7 @@ config.resolve.aliasFields
   .clear()
 ```
 
-#### ÅäÖÃ resolve descriptionFields
+#### é…ç½® resolve descriptionFields
 
 ```js
 config.resolve.descriptionFields : ChainedSet
@@ -465,7 +465,7 @@ config.resolve.descriptionFields
   .clear()
 ```
 
-#### ÅäÖÃ resolve extensions
+#### é…ç½® resolve extensions
 
 ```js
 config.resolve.extensions : ChainedSet
@@ -476,7 +476,7 @@ config.resolve.extensions
   .clear()
 ```
 
-#### ÅäÖÃ resolve mainFields
+#### é…ç½® resolve mainFields
 
 ```js
 config.resolve.mainFields : ChainedSet
@@ -487,7 +487,7 @@ config.resolve.mainFields
   .clear()
 ```
 
-#### ÅäÖÃ resolve mainFiles
+#### é…ç½® resolve mainFiles
 
 ```js
 config.resolve.mainFiles : ChainedSet
@@ -498,11 +498,11 @@ config.resolve.mainFiles
   .clear()
 ```
 
-#### ÅäÖÃ resolveLoader
+#### é…ç½® resolveLoader
 
-µ±Ç°API `config.resolveLoader` ÏàÍ¬ÓÚ ÅäÖÃ `config.resolve` ÓÃÏÂÃæµÄÅäÖÃ£º
+å½“å‰API `config.resolveLoader` ç›¸åŒäºŽ é…ç½® `config.resolve` ç”¨ä¸‹é¢çš„é…ç½®ï¼š
 
-##### ÅäÖÃ resolveLoader moduleExtensions
+##### é…ç½® resolveLoader moduleExtensions
 
 ```js
 config.resolveLoader.moduleExtensions : ChainedSet
@@ -513,7 +513,7 @@ config.resolveLoader.moduleExtensions
   .clear()
 ```
 
-##### ÅäÖÃ resolveLoader packageMains
+##### é…ç½® resolveLoader packageMains
 
 ```js
 config.resolveLoader.packageMains : ChainedSet
@@ -524,7 +524,7 @@ config.resolveLoader.packageMains
   .clear()
 ```
 
-#### ÅäÖÃ performance£¨ÐÔÄÜ£©: ËÙ¼Ç·½·¨
+#### é…ç½® performanceï¼ˆæ€§èƒ½ï¼‰: é€Ÿè®°æ–¹æ³•
 
 ```js
 config.performance : ChainedMap
@@ -536,7 +536,7 @@ config.performance
   .assetFilter(assetFilter)
 ```
 
-#### ÅäÖÃ optimizations£¨ÓÅ»¯£©: ËÙ¼Ç·½·¨
+#### é…ç½® optimizationsï¼ˆä¼˜åŒ–ï¼‰: é€Ÿè®°æ–¹æ³•
 
 ```js
 config.optimization : ChainedMap
@@ -561,50 +561,50 @@ config.optimization
   .usedExports(usedExports)
 ```
 
-#### ÅäÖÃ optimization minimizers£¨×îÐ¡ÓÅ»¯Æ÷£©
+#### é…ç½® optimization minimizersï¼ˆæœ€å°ä¼˜åŒ–å™¨ï¼‰
 
 ```js
-// »Øµ½ config.optimization.minimizers
+// å›žåˆ° config.optimization.minimizers
 config.optimization
   .minimizer(name) : ChainedMap
 ```
 
-#### ÅäÖÃ optimization minimizers: Ìí¼Ó
+#### é…ç½® optimization minimizers: æ·»åŠ 
 
-_×¢Òâ: ²»ÒªÓÃ `new` È¥´´½¨×îÐ¡ÓÅ»¯Æ÷²å¼þ£¬ÒòÎªÒÑ¾­ÎªÄã×öºÃÁË¡£_
+_æ³¨æ„: ä¸è¦ç”¨ `new` åŽ»åˆ›å»ºæœ€å°ä¼˜åŒ–å™¨æ’ä»¶ï¼Œå› ä¸ºå·²ç»ä¸ºä½ åšå¥½äº†ã€‚_
 
 ```js
 config.optimization
   .minimizer(name)
   .use(WebpackPlugin, args)
 
-// ÀýÈç
+// ä¾‹å¦‚
 
 config.optimization
   .minimizer('css')
   .use(OptimizeCSSAssetsPlugin, [{ cssProcessorOptions: { safe: true } }])
 
-// Minimizer ²å¼þÒ²¿ÉÒÔÓÉËüÃÇµÄÂ·¾¶Ö¸¶¨£¬´Ó¶øÔÊÐíÔÚ²»Ê¹ÓÃ²å¼þ»òwebpackÅäÖÃµÄÇé¿öÏÂÌø¹ý°º¹óµÄ require s¡£
+// Minimizer æ’ä»¶ä¹Ÿå¯ä»¥ç”±å®ƒä»¬çš„è·¯å¾„æŒ‡å®šï¼Œä»Žè€Œå…è®¸åœ¨ä¸ä½¿ç”¨æ’ä»¶æˆ–webpacké…ç½®çš„æƒ…å†µä¸‹è·³è¿‡æ˜‚è´µçš„ require sã€‚
 config.optimization
   .minimizer('css')
   .use(require.resolve('optimize-css-assets-webpack-plugin'), [{ cssProcessorOptions: { safe: true } }])
 
 ```
 
-#### ÅäÖÃ optimization minimizers: ÐÞ¸Ä²ÎÊý
+#### é…ç½® optimization minimizers: ä¿®æ”¹å‚æ•°
 
 ```js
 config.optimization
   .minimizer(name)
   .tap(args => newArgs)
 
-// ÀýÈç
+// ä¾‹å¦‚
 config
   .minimizer('css')
   .tap(args => [...args, { cssProcessorOptions: { safe: false } }])
 ```
 
-#### ÅäÖÃ optimization minimizers: ÐÞ¸ÄÊµÀý
+#### é…ç½® optimization minimizers: ä¿®æ”¹å®žä¾‹
 
 ```js
 config.optimization
@@ -612,53 +612,53 @@ config.optimization
   .init((Plugin, args) => new Plugin(...args));
 ```
 
-#### ÅäÖÃ optimization minimizers: ÒÆ³ý
+#### é…ç½® optimization minimizers: ç§»é™¤
 
 ```js
 config.optimization.minimizers.delete(name)
 ```
 
-#### ÅäÖÃ²å¼þ
+#### é…ç½®æ’ä»¶
 
 ```js
-// »Øµ½ config.plugins
+// å›žåˆ° config.plugins
 config.plugin(name) : ChainedMap
 ```
 
-#### ÅäÖÃ²å¼þ: Ìí¼Ó
+#### é…ç½®æ’ä»¶: æ·»åŠ 
 
-_×¢Òâ: ²»ÒªÓÃ `new` È¥´´½¨²å¼þ£¬ÒòÎªÒÑ¾­ÎªÄã×öºÃÁË¡£_
+_æ³¨æ„: ä¸è¦ç”¨ `new` åŽ»åˆ›å»ºæ’ä»¶ï¼Œå› ä¸ºå·²ç»ä¸ºä½ åšå¥½äº†ã€‚_
 
 ```js
 config
   .plugin(name)
   .use(WebpackPlugin, args)
 
-// ÀýÈç
+// ä¾‹å¦‚
 config
   .plugin('hot')
   .use(webpack.HotModuleReplacementPlugin);
 
-// ²å¼þÒ²¿ÉÒÔÓÉËüÃÇµÄÂ·¾¶Ö¸¶¨£¬´Ó¶øÔÊÐíÔÚ²»Ê¹ÓÃ²å¼þ»òwebpackÅäÖÃµÄÇé¿öÏÂÌø¹ý°º¹óµÄ require s¡£
+// æ’ä»¶ä¹Ÿå¯ä»¥ç”±å®ƒä»¬çš„è·¯å¾„æŒ‡å®šï¼Œä»Žè€Œå…è®¸åœ¨ä¸ä½¿ç”¨æ’ä»¶æˆ–webpacké…ç½®çš„æƒ…å†µä¸‹è·³è¿‡æ˜‚è´µçš„ require sã€‚
 config
   .plugin('env')
   .use(require.resolve('webpack/lib/EnvironmentPlugin'), [{ 'VAR': false }]);
 ```
 
-#### ÅäÖÃ²å¼þ: ÐÞ¸Ä²ÎÊý
+#### é…ç½®æ’ä»¶: ä¿®æ”¹å‚æ•°
 
 ```js
 config
   .plugin(name)
   .tap(args => newArgs)
 
-// ÀýÈç
+// ä¾‹å¦‚
 config
   .plugin('env')
   .tap(args => [...args, 'SECRET_KEY']);
 ```
 
-#### ÅäÖÃ²å¼þ: ÐÞ¸ÄÊµÀý
+#### é…ç½®æ’ä»¶: ä¿®æ”¹å®žä¾‹
 
 ```js
 config
@@ -666,22 +666,22 @@ config
   .init((Plugin, args) => new Plugin(...args));
 ```
 
-#### ÅäÖÃ²å¼þ: ÒÆ³ý
+#### é…ç½®æ’ä»¶: ç§»é™¤
 
 ```js
 config.plugins.delete(name)
 ```
 
-#### ÅäÖÃ²å¼þ: ÔÚÖ®Ç°µ÷ÓÃ
+#### é…ç½®æ’ä»¶: åœ¨ä¹‹å‰è°ƒç”¨
 
-Ö¸¶¨µ±Ç°²å¼þÉÏÏÂÎÄÓ¦¸ÃÔÚÁíÒ»¸öÖ¸¶¨²å¼þÖ®Ç°Ö´ÐÐ£¬Äã²»ÄÜÔÚÍ¬Ò»¸ö²å¼þÉÏÍ¬Ê±Ê¹ÓÃ `.before()` ºÍ `.after()`¡£  
+æŒ‡å®šå½“å‰æ’ä»¶ä¸Šä¸‹æ–‡åº”è¯¥åœ¨å¦ä¸€ä¸ªæŒ‡å®šæ’ä»¶ä¹‹å‰æ‰§è¡Œï¼Œä½ ä¸èƒ½åœ¨åŒä¸€ä¸ªæ’ä»¶ä¸ŠåŒæ—¶ä½¿ç”¨ `.before()` å’Œ `.after()`ã€‚  
 
 ```js
 config
   .plugin(name)
     .before(otherName)
 
-// ÀýÈç
+// ä¾‹å¦‚
 config
   .plugin('html-template')
     .use(HtmlWebpackTemplate)
@@ -691,16 +691,16 @@ config
     .before('html-template');
 ```
 
-#### Config plugins: ÔÚÖ®ºóµ÷ÓÃ
+#### Config plugins: åœ¨ä¹‹åŽè°ƒç”¨
 
-Ö¸¶¨µ±Ç°²å¼þÉÏÏÂÎÄÓ¦¸ÃÔÚÁíÒ»¸öÖ¸¶¨²å¼þÖ®ºóÖ´ÐÐ£¬Äã²»ÄÜÔÚÍ¬Ò»¸ö²å¼þÉÏÍ¬Ê±Ê¹ÓÃ `.before()` ºÍ `.after()`¡£  
+æŒ‡å®šå½“å‰æ’ä»¶ä¸Šä¸‹æ–‡åº”è¯¥åœ¨å¦ä¸€ä¸ªæŒ‡å®šæ’ä»¶ä¹‹åŽæ‰§è¡Œï¼Œä½ ä¸èƒ½åœ¨åŒä¸€ä¸ªæ’ä»¶ä¸ŠåŒæ—¶ä½¿ç”¨ `.before()` å’Œ `.after()`ã€‚  
 
 ```js
 config
   .plugin(name)
     .after(otherName)
 
-// ÀýÈç
+// ä¾‹å¦‚
 config
   .plugin('html-template')
     .after('script-ext')
@@ -710,16 +710,16 @@ config
     .use(ScriptExtWebpackPlugin);
 ```
 
-#### ÅäÖÃ resolve ²å¼þ
+#### é…ç½® resolve æ’ä»¶
 
 ```js
-// »Øµ½ config.resolve.plugins
+// å›žåˆ° config.resolve.plugins
 config.resolve.plugin(name) : ChainedMap
 ```
 
-#### ÅäÖÃ resolve ²å¼þ: Ìí¼Ó
+#### é…ç½® resolve æ’ä»¶: æ·»åŠ 
 
-_×¢Òâ: ²»ÒªÓÃ `new` È¥´´½¨²å¼þ£¬ÒòÎªÒÑ¾­ÎªÄã×öºÃÁË¡£_
+_æ³¨æ„: ä¸è¦ç”¨ `new` åŽ»åˆ›å»ºæ’ä»¶ï¼Œå› ä¸ºå·²ç»ä¸ºä½ åšå¥½äº†ã€‚_
 
 ```js
 config.resolve
@@ -793,7 +793,7 @@ config.resolve
     .use(AlphaWebpackPlugin);
 ```
 
-#### ÅäÖÃ node
+#### é…ç½® node
 
 ```js
 config.node : ChainedMap
@@ -803,7 +803,7 @@ config.node
   .set('__filename', 'mock');
 ```
 
-#### ÅäÖÃ devServer
+#### é…ç½® devServer
 
 ```js
 config.devServer : ChainedMap
@@ -955,9 +955,9 @@ config.module
 
 ---
 
-### ºÏ²¢ÅäÖÃ
+### åˆå¹¶é…ç½®
 
-webpack-chain Ö§³Ö½«¶ÔÏóºÏ²¢µ½ÅäÖÃÊµÀý£¬¸ÄÊµÀýÀàËÆÓÚ webpack-chain Ä£Ê½²¼¾ÖµÄ²¼¾Ö¡£ Çë×¢Òâ£¬Õâ²»ÊÇ webpack ÅäÖÃ¶ÔÏó£¬µ«Äú¿ÉÒÔÔÙ½«webpackÅäÖÃ¶ÔÏóÌá¹©¸øwebpack-chain ÒÔÆ¥ÅäÆ÷²¼¾ÖÖ®Ç°¶ÔÆä½øÐÐ×ª»»¡£
+webpack-chain æ”¯æŒå°†å¯¹è±¡åˆå¹¶åˆ°é…ç½®å®žä¾‹ï¼Œæ”¹å®žä¾‹ç±»ä¼¼äºŽ webpack-chain æ¨¡å¼å¸ƒå±€çš„å¸ƒå±€ã€‚ è¯·æ³¨æ„ï¼Œè¿™ä¸æ˜¯ webpack é…ç½®å¯¹è±¡ï¼Œä½†æ‚¨å¯ä»¥å†å°†webpacké…ç½®å¯¹è±¡æä¾›ç»™webpack-chain ä»¥åŒ¹é…å™¨å¸ƒå±€ä¹‹å‰å¯¹å…¶è¿›è¡Œè½¬æ¢ã€‚
 
 ```js
 config.merge({ devtool: 'source-map' });
@@ -1142,12 +1142,12 @@ config.merge({
 })
 ```
 
-### Ìõ¼þÅäÖÃ
+### æ¡ä»¶é…ç½®
 
-µ±Ê¹ÓÃµÄÇé¿öÏÂ¹¤×÷ChainedMapºÍChainedSet£¬Ôò¿ÉÒÔÊ¹ÓÃÖ´ÐÐÌõ¼þµÄÅäÖÃwhen¡£Äú±ØÐëÖ¸¶¨Ò»¸ö±í´ïÊ½ when()£¬ÒÔÆÀ¹ÀÆäÕæÊµÐÔ»òÐé¼ÙÐÔ¡£Èç¹û±í´ïÊ½ÊÇÕæÊµµÄ£¬Ôò½«Ê¹ÓÃµ±Ç°Á´½ÓÊµÀýµÄÊµÀýµ÷ÓÃµÚÒ»¸öº¯Êý²ÎÊý¡£Äú¿ÉÒÔÑ¡ÔñÌá¹©ÔÚÌõ¼þÎª¼ÙÊ±µ÷ÓÃµÄµÚ¶þ¸öº¯Êý£¬¸Ãº¯ÊýÒ²ÊÇµ±Ç°Á´½ÓµÄÊµÀý¡£
+å½“ä½¿ç”¨çš„æƒ…å†µä¸‹å·¥ä½œChainedMapå’ŒChainedSetï¼Œåˆ™å¯ä»¥ä½¿ç”¨æ‰§è¡Œæ¡ä»¶çš„é…ç½®whenã€‚æ‚¨å¿…é¡»æŒ‡å®šä¸€ä¸ªè¡¨è¾¾å¼ when()ï¼Œä»¥è¯„ä¼°å…¶çœŸå®žæ€§æˆ–è™šå‡æ€§ã€‚å¦‚æžœè¡¨è¾¾å¼æ˜¯çœŸå®žçš„ï¼Œåˆ™å°†ä½¿ç”¨å½“å‰é“¾æŽ¥å®žä¾‹çš„å®žä¾‹è°ƒç”¨ç¬¬ä¸€ä¸ªå‡½æ•°å‚æ•°ã€‚æ‚¨å¯ä»¥é€‰æ‹©æä¾›åœ¨æ¡ä»¶ä¸ºå‡æ—¶è°ƒç”¨çš„ç¬¬äºŒä¸ªå‡½æ•°ï¼Œè¯¥å‡½æ•°ä¹Ÿæ˜¯å½“å‰é“¾æŽ¥çš„å®žä¾‹ã€‚
 
 ```js
-// Ê¾Àý£º½öÔÚÉú²úÆÚ¼äÌí¼Óminify²å¼þ
+// ç¤ºä¾‹ï¼šä»…åœ¨ç”Ÿäº§æœŸé—´æ·»åŠ minifyæ’ä»¶
 config
   .when(process.env.NODE_ENV === 'production', config => {
     config
@@ -1157,7 +1157,7 @@ config
 ```
 
 ```js
-// Àý£ºÖ»ÓÐÔÚÉú²ú¹ý³ÌÖÐÌí¼ÓËõÐ¡²å¼þ£¬·ñÔòÉèÖÃdevtoolµ½Ô´Ó³Éä
+// ä¾‹ï¼šåªæœ‰åœ¨ç”Ÿäº§è¿‡ç¨‹ä¸­æ·»åŠ ç¼©å°æ’ä»¶ï¼Œå¦åˆ™è®¾ç½®devtoolåˆ°æºæ˜ å°„
 config
   .when(process.env.NODE_ENV === 'production',
     config => config.plugin('minify').use(BabiliWebpackPlugin),
@@ -1165,9 +1165,9 @@ config
   );
 ```
 
-### ¼ì²éÉú³ÉµÄÅäÖÃ
+### æ£€æŸ¥ç”Ÿæˆçš„é…ç½®
 
-Äú¿ÉÒÔÊ¹ÓÃ¼ì²éÉú³ÉµÄwebpackÅäÖÃconfig.toString()¡£Õâ½«Éú³ÉÅäÖÃµÄ×Ö·û´®»¯°æ±¾£¬ÆäÖÐ°üº¬ÃüÃû¹æÔò£¬ÓÃ·¨ºÍ²å¼þµÄ×¢ÊÍÌáÊ¾£º
+æ‚¨å¯ä»¥ä½¿ç”¨æ£€æŸ¥ç”Ÿæˆçš„webpacké…ç½®config.toString()ã€‚è¿™å°†ç”Ÿæˆé…ç½®çš„å­—ç¬¦ä¸²åŒ–ç‰ˆæœ¬ï¼Œå…¶ä¸­åŒ…å«å‘½åè§„åˆ™ï¼Œç”¨æ³•å’Œæ’ä»¶çš„æ³¨é‡Šæç¤ºï¼š
 
 ``` js
 config
@@ -1199,7 +1199,7 @@ config.toString();
 
 ```
 
-Ä¬ÈÏÇé¿öÏÂ£¬Èç¹ûÉú³ÉµÄ×Ö·û´®°üº¬ÐèÒªµÄº¯ÊýºÍ²å¼þ£¬Ôò²»ÄÜÖ±½ÓÓÃ×÷ÕæÕýµÄwebpackÅäÖÃ¡£ÎªÁËÉú³É¿ÉÓÃµÄÅäÖÃ£¬Äú¿ÉÒÔÍ¨¹ý__expressionÔÚÆäÉÏÉèÖÃÌØÊâÊôÐÔÀ´×Ô¶¨Òåº¯ÊýºÍ²å¼þµÄ×Ö·û´®»¯·½Ê½£º
+é»˜è®¤æƒ…å†µä¸‹ï¼Œå¦‚æžœç”Ÿæˆçš„å­—ç¬¦ä¸²åŒ…å«éœ€è¦çš„å‡½æ•°å’Œæ’ä»¶ï¼Œåˆ™ä¸èƒ½ç›´æŽ¥ç”¨ä½œçœŸæ­£çš„webpacké…ç½®ã€‚ä¸ºäº†ç”Ÿæˆå¯ç”¨çš„é…ç½®ï¼Œæ‚¨å¯ä»¥é€šè¿‡__expressionåœ¨å…¶ä¸Šè®¾ç½®ç‰¹æ®Šå±žæ€§æ¥è‡ªå®šä¹‰å‡½æ•°å’Œæ’ä»¶çš„å­—ç¬¦ä¸²åŒ–æ–¹å¼ï¼š
 
 ``` js
 class MyPlugin {}
@@ -1225,7 +1225,7 @@ config.toString();
 */
 ```
 
-Í¨¹ýÆäÂ·¾¶Ö¸¶¨µÄ²å¼þ½«require()×Ô¶¯Éú³ÉÆäÓï¾ä£º
+é€šè¿‡å…¶è·¯å¾„æŒ‡å®šçš„æ’ä»¶å°†require()è‡ªåŠ¨ç”Ÿæˆå…¶è¯­å¥ï¼š
 
 ``` js
 config
@@ -1246,7 +1246,7 @@ config.toString();
 }
 ```
 
-Äú»¹¿ÉÒÔµ÷ÓÃtoString¾²Ì¬·½·¨Config£¬ÒÔ±ãÔÚ×Ö·û´®»¯Ö®Ç°ÐÞ¸ÄÅäÖÃ¶ÔÏó¡£
+æ‚¨è¿˜å¯ä»¥è°ƒç”¨toStringé™æ€æ–¹æ³•Configï¼Œä»¥ä¾¿åœ¨å­—ç¬¦ä¸²åŒ–ä¹‹å‰ä¿®æ”¹é…ç½®å¯¹è±¡ã€‚
 
 ```js
 Config.toString({
