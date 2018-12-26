@@ -4,7 +4,7 @@
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
-应用一个链式 API 来生成和简化 2-4 版本的webpack的配置的修改。
+应用一个链式 API 来生成和简化 2-4 版本的webpack的配置的修改。
 
 此文档对应于webpack-chain的v5版本，对于以前的版本，请参阅：
 
@@ -47,17 +47,17 @@ npm install --save-dev webpack-chain
 当你安装了 `webpack-chain`， 你就可以开始创建一个webpack的配置。 对于本指南，我们的示例基本配置 `webpack.config.js` 将位于我们项目的根目录。
 
 ```js
-// 导入 webpack-chain 模块，该模块导出了一个用于创建一个webpack配置API的单一构造函数。
+// 导入 webpack-chain 模块，该模块导出了一个用于创建一个webpack配置API的单一构造函数。
 const Config = require('webpack-chain');
 
-// 对该单一构造函数创建一个新的配置实例
+// 对该单一构造函数创建一个新的配置实例
 const config = new Config();
 
-// 用链式API改变配置
+// 用链式API改变配置
 // 每个API的调用都会跟踪对存储配置的更改。
 
 config
-  // 修改 entry 配置
+  // 修改 entry 配置
   .entry('index')
     .add('src/index.js')
     .end()
