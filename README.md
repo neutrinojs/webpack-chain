@@ -144,7 +144,7 @@ webpack-chain 中的核心API接口之一是 `ChainedMap`. 一个 `ChainedMap`�
 **除非另有说明，否则这些方法将返回 `ChainedMap` , 允许链式调用这些方法。**
 
 ```js
-// 从 Map 移除所有配置.
+// 从 Map 移除所有 配置.
 clear()
 ```
 
@@ -171,7 +171,7 @@ getOrCompute(key, fn)
 ```
 
 ```js
-// 配置Map中已存在的键的值
+// 配置Map中 已存在的键的值
 // key: *
 // value: *
 set(key, value)
@@ -185,7 +185,7 @@ has(key)
 ```
 
 ```js
-// 返回Map中已存储的所有值的数组
+// 返回 Map中已存储的所有值的数组
 // returns: Array
 values()
 ```
@@ -199,7 +199,7 @@ entries()
 ````
 
 ```js
-// 提供一个对象，这个对象的属性和值将映射进 Map。
+//  提供一个对象，这个对象的属性和值将 映射进 Map。
 // 你也可以提供一个数组作为第二个参数以便忽略合并的属性名称。
 // obj: Object
 // omit: Optional Array
@@ -292,17 +292,17 @@ when(condition, whenTruthy, whenFalsy)
 ## 速记方法
 
 存在许多简写方法，用于 使用与简写方法名称相同的键在 ChainedMap 设置一个值
-例如, `devServer.hot` 是一个速记方法, 因此它可以用作:
+例如, `devServer.hot` 是一个速记方法,  因此它可以用作:
 
 ```js
-// 在 ChainedMap 上设置一个值的速记方法
+// 在 ChainedMap 上设置一个值的 速记方法
 devServer.hot(true);
 
 // 上述方法等效于:
 devServer.set('hot', true);
 ```
 
-一个速记方法是可链式的，因此调用它将返回原实例，允许你继续链式使用
+一个速记方法是可链式的，因此调用它将返回 原实例，允许你继续链式使用
 
 ### 配置
 
@@ -314,7 +314,7 @@ const Config = require('webpack-chain');
 const config = new Config();
 ```
 
-移动到API的更深层将改变你正在修改的内容的上下文。 你可以通过 `config`在此引用顶级配置或者通过调用 `.end()` 方法向上移动一级 使你移回更高的上下文环境。
+移动到API的更深层将改变你正在修改的内容的上下文。 你可以通过 `config`在此引用顶级配置或者通过调用 `.end()` 方法向上移动一级 使你移回更高的 上下文环境。
 如果你熟悉jQuery, 这里与其 `.end()` 工作原理类似。除非另有说明，否则全部的API调用都将在当前上下文中返回API实例。 这样，你可以根据需要连续 链式API调用.  
 有关对所有速记和低级房费有效的特定值的详细信息，请参阅 [webpack文档层次结构](https://webpack.js.org/configuration/) 中的相应名词。
 
@@ -372,7 +372,7 @@ config.entryPoints
     .clear()
 ```
 
-#### 配置 output: 速记方法
+#### 配置 output: 速记 方法
 
 ```js
 config.output : ChainedMap
@@ -536,7 +536,7 @@ config.performance
   .assetFilter(assetFilter)
 ```
 
-#### 配置 optimizations（优化）: 速记方法
+#### 配置 optimizations（优化）:  速记方法
 
 ```js
 config.optimization : ChainedMap
@@ -952,7 +952,7 @@ config.module
 
 ### 合并配置
 
-webpack-chain 支持将对象合并到配置实例，改实例类似于 webpack-chain 模式布局的布局。 请注意，这不是 webpack 配置对象，但您可以再将webpack配置对象提供给webpack-chain 以匹配器布局之前对其进行转换。
+webpack-chain 支持将对象合并到配置实例，改实例类似于 webpack-chain 模式 布局的布局。 请注意，这不是 webpack 配置对象，但您可以再将webpack配置对象提供给webpack-chain 以匹配器布局之前对其进行转换。
 
 ```js
 config.merge({ devtool: 'source-map' });
