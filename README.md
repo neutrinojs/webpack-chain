@@ -367,6 +367,7 @@ config
   .context(context)
   .externals(externals)
   .loader(loader)
+  .name(name)
   .mode(mode)
   .parallelism(parallelism)
   .profile(profile)
