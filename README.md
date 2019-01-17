@@ -1135,7 +1135,7 @@ config.merge({
     [key]: value
   },
 
-  optimizations: {
+  optimization: {
     concatenateModules,
     flagIncludedChunks,
     mergeDuplicateChunks,
