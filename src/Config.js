@@ -41,6 +41,7 @@ module.exports = class extends ChainedMap {
       'externals',
       'loader',
       'mode',
+      'name',
       'parallelism',
       'profile',
       'recordsInputPath',

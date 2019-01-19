@@ -304,3 +304,32 @@ test('merge with omit', t => {
     ],
   });
 });
+
+test('ordered oneOfs', t => {
+  const rule = new Rule();
+  rule
+    .oneOf('first')
+    .test(/\.first$/)
+    .end()
+    .oneOf('second')
+    .test(/\.second$/)
+    .end()
+    .oneOf('third')
+    .test(/\.third$/)
+    .end()
+    .oneOf('alpha')
+    .test(/\.alpha$/)
+    .before('first')
+    .end()
+    .oneOf('beta')
+    .test(/\.beta$/)
+    .after('second');
+
+  t.deepEqual(rule.toConfig().oneOf.map(o => o.test), [
+    /\.alpha$/,
+    /\.first$/,
+    /\.second$/,
+    /\.beta$/,
+    /\.third$/,
+  ]);
+});

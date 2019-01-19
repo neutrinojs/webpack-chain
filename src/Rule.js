@@ -1,92 +1,99 @@
 const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
+const Orderable = require('./Orderable');
 const Use = require('./Use');
 
-module.exports = class Rule extends ChainedMap {
-  constructor(parent, name) {
-    super(parent);
-    this.name = name;
-    this.names = [];
+const Rule = Orderable(
+  class extends ChainedMap {
+    constructor(parent, name) {
+      super(parent);
+      this.name = name;
+      this.names = [];
 
-    let rule = this;
-    while (rule instanceof Rule) {
-      this.names.unshift(rule.name);
-      rule = rule.parent;
+      let rule = this;
+      while (rule instanceof Rule) {
+        this.names.unshift(rule.name);
+        rule = rule.parent;
+      }
+
+      this.include = new ChainedSet(this);
+      this.exclude = new ChainedSet(this);
+
+      this.createMethodWithMap('use', 'uses', name => new Use(this, name));
+      this.createMethodWithMap('oneOf', 'oneOfs', name => new Rule(this, name));
+
+      this.extend([
+        'enforce',
+        'issuer',
+        'parser',
+        'resource',
+        'resourceQuery',
+        'sideEffects',
+        'test',
+        'type',
+      ]);
     }
 
-    this.include = new ChainedSet(this);
-    this.exclude = new ChainedSet(this);
-
-    this.createMethodWithMap('use', 'uses', name => new Use(this, name));
-    this.createMethodWithMap('oneOf', 'oneOfs', name => new Rule(this, name));
-
-    this.extend([
-      'enforce',
-      'issuer',
-      'parser',
-      'resource',
-      'resourceQuery',
-      'sideEffects',
-      'test',
-      'type',
-    ]);
-  }
-
-  pre() {
-    return this.enforce('pre');
-  }
-
-  post() {
-    return this.enforce('post');
-  }
-
-  toConfig() {
-    const config = this.clean(
-      Object.assign(this.entries() || {}, {
-        include: this.include.values(),
-        exclude: this.exclude.values(),
-        oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
-        use: this.uses.values().map(use => use.toConfig()),
-      })
-    );
-
-    Object.defineProperties(config, {
-      __ruleNames: { value: this.names },
-    });
-
-    return config;
-  }
-
-  merge(obj, omit = []) {
-    if (!omit.includes('include') && 'include' in obj) {
-      this.include.merge(obj.include);
+    pre() {
+      return this.enforce('pre');
     }
 
-    if (!omit.includes('exclude') && 'exclude' in obj) {
-      this.exclude.merge(obj.exclude);
+    post() {
+      return this.enforce('post');
     }
 
-    if (!omit.includes('use') && 'use' in obj) {
-      Object.keys(obj.use).forEach(name => this.use(name).merge(obj.use[name]));
-    }
-
-    if (!omit.includes('oneOf') && 'oneOf' in obj) {
-      Object.keys(obj.oneOf).forEach(name =>
-        this.oneOf(name).merge(obj.oneOf[name])
+    toConfig() {
+      const config = this.clean(
+        Object.assign(this.entries() || {}, {
+          include: this.include.values(),
+          exclude: this.exclude.values(),
+          oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
+          use: this.uses.values().map(use => use.toConfig()),
+        })
       );
+
+      Object.defineProperties(config, {
+        __ruleNames: { value: this.names },
+      });
+
+      return config;
     }
 
-    if (!omit.includes('test') && 'test' in obj) {
-      this.test(obj.test instanceof RegExp ? obj.test : new RegExp(obj.test));
-    }
+    merge(obj, omit = []) {
+      if (!omit.includes('include') && 'include' in obj) {
+        this.include.merge(obj.include);
+      }
 
-    return super.merge(obj, [
-      ...omit,
-      'include',
-      'exclude',
-      'use',
-      'oneOf',
-      'test',
-    ]);
+      if (!omit.includes('exclude') && 'exclude' in obj) {
+        this.exclude.merge(obj.exclude);
+      }
+
+      if (!omit.includes('use') && 'use' in obj) {
+        Object.keys(obj.use).forEach(name =>
+          this.use(name).merge(obj.use[name])
+        );
+      }
+
+      if (!omit.includes('oneOf') && 'oneOf' in obj) {
+        Object.keys(obj.oneOf).forEach(name =>
+          this.oneOf(name).merge(obj.oneOf[name])
+        );
+      }
+
+      if (!omit.includes('test') && 'test' in obj) {
+        this.test(obj.test instanceof RegExp ? obj.test : new RegExp(obj.test));
+      }
+
+      return super.merge(obj, [
+        ...omit,
+        'include',
+        'exclude',
+        'use',
+        'oneOf',
+        'test',
+      ]);
+    }
   }
-};
+);
+
+module.exports = Rule;

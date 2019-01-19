@@ -367,6 +367,7 @@ config
   .context(context)
   .externals(externals)
   .loader(loader)
+  .name(name)
   .mode(mode)
   .parallelism(parallelism)
   .profile(profile)
@@ -995,6 +996,66 @@ config.module
         .loader('file-loader')
 ```
 
+#### Config module rules oneOfs (conditional rules): ordering before
+Specify that the current `oneOf` context should operate before another named
+`oneOf`. You cannot use both `.before()` and `.after()` on the same `oneOf`.
+
+```js
+config.module
+  .rule(name)
+    .oneOf(name)
+      .before()
+
+// Example
+
+config.module
+  .rule('scss')
+    .test(/\.scss$/)
+    .oneOf('normal')
+      .use('sass')
+        .loader('sass-loader')
+        .end()
+      .end()
+    .oneOf('sass-vars')
+      .before('normal')
+      .resourceQuery(/\?sassvars/)
+      .use('sass-vars')
+        .loader('sass-vars-to-js-loader')
+```
+
+#### Config module rules oneOfs (conditional rules): ordering after
+Specify that the current `oneOf` context should operate after another named
+`oneOf`. You cannot use both `.before()` and `.after()` on the same `oneOf`.
+
+```js
+config.module
+  .rule(name)
+    .oneOf(name)
+      .after()
+
+// Example
+
+config.module
+  .rule('scss')
+    .test(/\.scss$/)
+    .oneOf('vue')
+      .resourceQuery(/\?vue/)
+      .use('vue-style')
+        .loader('vue-style-loader')
+        .end()
+      .end()    
+    .oneOf('normal')
+      .use('sass')
+        .loader('sass-loader')
+        .end()
+      .end()
+    .oneOf('sass-vars')
+      .after('vue')
+      .resourceQuery(/\?sassvars/)
+      .use('sass-vars')
+        .loader('sass-vars-to-js-loader')
+```
+
 ---
 
 ### Merging Config
@@ -1074,7 +1135,7 @@ config.merge({
     [key]: value
   },
 
-  optimizations: {
+  optimization: {
     concatenateModules,
     flagIncludedChunks,
     mergeDuplicateChunks,
