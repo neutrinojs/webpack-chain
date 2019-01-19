@@ -1,10 +1,13 @@
 const merge = require('deepmerge');
 const Chainable = require('./Chainable');
 
-module.exports = class extends Chainable {
+module.exports = class ChainedMap extends Chainable {
   constructor(parent) {
     super(parent);
     this.store = new Map();
+    this._methodMap = new Map();
+    this._compatibleMethods = new Set();
+    this._compatible = false;
   }
 
   extend(methods) {
@@ -13,6 +16,19 @@ module.exports = class extends Chainable {
       this[method] = value => this.set(method, value);
     });
     return this;
+  }
+
+  createMethodWithMap(method, mapName, methodFactory) {
+    const map = new ChainedMap(this);
+    this[mapName] = map;
+    this[method] = name => {
+      if (this._compatibleMethods.has(method) && Array.isArray(name)) {
+        map._compatibleSet(name);
+        return this;
+      }
+      return map.getOrCompute(name, methodFactory.bind(map, name));
+    };
+    this._methodMap.set(method, map);
   }
 
   clear() {
@@ -69,6 +85,18 @@ module.exports = class extends Chainable {
   }
 
   get(key) {
+    if (this._methodMap.has(key) && this._compatibleMethods.has(key)) {
+      const map = this._methodMap.get(key);
+      return map.values().map(value => {
+        if (
+          typeof value === 'object' &&
+          value instanceof ChainedMap &&
+          typeof value.toConfig === 'function'
+        )
+          return value.toConfig();
+        return value;
+      });
+    }
     return this.store.get(key);
   }
 
@@ -85,6 +113,22 @@ module.exports = class extends Chainable {
 
   set(key, value) {
     this.store.set(key, value);
+    return this;
+  }
+
+  _compatibleSet(args) {
+    this.clear();
+    args.forEach((item, index) => {
+      this.set(`__compatible_${index}__`, item);
+    });
+    return this;
+  }
+
+  compatible(method) {
+    if (this._methodMap.has(method)) {
+      this._compatibleMethods.add(method);
+      this._methodMap.get(method)._compatible = true;
+    }
     return this;
   }
 
