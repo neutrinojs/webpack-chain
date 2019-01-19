@@ -12,7 +12,13 @@ module.exports = class extends ChainedMap {
     this.mainFields = new ChainedSet(this);
     this.mainFiles = new ChainedSet(this);
     this.modules = new ChainedSet(this);
-    this.plugins = new ChainedMap(this);
+
+    this.createMethodWithMap(
+      'plugin',
+      'plugins',
+      name => new Plugin(this, name, 'resolve.plugin')
+    );
+
     this.extend([
       'cachePredicate',
       'cacheWithContext',
@@ -22,13 +28,6 @@ module.exports = class extends ChainedMap {
       'symlinks',
       'unsafeCache',
     ]);
-  }
-
-  plugin(name) {
-    return this.plugins.getOrCompute(
-      name,
-      () => new Plugin(this, name, 'resolve.plugin')
-    );
   }
 
   toConfig() {

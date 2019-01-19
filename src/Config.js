@@ -13,15 +13,25 @@ module.exports = class extends ChainedMap {
   constructor() {
     super();
     this.devServer = new DevServer(this);
-    this.entryPoints = new ChainedMap(this);
     this.module = new Module(this);
     this.node = new ChainedMap(this);
     this.optimization = new Optimization(this);
     this.output = new Output(this);
     this.performance = new Performance(this);
-    this.plugins = new ChainedMap(this);
     this.resolve = new Resolve(this);
     this.resolveLoader = new ResolveLoader(this);
+
+    this.createMethodWithMap(
+      'entry',
+      'entryPoints',
+      () => new ChainedSet(this)
+    );
+    this.createMethodWithMap(
+      'plugin',
+      'plugins',
+      name => new Plugin(this, name)
+    );
+
     this.extend([
       'amd',
       'bail',
@@ -104,14 +114,6 @@ module.exports = class extends ChainedMap {
       },
       2
     );
-  }
-
-  entry(name) {
-    return this.entryPoints.getOrCompute(name, () => new ChainedSet(this));
-  }
-
-  plugin(name) {
-    return this.plugins.getOrCompute(name, () => new Plugin(this, name));
   }
 
   toConfig() {

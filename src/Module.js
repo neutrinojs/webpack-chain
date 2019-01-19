@@ -4,17 +4,15 @@ const Rule = require('./Rule');
 module.exports = class extends ChainedMap {
   constructor(parent) {
     super(parent);
-    this.rules = new ChainedMap(this);
-    this.defaultRules = new ChainedMap(this);
+
+    this.createMethodWithMap('rule', 'rules', name => new Rule(this, name));
+    this.createMethodWithMap(
+      'defaultRule',
+      'defaultRules',
+      name => new Rule(this, name)
+    );
+
     this.extend(['noParse']);
-  }
-
-  defaultRule(name) {
-    return this.defaultRules.getOrCompute(name, () => new Rule(this, name));
-  }
-
-  rule(name) {
-    return this.rules.getOrCompute(name, () => new Rule(this, name));
   }
 
   toConfig() {

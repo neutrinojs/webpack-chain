@@ -14,10 +14,12 @@ module.exports = class Rule extends ChainedMap {
       rule = rule.parent;
     }
 
-    this.uses = new ChainedMap(this);
     this.include = new ChainedSet(this);
     this.exclude = new ChainedSet(this);
-    this.oneOfs = new ChainedMap(this);
+
+    this.createMethodWithMap('use', 'uses', name => new Use(this, name));
+    this.createMethodWithMap('oneOf', 'oneOfs', name => new Rule(this, name));
+
     this.extend([
       'enforce',
       'issuer',
@@ -28,14 +30,6 @@ module.exports = class Rule extends ChainedMap {
       'test',
       'type',
     ]);
-  }
-
-  use(name) {
-    return this.uses.getOrCompute(name, () => new Use(this, name));
-  }
-
-  oneOf(name) {
-    return this.oneOfs.getOrCompute(name, () => new Rule(this, name));
   }
 
   pre() {

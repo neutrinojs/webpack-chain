@@ -4,7 +4,13 @@ const Plugin = require('./Plugin');
 module.exports = class extends ChainedMap {
   constructor(parent) {
     super(parent);
-    this.minimizers = new ChainedMap(this);
+
+    this.createMethodWithMap(
+      'minimizer',
+      'minimizers',
+      name => new Plugin(this, name, 'optimization.minimizer')
+    );
+
     this.extend([
       'concatenateModules',
       'flagIncludedChunks',
@@ -24,13 +30,6 @@ module.exports = class extends ChainedMap {
       'splitChunks',
       'usedExports',
     ]);
-  }
-
-  minimizer(name) {
-    return this.minimizers.getOrCompute(
-      name,
-      () => new Plugin(this, name, 'optimization.minimizer')
-    );
   }
 
   toConfig() {
