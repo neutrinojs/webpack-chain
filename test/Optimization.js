@@ -105,3 +105,38 @@ test('toConfig with values', t => {
     },
   });
 });
+
+test('enable compatible for minimizer', t => {
+  const optimization = new Optimization();
+  optimization.compatible('minimizer');
+  t.is(typeof optimization.minimizer, 'function');
+
+  const pluginAlpha = new StringifyPlugin('alpha');
+  const pluginBeta = new StringifyPlugin('beta');
+  const pluginGamma = new StringifyPlugin('gamma');
+
+  optimization.minimizer([pluginAlpha, pluginBeta]);
+  t.deepEqual(optimization.get('minimizer'), [pluginAlpha, pluginBeta]);
+
+  optimization.minimizer('gamma').use(pluginGamma);
+  t.deepEqual(optimization.get('minimizer'), [
+    pluginAlpha,
+    pluginBeta,
+    pluginGamma,
+  ]);
+  optimization.minimizers.delete('gamma');
+  t.deepEqual(optimization.get('minimizer'), [pluginAlpha, pluginBeta]);
+
+  optimization.minimizer('delta').use(StringifyPlugin, ['delta']);
+  t.deepEqual(optimization.get('minimizer'), [
+    pluginAlpha,
+    pluginBeta,
+    new StringifyPlugin('delta'),
+  ]);
+  optimization.minimizers.delete('delta');
+  t.deepEqual(optimization.get('minimizer'), [pluginAlpha, pluginBeta]);
+
+  const pluginEpsilon = new StringifyPlugin('epsilon');
+  optimization.minimizer([pluginEpsilon]);
+  t.deepEqual(optimization.get('minimizer'), [pluginEpsilon]);
+});

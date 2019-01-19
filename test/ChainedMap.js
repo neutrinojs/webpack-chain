@@ -187,3 +187,94 @@ test('clean empty object', t => {
   t.true('alpha' in map.entries());
   t.false('alpha' in map.clean(map.entries()));
 });
+
+test('create method with nested chainedMap', t => {
+  const map = new ChainedMap();
+  const testRecord = {};
+  map.createMethodWithMap('testMethod', 'testMethodMap', name => {
+    testRecord[name] = { id: Math.random() };
+    return testRecord[name];
+  });
+  t.is(typeof map.testMethod, 'function');
+  t.truthy(map.testMethodMap instanceof ChainedMap);
+
+  const computedValue = map.testMethod('testKey');
+  t.is(typeof computedValue.id, 'number');
+  t.is(computedValue, testRecord.testKey);
+  t.is(map.testMethodMap.get('testKey'), testRecord.testKey);
+
+  const reGetComputedValue = map.testMethod('testKey');
+  t.is(reGetComputedValue, computedValue);
+
+  const anotherComputedValue = map.testMethod('testKey2');
+  t.is(typeof anotherComputedValue.id, 'number');
+  t.is(anotherComputedValue, testRecord.testKey2);
+  t.is(map.testMethodMap.get('testKey2'), testRecord.testKey2);
+  t.is(map.testMethodMap.get('testKey'), testRecord.testKey);
+
+  map.testMethodMap.clear();
+  t.is(map.testMethodMap.get('testKey2'), undefined);
+  t.is(map.testMethodMap.get('testKey'), undefined);
+});
+
+test('create compatible method with nested chainedMap', t => {
+  const map = new ChainedMap();
+  const testRecord = {};
+  class TestPlugin extends ChainedMap {
+    constructor(parent, name) {
+      super(parent);
+      this.name = name;
+    }
+
+    use(args) {
+      testRecord[this.name] = args;
+      return this;
+    }
+
+    toConfig() {
+      return testRecord[this.name];
+    }
+  }
+
+  map.createMethodWithMap(
+    'testMethod',
+    'testMethodMap',
+    name => new TestPlugin(map, name)
+  );
+  map.compatible('testMethod');
+  const data1 = { id: Math.random() };
+  const data2 = { id: Math.random() };
+
+  // compatible with shorthand style
+  map.testMethod([data1, data2]);
+  t.deepEqual(map.get('testMethod'), [data1, data2]);
+
+  // mix-styles supported
+  const data3 = { id: Math.random() };
+  const childMap = map.testMethod('data3');
+  t.truthy(childMap instanceof TestPlugin);
+  childMap.use(data3);
+  t.deepEqual(map.get('testMethod'), [data1, data2, data3]);
+
+  // should be ok with chain
+  map
+    .testMethod('data4')
+    .use('data4')
+    .end()
+    .testMethod('data5')
+    .use('data5');
+  t.deepEqual(map.get('testMethod'), [data1, data2, data3, 'data4', 'data5']);
+  map.testMethodMap.delete('data4');
+  t.deepEqual(map.get('testMethod'), [data1, data2, data3, 'data5']);
+
+  // could be override
+  map.testMethod(['data6']);
+  t.deepEqual(map.get('testMethod'), ['data6']);
+
+  map.testMethodMap.clear();
+  t.deepEqual(map.get('testMethod'), []);
+
+  map.testMethod(['data7']);
+  map.testMethod([]);
+  t.deepEqual(map.get('testMethod'), []);
+});
