@@ -21,6 +21,7 @@ config
   .externals(['foo', 'bar'])
   .externals((context, request, cb) => cb(null, true))
   .loader({})
+  .name("config-name")
   .mode("development")
   .mode("production")
   .profile(false)
