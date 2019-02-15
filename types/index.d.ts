@@ -110,6 +110,7 @@ declare namespace Config {
     devtoolFallbackModuleFilenameTemplate(value: any): this;
     devtoolLineToLine(value: any): this;
     devtoolModuleFilenameTemplate(value: any): this;
+    globalObject(value: string): this;
     hashFunction(value: string): this;
     hashDigest(value: string): this;
     hashDigestLength(value: number): this;
