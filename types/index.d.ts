@@ -56,7 +56,7 @@ declare class Config extends __Config.ChainedMap<void> {
   externals(value: webpack.ExternalsElement | webpack.ExternalsElement[]): this;
   loader(value: any): this;
   name(value: string): this;
-  mode(value: 'development' | 'production') : this;
+  mode(value: 'none' | 'development' | 'production') : this;
   parallelism(value: number) : this;
   profile(value: boolean): this;
   recordsPath(value: string): this;
