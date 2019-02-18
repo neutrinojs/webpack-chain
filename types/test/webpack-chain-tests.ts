@@ -285,6 +285,14 @@ config
       .delete('compile')
       .end()
     .end()
+  
+  //** support https://webpack.js.org/configuration/module/#ruletype  */
+  .module
+    .rule('mjs-compile')
+      .test(/\.mjs$/)
+      .type('javascript/auto')
+      .end()
+    .end()
 
   .merge({})
   .toConfig();
