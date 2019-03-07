@@ -212,6 +212,7 @@ declare namespace Config {
 
     parser(value: { [optName: string]: any }): this;
     test(value: webpack.Condition | webpack.Condition[]): this;
+    type(value: 'javascript/auto' | 'javascript/dynamic' | 'javascript/esm' | 'json' | 'webassembly/experimental'): this;
     enforce(value: 'pre' | 'post'): this;
 
     use(name: string): Use;
