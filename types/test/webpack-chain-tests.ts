@@ -63,6 +63,7 @@ config
     .devtoolLineToLine('')
     .devtoolModuleFilenameTemplate('')
     .filename('main.js')
+    .globalObject('global')
     .hashFunction('md5')
     .hashDigest('md5')
     .hashDigestLength(15)
