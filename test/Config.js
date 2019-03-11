@@ -1,7 +1,7 @@
 import test from 'ava';
 import { validate } from 'webpack';
 import EnvironmentPlugin from 'webpack/lib/EnvironmentPlugin';
-import stringify from 'javascript-stringify';
+import { stringify } from 'javascript-stringify';
 import Config from '../src/Config';
 
 class StringifyPlugin {
