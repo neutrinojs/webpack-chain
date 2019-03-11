@@ -1385,8 +1385,9 @@ Config.toString({
     ],
   },
 })
+```
 
-/*
+```
 {
   plugins: [
     /* config.plugin('foo') */
@@ -1407,7 +1408,6 @@ Config.toString({
     ]
   }
 }
-*/
 ```
 
 [npm-image]: https://img.shields.io/npm/v/webpack-chain.svg
