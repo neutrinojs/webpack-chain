@@ -46,7 +46,7 @@ module.exports = class extends ChainedMap {
 
   static toString(config, { verbose = false, configPrefix = 'config' } = {}) {
     // eslint-disable-next-line global-require
-    const stringify = require('javascript-stringify');
+    const { stringify } = require('javascript-stringify');
 
     return stringify(
       config,

@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "deepmerge": "^1.5.2",
-    "javascript-stringify": "^1.6.0"
+    "javascript-stringify": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^10.12.17",
