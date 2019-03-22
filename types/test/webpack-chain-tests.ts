@@ -128,6 +128,9 @@ config
     .packageMains
       .add('index.js')
       .end()
+    .plugin('foo')
+      .use(webpack.DefinePlugin)
+      .end()
     .end()
 
   .performance
