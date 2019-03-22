@@ -198,11 +198,9 @@ declare namespace Config {
     plugin(name: string): Plugin<this>;
   }
 
-  class ResolveLoader extends ChainedMap<Config> {
-    extensions: TypedChainedSet<this, string>;
-    modules: TypedChainedSet<this, string>;
-    moduleExtensions: TypedChainedSet<this, string>;
-    packageMains: TypedChainedSet<this, string>;
+  class ResolveLoader extends Resolve {
+    moduleExtensions: ChainedSet<this>;
+    packageMains: ChainedSet<this>
   }
 
   class Rule extends ChainedMap<Module> {
