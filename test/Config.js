@@ -524,6 +524,10 @@ test('toString with custom prefix', t => {
 
 test('static Config.toString', t => {
   const config = new Config();
+  const sass = {
+    __expression: `require('sass')`,
+    render() {},
+  };
 
   config.plugin('foo').use(class TestPlugin {});
 
@@ -536,7 +540,10 @@ test('static Config.toString', t => {
               use: [
                 {
                   loader: 'banner-loader',
-                  options: { prefix: 'banner-prefix.txt' },
+                  options: {
+                    prefix: 'banner-prefix.txt',
+                    implementation: sass,
+                  },
                 },
               ],
             },
@@ -557,7 +564,8 @@ test('static Config.toString', t => {
           {
             loader: 'banner-loader',
             options: {
-              prefix: 'banner-prefix.txt'
+              prefix: 'banner-prefix.txt',
+              implementation: require('sass')
             }
           }
         ]

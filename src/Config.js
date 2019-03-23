@@ -91,11 +91,12 @@ module.exports = class extends ChainedMap {
           return prefix + stringify(value);
         }
 
+        if (value && value.__expression) {
+          return value.__expression;
+        }
+
         // shorten long functions
         if (typeof value === 'function') {
-          if (value.__expression) {
-            return value.__expression;
-          }
           if (!verbose && value.toString().length > 100) {
             return `function () { /* omitted long function */ }`;
           }
