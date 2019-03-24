@@ -251,7 +251,7 @@ declare namespace Config {
 
   interface LoaderOptions { [name: string]: any; }
 
-  class Use extends ChainedMap<Rule> implements Orderable {
+  class Use<Parent = Rule> extends ChainedMap<Parent> implements Orderable {
     loader(value: string): this;
     options(value: LoaderOptions): this;
 
@@ -264,7 +264,7 @@ declare namespace Config {
 
   class OneOf extends ChainedMap<Rule> implements Orderable {
     resourceQuery(value: webpack.Condition | webpack.Condition[]): this;
-    use(name: string): Use;
+    use(name: string): Use<this>;
 
     // Orderable
     before(name: string): this;
