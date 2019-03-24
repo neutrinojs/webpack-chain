@@ -636,7 +636,7 @@ config.optimization
   .tap(args => newArgs)
 
 // Example
-config
+config.optimization
   .minimizer('css')
   .tap(args => [...args, { cssProcessorOptions: { safe: false } }])
 ```
