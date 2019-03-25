@@ -1043,7 +1043,7 @@ config.module
       .use('vue-style')
         .loader('vue-style-loader')
         .end()
-      .end()    
+      .end()
     .oneOf('normal')
       .use('sass')
         .loader('sass-loader')
@@ -1315,11 +1315,14 @@ config.toString();
 ```
 
 By default the generated string cannot be used directly as real webpack config
-if it contains functions and plugins that need to be required. In order to
-generate usable config, you can customize how functions and plugins are
+if it contains objects and plugins that need to be required. In order to
+generate usable config, you can customize how objects and plugins are
 stringified by setting a special `__expression` property on them:
 
 ``` js
+const sass = require('sass');
+sass.__expression = `require('sass');
+
 class MyPlugin {}
 MyPlugin.__expression = `require('my-plugin')`;
 
@@ -1328,7 +1331,7 @@ myFunction.__expression = `require('my-function')`;
 
 config
   .plugin('example')
-    .use(MyPlugin, [{ fn: myFunction }]);
+    .use(MyPlugin, [{ fn: myFunction, implementation: sass, }]);
 
 config.toString();
 
@@ -1336,7 +1339,8 @@ config.toString();
 {
   plugins: [
     new (require('my-plugin'))({
-      fn: require('my-function')
+      fn: require('my-function'),
+      implementation: require('sass')
     })
   ]
 }
