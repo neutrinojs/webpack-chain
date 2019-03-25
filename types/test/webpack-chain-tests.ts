@@ -1,5 +1,5 @@
 /**
- * Notes: The order structure of the type check follows the order 
+ * Notes: The order structure of the type check follows the order
  * of this document: https://github.com/neutrinojs/webpack-chain#config
  */
 import Config = require('webpack-chain');
@@ -191,7 +191,7 @@ config
     .delete('__dirname')
     .clear()
     .end()
-  
+
   .devServer
     .allowedHosts
       .add('host.com')
@@ -282,6 +282,7 @@ config
         .use('url')
           .loader('url-loader')
           .end()
+        .end()
       .oneOfs
         .delete('inline')
         .end()
@@ -290,7 +291,7 @@ config
       .delete('compile')
       .end()
     .end()
-  
+
   //** support https://webpack.js.org/configuration/module/#ruletype  */
   .module
     .rule('mjs-compile')
