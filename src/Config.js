@@ -31,6 +31,7 @@ module.exports = class extends ChainedMap {
       'externals',
       'loader',
       'mode',
+      'name',
       'parallelism',
       'profile',
       'recordsInputPath',
@@ -45,7 +46,7 @@ module.exports = class extends ChainedMap {
 
   static toString(config, { verbose = false, configPrefix = 'config' } = {}) {
     // eslint-disable-next-line global-require
-    const stringify = require('javascript-stringify');
+    const { stringify } = require('javascript-stringify');
 
     return stringify(
       config,
@@ -90,11 +91,12 @@ module.exports = class extends ChainedMap {
           return prefix + stringify(value);
         }
 
+        if (value && value.__expression) {
+          return value.__expression;
+        }
+
         // shorten long functions
         if (typeof value === 'function') {
-          if (value.__expression) {
-            return value.__expression;
-          }
           if (!verbose && value.toString().length > 100) {
             return `function () { /* omitted long function */ }`;
           }

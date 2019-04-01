@@ -1,7 +1,8 @@
 {
   "name": "webpack-chain",
-  "version": "5.0.1",
+  "version": "5.2.4",
   "main": "src/Config.js",
+  "typings": "types/index.d.ts",
   "repository": "neutrinojs/webpack-chain",
   "keywords": [
     "webpack",
@@ -11,30 +12,35 @@
     "api"
   ],
   "files": [
-    "src"
+    "src",
+    "types/*.d.ts"
   ],
   "author": "Eli Perelman <eli@eliperelman.com>",
   "license": "MPL-2.0",
   "scripts": {
     "test": "ava test",
+    "test:types": "tsc -p ./types/test/tsconfig.json",
     "lint": "eslint --cache --report-unused-disable-directives --format codeframe \".*.js\" src test",
     "changelog": "auto-changelog --remote upstream --commit-limit false",
     "version": "yarn changelog --package && git add CHANGELOG.md"
   },
   "dependencies": {
     "deepmerge": "^1.5.2",
-    "javascript-stringify": "^1.6.0"
+    "javascript-stringify": "^2.0.0"
   },
   "devDependencies": {
+    "@types/node": "^10.12.17",
+    "@types/webpack": "^4.4.21",
     "auto-changelog": "^1.8.0",
     "ava": "^1.0.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-ava": "^5.1.1",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-ava": "^6.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "prettier": "^1.14.3",
+    "typescript": "^3.2.2",
     "webpack": "^4.20.2"
   }
 }
