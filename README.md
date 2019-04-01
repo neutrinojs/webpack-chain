@@ -17,7 +17,7 @@ This documentation corresponds to v5 of webpack-chain. For previous versions, se
 _Note: while webpack-chain is utilized extensively in Neutrino, this package is
 completely standalone and can be used by any project._
 
-**[chinese docs（中文文档）](https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans)**
+**[Chinese docs(中文文档)](https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans)**
 
 ## Introduction
 
