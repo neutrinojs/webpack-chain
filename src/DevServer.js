@@ -8,6 +8,8 @@ module.exports = class extends ChainedMap {
     this.allowedHosts = new ChainedSet(this);
 
     this.extend([
+      'after',
+      'before',
       'bonjour',
       'clientLogLevel',
       'color',
@@ -20,10 +22,13 @@ module.exports = class extends ChainedMap {
       'host',
       'hot',
       'hotOnly',
+      'http2',
       'https',
+      'index',
       'info',
       'inline',
       'lazy',
+      'mimeTypes',
       'noInfo',
       'open',
       'openPage',
@@ -44,6 +49,7 @@ module.exports = class extends ChainedMap {
       'useLocalIp',
       'watchContentBase',
       'watchOptions',
+      'writeToDisk'
     ]);
   }
 
