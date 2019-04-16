@@ -49,7 +49,7 @@ module.exports = class extends ChainedMap {
       'useLocalIp',
       'watchContentBase',
       'watchOptions',
-      'writeToDisk'
+      'writeToDisk',
     ]);
   }
 
