@@ -55,7 +55,7 @@ const Rule = Orderable(
           exclude: this.exclude.values(),
           oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
           use: this.uses.values().map(use => use.toConfig()),
-        })
+        }),
       );
 
       Object.defineProperties(config, {
@@ -76,13 +76,13 @@ const Rule = Orderable(
 
       if (!omit.includes('use') && 'use' in obj) {
         Object.keys(obj.use).forEach(name =>
-          this.use(name).merge(obj.use[name])
+          this.use(name).merge(obj.use[name]),
         );
       }
 
       if (!omit.includes('oneOf') && 'oneOf' in obj) {
         Object.keys(obj.oneOf).forEach(name =>
-          this.oneOf(name).merge(obj.oneOf[name])
+          this.oneOf(name).merge(obj.oneOf[name]),
         );
       }
 
@@ -99,7 +99,7 @@ const Rule = Orderable(
         'test',
       ]);
     }
-  }
+  },
 );
 
 module.exports = Rule;

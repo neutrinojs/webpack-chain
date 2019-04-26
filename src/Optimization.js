@@ -29,7 +29,7 @@ module.exports = class extends ChainedMap {
   minimizer(name) {
     return this.minimizers.getOrCompute(
       name,
-      () => new Plugin(this, name, 'optimization.minimizer')
+      () => new Plugin(this, name, 'optimization.minimizer'),
     );
   }
 
@@ -37,14 +37,14 @@ module.exports = class extends ChainedMap {
     return this.clean(
       Object.assign(this.entries() || {}, {
         minimizer: this.minimizers.values().map(plugin => plugin.toConfig()),
-      })
+      }),
     );
   }
 
   merge(obj, omit = []) {
     if (!omit.includes('minimizer') && 'minimizer' in obj) {
       Object.keys(obj.minimizer).forEach(name =>
-        this.minimizer(name).merge(obj.minimizer[name])
+        this.minimizer(name).merge(obj.minimizer[name]),
       );
     }
 

@@ -92,7 +92,7 @@ test('merge with omit', t => {
       modules: ['dist'],
       moduleExtensions: ['-fake'],
     },
-    ['moduleExtensions']
+    ['moduleExtensions'],
   );
 
   t.deepEqual(resolveLoader.toConfig(), {

@@ -69,5 +69,5 @@ module.exports = Orderable(
 
       return config;
     }
-  }
+  },
 );

@@ -4,8 +4,8 @@ module.exports = Class =>
       if (this.__after) {
         throw new Error(
           `Unable to set .before(${JSON.stringify(
-            name
-          )}) with existing value for .after()`
+            name,
+          )}) with existing value for .after()`,
         );
       }
 
@@ -17,8 +17,8 @@ module.exports = Class =>
       if (this.__before) {
         throw new Error(
           `Unable to set .after(${JSON.stringify(
-            name
-          )}) with existing value for .before()`
+            name,
+          )}) with existing value for .before()`,
         );
       }
 

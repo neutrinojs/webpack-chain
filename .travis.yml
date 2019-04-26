@@ -5,7 +5,7 @@ node_js:
 - '6'
 - '8'
 - '10'
-- '11'
+- '12'
 before_install:
 # Required due to: https://github.com/travis-ci/travis-ci/issues/7951
 - curl -sSfL https://yarnpkg.com/install.sh | bash

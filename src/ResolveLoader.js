@@ -15,8 +15,8 @@ module.exports = class extends Resolve {
           moduleExtensions: this.moduleExtensions.values(),
           packageMains: this.packageMains.values(),
         },
-        super.toConfig()
-      )
+        super.toConfig(),
+      ),
     );
   }
 

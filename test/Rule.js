@@ -286,7 +286,7 @@ test('merge with omit', t => {
         },
       },
     },
-    ['use', 'oneOf']
+    ['use', 'oneOf'],
   );
 
   t.deepEqual(rule.toConfig(), {

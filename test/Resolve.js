@@ -120,7 +120,7 @@ test('merge with omit', t => {
       extensions: ['.jsx'],
       alias: { ReactDOM: 'src/react-dom' },
     },
-    ['alias']
+    ['alias'],
   );
 
   t.deepEqual(resolve.toConfig(), {

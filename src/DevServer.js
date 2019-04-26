@@ -59,8 +59,8 @@ module.exports = class extends ChainedMap {
         {
           allowedHosts: this.allowedHosts.values(),
         },
-        this.entries() || {}
-      )
+        this.entries() || {},
+      ),
     );
   }
 

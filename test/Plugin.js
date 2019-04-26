@@ -50,7 +50,7 @@ test('init', t => {
   });
   const initialized = plugin.get('init')(
     plugin.get('plugin'),
-    plugin.get('args')
+    plugin.get('args'),
   );
 
   t.is(instance, plugin);
