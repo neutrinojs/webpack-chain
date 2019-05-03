@@ -1,6 +1,6 @@
 {
   "name": "webpack-chain",
-  "version": "5.2.4",
+  "version": "6.0.0",
   "main": "src/Config.js",
   "typings": "types/index.d.ts",
   "repository": "neutrinojs/webpack-chain",
