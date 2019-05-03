@@ -7,8 +7,9 @@
 Use a chaining API to generate and simplify the modification of
 webpack version 2-4 configurations.
 
-This documentation corresponds to v5 of webpack-chain. For previous versions, see:
+This documentation corresponds to v6 of webpack-chain. For previous versions, see:
 
+* [v5 docs](https://github.com/neutrinojs/webpack-chain/tree/v5)
 * [v4 docs](https://github.com/neutrinojs/webpack-chain/tree/v4)
 * [v3 docs](https://github.com/neutrinojs/webpack-chain/tree/v3)
 * [v2 docs](https://github.com/neutrinojs/webpack-chain/tree/v2)
