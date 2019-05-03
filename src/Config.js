@@ -73,7 +73,7 @@ module.exports = class extends ChainedMap {
             stringify(
               value.__pluginArgs && value.__pluginArgs.length
                 ? { args: value.__pluginArgs }
-                : {}
+                : {},
             )
           );
         }
@@ -104,7 +104,7 @@ module.exports = class extends ChainedMap {
 
         return stringify(value);
       },
-      2
+      2,
     );
   }
 
@@ -133,9 +133,9 @@ module.exports = class extends ChainedMap {
         entry: Object.keys(entryPoints).reduce(
           (acc, key) =>
             Object.assign(acc, { [key]: entryPoints[key].values() }),
-          {}
+          {},
         ),
-      })
+      }),
     );
   }
 
@@ -157,13 +157,13 @@ module.exports = class extends ChainedMap {
 
     if (!omit.includes('entry') && 'entry' in obj) {
       Object.keys(obj.entry).forEach(name =>
-        this.entry(name).merge([].concat(obj.entry[name]))
+        this.entry(name).merge([].concat(obj.entry[name])),
       );
     }
 
     if (!omit.includes('plugin') && 'plugin' in obj) {
       Object.keys(obj.plugin).forEach(name =>
-        this.plugin(name).merge(obj.plugin[name])
+        this.plugin(name).merge(obj.plugin[name]),
       );
     }
 

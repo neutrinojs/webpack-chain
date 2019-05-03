@@ -473,7 +473,7 @@ test('toString', t => {
     )
   ]
 }
-  `.trim()
+  `.trim(),
   );
 });
 
@@ -500,7 +500,7 @@ test('toString for functions with custom expression', t => {
     ]
   }
 }
-  `.trim()
+  `.trim(),
   );
 });
 
@@ -518,7 +518,7 @@ test('toString with custom prefix', t => {
     new TestPlugin()
   ]
 }
-  `.trim()
+  `.trim(),
   );
 });
 
@@ -549,7 +549,7 @@ test('static Config.toString', t => {
             },
           ],
         },
-      })
+      }),
     ).trim(),
     `
 {
@@ -573,6 +573,6 @@ test('static Config.toString', t => {
     ]
   }
 }
-  `.trim()
+  `.trim(),
   );
 });
