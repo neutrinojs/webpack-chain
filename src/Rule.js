@@ -87,7 +87,11 @@ const Rule = Orderable(
       }
 
       if (!omit.includes('test') && 'test' in obj) {
-        this.test(obj.test instanceof RegExp ? obj.test : new RegExp(obj.test));
+        this.test(
+          obj.test instanceof RegExp || typeof obj.test === 'function'
+            ? obj.test
+            : new RegExp(obj.test),
+        );
       }
 
       return super.merge(obj, [

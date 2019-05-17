@@ -131,6 +131,15 @@ test('toConfig with values', t => {
   });
 });
 
+test('toConfig with test function', t => {
+  const rule = new Rule();
+  const test = s => s.includes('.js');
+
+  rule.test(test);
+
+  t.deepEqual(rule.toConfig(), { test });
+});
+
 test('merge empty', t => {
   const rule = new Rule();
   const obj = {
