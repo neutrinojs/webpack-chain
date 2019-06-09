@@ -53,9 +53,7 @@ module.exports = class extends ChainedMap {
       (value, indent, stringify) => {
         // improve plugin output
         if (value && value.__pluginName) {
-          const prefix = `/* ${configPrefix}.${value.__pluginType}('${
-            value.__pluginName
-          }') */\n`;
+          const prefix = `/* ${configPrefix}.${value.__pluginType}('${value.__pluginName}') */\n`;
           const constructorExpression = value.__pluginPath
             ? // The path is stringified to ensure special characters are escaped
               // (such as the backslashes in Windows-style paths).
