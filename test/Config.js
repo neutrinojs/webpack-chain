@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import test from 'ava';
 import { validate } from 'webpack';
 import EnvironmentPlugin from 'webpack/lib/EnvironmentPlugin';
