@@ -9,15 +9,11 @@ module.exports = class extends Resolve {
   }
 
   toConfig() {
-    return this.clean(
-      Object.assign(
-        {
-          moduleExtensions: this.moduleExtensions.values(),
-          packageMains: this.packageMains.values(),
-        },
-        super.toConfig(),
-      ),
-    );
+    return this.clean({
+      moduleExtensions: this.moduleExtensions.values(),
+      packageMains: this.packageMains.values(),
+      ...super.toConfig(),
+    });
   }
 
   merge(obj, omit = []) {

@@ -54,14 +54,10 @@ module.exports = class extends ChainedMap {
   }
 
   toConfig() {
-    return this.clean(
-      Object.assign(
-        {
-          allowedHosts: this.allowedHosts.values(),
-        },
-        this.entries() || {},
-      ),
-    );
+    return this.clean({
+      allowedHosts: this.allowedHosts.values(),
+      ...(this.entries() || {}),
+    });
   }
 
   merge(obj, omit = []) {
