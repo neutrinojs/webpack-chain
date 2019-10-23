@@ -96,6 +96,7 @@ declare namespace Config {
     rules: TypedChainedMap<this, Rule>;
     rule(name: string): Rule;
     noParse(noParse: RegExp | RegExp[] | ((contentPath: string) => boolean)): this;
+    strictExportPresence(value: boolean): this;
   }
 
   class Output extends ChainedMap<Config> {

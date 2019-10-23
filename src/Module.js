@@ -6,7 +6,7 @@ module.exports = class extends ChainedMap {
     super(parent);
     this.rules = new ChainedMap(this);
     this.defaultRules = new ChainedMap(this);
-    this.extend(['noParse']);
+    this.extend(['noParse', 'strictExportPresence']);
   }
 
   defaultRule(name) {
