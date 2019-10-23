@@ -34,6 +34,7 @@ module.exports = class extends ChainedMap {
       'strictModuleExceptionHandling',
       'umdNamedDefine',
       'webassemblyModuleFilename',
+      'futureEmitAssets',
     ]);
   }
 };

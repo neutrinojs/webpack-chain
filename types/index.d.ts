@@ -126,6 +126,7 @@ declare namespace Config {
     sourcePrefix(value: string): this;
     strictModuleExceptionHandling(value: boolean): this;
     umdNamedDefine(value: boolean): this;
+    futureEmitAssets(value: boolean): this;
   }
 
   class DevServer extends ChainedMap<Config> {
