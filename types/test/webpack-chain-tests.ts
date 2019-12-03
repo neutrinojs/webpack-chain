@@ -2,8 +2,13 @@
  * Notes: The order structure of the type check follows the order
  * of this document: https://github.com/neutrinojs/webpack-chain#config
  */
+import Resolver = require('enhanced-resolve/lib/Resolver');
 import Config = require('webpack-chain');
 import * as webpack from 'webpack';
+
+class ResolvePluginImpl extends webpack.ResolvePlugin {
+  apply(resolver: Resolver): void {}
+}
 
 const config = new Config();
 
@@ -114,7 +119,7 @@ config
       .add('index.js')
       .end()
     .plugin('foo')
-      .use(webpack.DefinePlugin, [])
+      .use(ResolvePluginImpl, [])
       .end()
     .plugins
       .delete('foo')
