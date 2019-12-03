@@ -185,10 +185,20 @@ config
     .after('bar')
     .end()
 
+  .plugin('asString')
+    .use('package-name-or-path')
+    .end()
+
+  .plugin('asObject')
+    .use({ apply: (compiler: webpack.Compiler) => {}})
+    .end()
+
   .plugins
     .delete('foo')
     .delete('bar')
     .delete('baz')
+    .delete('asString')
+    .delete('asObject')
     .end()
 
   .node
