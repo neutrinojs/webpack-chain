@@ -334,11 +334,8 @@ test('ordered oneOfs', t => {
     .test(/\.beta$/)
     .after('second');
 
-  t.deepEqual(rule.toConfig().oneOf.map(o => o.test), [
-    /\.alpha$/,
-    /\.first$/,
-    /\.second$/,
-    /\.beta$/,
-    /\.third$/,
-  ]);
+  t.deepEqual(
+    rule.toConfig().oneOf.map(o => o.test),
+    [/\.alpha$/, /\.first$/, /\.second$/, /\.beta$/, /\.third$/],
+  );
 });
