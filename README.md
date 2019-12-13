@@ -1420,5 +1420,5 @@ Config.toString({
 [npm-image]: https://img.shields.io/npm/v/webpack-chain.svg
 [npm-downloads]: https://img.shields.io/npm/dt/webpack-chain.svg
 [npm-url]: https://www.npmjs.com/package/webpack-chain
-[travis-image]: https://api.travis-ci.org/neutrinojs/webpack-chain.svg?branch=master
-[travis-url]: https://travis-ci.org/neutrinojs/webpack-chain
+[travis-image]: https://api.travis-ci.com/neutrinojs/webpack-chain.svg?branch=master
+[travis-url]: https://travis-ci.com/neutrinojs/webpack-chain
