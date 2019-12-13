@@ -41,7 +41,7 @@ test('pre', t => {
   const instance = rule.pre();
 
   t.is(instance, rule);
-  t.deepEqual(rule.get('enforce'), 'pre');
+  t.is(rule.get('enforce'), 'pre');
 });
 
 test('post', t => {
@@ -49,7 +49,7 @@ test('post', t => {
   const instance = rule.post();
 
   t.is(instance, rule);
-  t.deepEqual(rule.get('enforce'), 'post');
+  t.is(rule.get('enforce'), 'post');
 });
 
 test('sets methods', t => {
