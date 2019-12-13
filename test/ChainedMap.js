@@ -32,7 +32,10 @@ test('getOrCompute', t => {
   const map = new ChainedMap();
 
   t.is(map.get('a'), undefined);
-  t.is(map.getOrCompute('a', () => 'alpha'), 'alpha');
+  t.is(
+    map.getOrCompute('a', () => 'alpha'),
+    'alpha',
+  );
   t.is(map.get('a'), 'alpha');
 });
 

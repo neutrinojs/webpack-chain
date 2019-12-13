@@ -38,7 +38,10 @@ test('ordering before', t => {
   map.set('beta', new Ordered().set('beta', 'beta'));
   map.set('alpha', new Ordered().set('alpha', 'alpha').before('beta'));
 
-  t.deepEqual(map.values().map(o => o.values()), [['alpha'], ['beta']]);
+  t.deepEqual(
+    map.values().map(o => o.values()),
+    [['alpha'], ['beta']],
+  );
 });
 
 test('ordering after', t => {
@@ -47,7 +50,10 @@ test('ordering after', t => {
   map.set('beta', new Ordered().set('beta', 'beta').after('alpha'));
   map.set('alpha', new Ordered().set('alpha', 'alpha'));
 
-  t.deepEqual(map.values().map(o => o.values()), [['alpha'], ['beta']]);
+  t.deepEqual(
+    map.values().map(o => o.values()),
+    [['alpha'], ['beta']],
+  );
 });
 
 test('ordering before and after', t => {
@@ -57,11 +63,10 @@ test('ordering before and after', t => {
   map.set('gamma', new Ordered().set('gamma', 'gamma').after('beta'));
   map.set('alpha', new Ordered().set('alpha', 'alpha').before('beta'));
 
-  t.deepEqual(map.values().map(o => o.values()), [
-    ['alpha'],
-    ['beta'],
-    ['gamma'],
-  ]);
+  t.deepEqual(
+    map.values().map(o => o.values()),
+    [['alpha'], ['beta'], ['gamma']],
+  );
 });
 
 test('merge with before', t => {
