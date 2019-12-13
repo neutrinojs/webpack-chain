@@ -29,7 +29,9 @@
     "javascript-stringify": "^2.0.0"
   },
   "devDependencies": {
+    "@types/enhanced-resolve": "^3.0.6",
     "@types/node": "^12.7.2",
+    "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.32.2",
     "auto-changelog": "^1.15.0",
     "ava": "^1.4.1",

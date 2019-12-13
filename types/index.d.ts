@@ -1,3 +1,4 @@
+import {Tapable} from 'tapable';
 import * as webpack from 'webpack';
 import * as https from 'https';
 
@@ -44,7 +45,7 @@ declare class Config extends __Config.ChainedMap<void> {
   output: Config.Output;
   optimization: Config.Optimization;
   performance: Config.Performance;
-  plugins: Config.Plugins<this>;
+  plugins: Config.Plugins<this, webpack.Plugin>;
   resolve: Config.Resolve;
   resolveLoader: Config.ResolveLoader;
 
@@ -68,7 +69,7 @@ declare class Config extends __Config.ChainedMap<void> {
   watchOptions(value: webpack.Options.WatchOptions): this;
 
   entry(name: string): Config.EntryPoint;
-  plugin(name: string): Config.Plugin<this>;
+  plugin(name: string): Config.Plugin<this, webpack.Plugin>;
 
   toConfig(): webpack.Configuration;
 }
@@ -80,11 +81,11 @@ declare namespace Config {
   class TypedChainedSet<Parent, Value> extends __Config.TypedChainedSet<Parent, Value> {}
   class ChainedSet<Parent> extends __Config.TypedChainedSet<Parent, any> {}
 
-  class Plugins<Parent> extends TypedChainedMap<Parent, Plugin<Parent>> {}
+  class Plugins<Parent, PluginType extends Tapable.Plugin = webpack.Plugin> extends TypedChainedMap<Parent, Plugin<Parent, PluginType>> {}
 
-  class Plugin<Parent> extends ChainedMap<Parent> implements Orderable {
-    init(value: (plugin: PluginClass, args: any[]) => webpack.Plugin): this;
-    use(plugin: PluginClass, args?: any[]): this;
+  class Plugin<Parent, PluginType extends Tapable.Plugin = webpack.Plugin> extends ChainedMap<Parent> implements Orderable {
+    init(value: (plugin: PluginType | PluginClass<PluginType>, args: any[]) => PluginType): this;
+    use(plugin: string | PluginType | PluginClass<PluginType>, args?: any[]): this;
     tap(f: (args: any[]) => any[]): this;
 
     // Orderable
@@ -186,7 +187,7 @@ declare namespace Config {
     mainFields: TypedChainedSet<this, string>;
     mainFiles: TypedChainedSet<this, string>;
     modules: TypedChainedSet<this, string>;
-    plugins: TypedChainedMap<this, Plugin<this>>;
+    plugins: TypedChainedMap<this, Plugin<this, webpack.ResolvePlugin>>;
 
     enforceExtension(value: boolean): this;
     enforceModuleExtension(value: boolean): this;
@@ -195,7 +196,7 @@ declare namespace Config {
     cachePredicate(value: (data: { path: string, request: string }) => boolean): this;
     cacheWithContext(value: boolean): this;
 
-    plugin(name: string): Plugin<this>;
+    plugin(name: string): Plugin<this, webpack.ResolvePlugin>;
   }
 
   class ResolveLoader extends Resolve {
@@ -225,7 +226,7 @@ declare namespace Config {
     flagIncludedChunks(value: boolean): this;
     mergeDuplicateChunks(value: boolean): this;
     minimize(value: boolean): this;
-    minimizer(name: string): Config.Plugin<this>;
+    minimizer(name: string): Config.Plugin<this, webpack.Plugin>;
     namedChunks(value: boolean): this;
     namedModules(value: boolean): this;
     nodeEnv(value: boolean | string): this;
@@ -285,8 +286,8 @@ declare namespace Config {
     '#@source-map' | '#@nosources-source-map' | '#@hidden-source-map' | '#@nosources-source-map' |
     boolean;
 
-  interface PluginClass {
-    new (...opts: any[]): webpack.Plugin;
+  interface PluginClass<PluginType extends Tapable.Plugin = webpack.Plugin> {
+    new (...opts: any[]): PluginType;
   }
 
   interface Orderable {
