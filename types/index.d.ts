@@ -263,7 +263,7 @@ declare namespace Config {
     after(name: string): this;
   }
 
-  class OneOf extends ChainedMap<Rule> implements Orderable {
+  class OneOf extends Rule implements Orderable {
     resourceQuery(value: webpack.Condition | webpack.Condition[]): this;
     use(name: string): Use<this>;
 
