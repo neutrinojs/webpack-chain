@@ -57,6 +57,7 @@ config
     .end()
 
   .output
+    .futureEmitAssets(true)
     .auxiliaryComment('Test Comment')
     .auxiliaryComment({
       root: 'Root Comment'
@@ -263,6 +264,7 @@ config
 
   .module
     .noParse(/.min.js$/)
+    .strictExportPresence(true)
     .rule('compile')
       .test(/.js$/)
       .include

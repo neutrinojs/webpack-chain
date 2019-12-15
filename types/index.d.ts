@@ -97,6 +97,7 @@ declare namespace Config {
     rules: TypedChainedMap<this, Rule>;
     rule(name: string): Rule;
     noParse(noParse: RegExp | RegExp[] | ((contentPath: string) => boolean)): this;
+    strictExportPresence(value: boolean): this;
   }
 
   class Output extends ChainedMap<Config> {
@@ -127,6 +128,7 @@ declare namespace Config {
     sourcePrefix(value: string): this;
     strictModuleExceptionHandling(value: boolean): this;
     umdNamedDefine(value: boolean): this;
+    futureEmitAssets(value: boolean): this;
   }
 
   class DevServer extends ChainedMap<Config> {

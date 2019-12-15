@@ -14,6 +14,7 @@ module.exports = class extends ChainedMap {
       'devtoolModuleFilenameTemplate',
       'devtoolNamespace',
       'filename',
+      'futureEmitAssets',
       'globalObject',
       'hashDigest',
       'hashDigestLength',
