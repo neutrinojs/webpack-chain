@@ -14,6 +14,7 @@ module.exports = class extends ChainedMap {
       'devtoolModuleFilenameTemplate',
       'devtoolNamespace',
       'filename',
+      'futureEmitAssets',
       'globalObject',
       'hashDigest',
       'hashDigestLength',
@@ -34,7 +35,6 @@ module.exports = class extends ChainedMap {
       'strictModuleExceptionHandling',
       'umdNamedDefine',
       'webassemblyModuleFilename',
-      'futureEmitAssets',
     ]);
   }
 };
