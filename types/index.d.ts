@@ -205,7 +205,7 @@ declare namespace Config {
   }
 
   class Rule extends ChainedMap<Module> {
-    oneOfs: TypedChainedMap<this, OneOf>;
+    oneOfs: TypedChainedMap<this, ChildRule>;
     uses: TypedChainedMap<this, Use>;
     include: TypedChainedSet<this, webpack.Condition>;
     exclude: TypedChainedSet<this, webpack.Condition>;
@@ -216,7 +216,7 @@ declare namespace Config {
     enforce(value: 'pre' | 'post'): this;
 
     use(name: string): Use;
-    oneOf(name: string): OneOf;
+    oneOf(name: string): ChildRule;
     pre(): this;
     post(): this;
   }
@@ -263,7 +263,7 @@ declare namespace Config {
     after(name: string): this;
   }
 
-  class OneOf extends Rule implements Orderable {
+  class OneOf extends ChainedMap<Rule> implements Orderable {
     resourceQuery(value: webpack.Condition | webpack.Condition[]): this;
     use(name: string): Use<this>;
 
@@ -271,6 +271,8 @@ declare namespace Config {
     before(name: string): this;
     after(name: string): this;
   }
+
+  type ChildRule = OneOf & Rule;
 
   type DevTool = 'eval' | 'inline-source-map' | 'cheap-eval-source-map' | 'cheap-source-map' |
     'cheap-module-eval-source-map' | 'cheap-module-source-map' | 'eval-source-map' | 'source-map' |

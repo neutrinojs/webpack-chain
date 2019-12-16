@@ -293,6 +293,9 @@ config
       .post()
       .oneOf('inline')
         .after('vue')
+        .uses
+          .delete('babel')
+          .end()
         .resourceQuery(/inline/)
         .use('url')
           .loader('url-loader')
