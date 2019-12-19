@@ -78,11 +78,11 @@ module.exports = class extends ChainedMap {
 
         // improve rule/use output
         if (value && value.__ruleNames) {
-          const prefix = `/* ${configPrefix}.module.rule('${
-            value.__ruleNames[0]
-          }')${value.__ruleNames
-            .slice(1)
-            .map(r => `.oneOf('${r}')`)
+          const ruleTypes = value.__ruleTypes;
+          const prefix = `/* ${configPrefix}.module${value.__ruleNames
+            .map(
+              (r, index) => `.${ruleTypes ? ruleTypes[index] : 'rule'}('${r}')`,
+            )
             .join('')}${
             value.__useName ? `.use('${value.__useName}')` : ``
           } */\n`;

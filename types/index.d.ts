@@ -207,6 +207,7 @@ declare namespace Config {
   }
 
   class Rule<T = Module> extends ChainedMap<T> implements Orderable {
+    rules: TypedChainedMap<this, Rule<Rule>>;
     oneOfs: TypedChainedMap<this, Rule<Rule>>;
     uses: TypedChainedMap<this, Use>;
     include: TypedChainedSet<this, webpack.Condition>;
@@ -218,6 +219,7 @@ declare namespace Config {
     enforce(value: 'pre' | 'post'): this;
 
     use(name: string): Use<this>;
+    rule(name: string): Rule<Rule>;
     oneOf(name: string): Rule<Rule>;
     pre(): this;
     post(): this;

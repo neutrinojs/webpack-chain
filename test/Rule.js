@@ -28,6 +28,14 @@ test('use', t => {
   t.true(rule.uses.has('babel'));
 });
 
+test('rule', t => {
+  const rule = new Rule();
+  const instance = rule.rule('babel').end();
+
+  t.is(instance, rule);
+  t.true(rule.rules.has('babel'));
+});
+
 test('oneOf', t => {
   const rule = new Rule();
   const instance = rule.oneOf('babel').end();
@@ -77,10 +85,16 @@ test('toConfig with name', t => {
   const parent = new Rule(null, 'alpha');
   const child = parent.oneOf('beta');
   const grandChild = child.oneOf('gamma');
+  const ruleChild = parent.rule('delta');
 
   t.deepEqual(parent.toConfig().__ruleNames, ['alpha']);
+  t.deepEqual(parent.toConfig().__ruleTypes, ['rule']);
   t.deepEqual(child.toConfig().__ruleNames, ['alpha', 'beta']);
+  t.deepEqual(child.toConfig().__ruleTypes, ['rule', 'oneOf']);
   t.deepEqual(grandChild.toConfig().__ruleNames, ['alpha', 'beta', 'gamma']);
+  t.deepEqual(grandChild.toConfig().__ruleTypes, ['rule', 'oneOf', 'oneOf']);
+  t.deepEqual(ruleChild.toConfig().__ruleNames, ['alpha', 'delta']);
+  t.deepEqual(ruleChild.toConfig().__ruleTypes, ['rule', 'rule']);
 });
 
 test('toConfig with values', t => {
@@ -100,6 +114,12 @@ test('toConfig with values', t => {
     .loader('babel-loader')
     .options({ presets: ['alpha'] })
     .end()
+    .rule('minifier')
+    .resourceQuery(/minify/)
+    .use('minifier')
+    .loader('minifier-loader')
+    .end()
+    .end()
     .oneOf('inline')
     .resourceQuery(/inline/)
     .use('url')
@@ -110,6 +130,16 @@ test('toConfig with values', t => {
     enforce: 'pre',
     include: ['alpha', 'beta'],
     exclude: ['alpha', 'beta'],
+    rules: [
+      {
+        resourceQuery: /minify/,
+        use: [
+          {
+            loader: 'minifier-loader',
+          },
+        ],
+      },
+    ],
     oneOf: [
       {
         resourceQuery: /inline/,
@@ -147,6 +177,16 @@ test('merge empty', t => {
     test: /\.js$/,
     include: ['alpha', 'beta'],
     exclude: ['alpha', 'beta'],
+    rules: {
+      minifier: {
+        resourceQuery: /minify/,
+        use: {
+          minifier: {
+            loader: 'minifier-loader',
+          },
+        },
+      },
+    },
     oneOf: {
       inline: {
         resourceQuery: /inline/,
@@ -174,6 +214,16 @@ test('merge empty', t => {
     test: /\.js$/,
     include: ['alpha', 'beta'],
     exclude: ['alpha', 'beta'],
+    rules: [
+      {
+        resourceQuery: /minify/,
+        use: [
+          {
+            loader: 'minifier-loader',
+          },
+        ],
+      },
+    ],
     oneOf: [
       {
         resourceQuery: /inline/,
@@ -213,6 +263,16 @@ test('merge with values', t => {
     enforce: 'pre',
     include: ['alpha', 'beta'],
     exclude: ['alpha', 'beta'],
+    rules: {
+      minifier: {
+        resourceQuery: /minify/,
+        use: {
+          minifier: {
+            loader: 'minifier-loader',
+          },
+        },
+      },
+    },
     oneOf: {
       inline: {
         resourceQuery: /inline/,
@@ -237,6 +297,16 @@ test('merge with values', t => {
     enforce: 'pre',
     include: ['gamma', 'delta', 'alpha', 'beta'],
     exclude: ['alpha', 'beta'],
+    rules: [
+      {
+        resourceQuery: /minify/,
+        use: [
+          {
+            loader: 'minifier-loader',
+          },
+        ],
+      },
+    ],
     oneOf: [
       {
         resourceQuery: /inline/,
@@ -277,6 +347,16 @@ test('merge with omit', t => {
       enforce: 'pre',
       include: ['alpha', 'beta'],
       exclude: ['alpha', 'beta'],
+      rules: {
+        minifier: {
+          resourceQuery: /minify/,
+          use: {
+            minifier: {
+              loader: 'minifier-loader',
+            },
+          },
+        },
+      },
       oneOf: {
         inline: {
           resourceQuery: /inline/,
@@ -295,7 +375,7 @@ test('merge with omit', t => {
         },
       },
     },
-    ['use', 'oneOf'],
+    ['use', 'oneOf', 'rules'],
   );
 
   t.deepEqual(rule.toConfig(), {
@@ -312,6 +392,32 @@ test('merge with omit', t => {
       },
     ],
   });
+});
+
+test('ordered rules', t => {
+  const rule = new Rule();
+  rule
+    .rule('first')
+    .test(/\.first$/)
+    .end()
+    .rule('second')
+    .test(/\.second$/)
+    .end()
+    .rule('third')
+    .test(/\.third$/)
+    .end()
+    .rule('alpha')
+    .test(/\.alpha$/)
+    .before('first')
+    .end()
+    .rule('beta')
+    .test(/\.beta$/)
+    .after('second');
+
+  t.deepEqual(
+    rule.toConfig().rules.map(o => o.test),
+    [/\.alpha$/, /\.first$/, /\.second$/, /\.beta$/, /\.third$/],
+  );
 });
 
 test('ordered oneOfs', t => {

@@ -10,11 +10,14 @@ module.exports = class extends ChainedMap {
   }
 
   defaultRule(name) {
-    return this.defaultRules.getOrCompute(name, () => new Rule(this, name));
+    return this.defaultRules.getOrCompute(
+      name,
+      () => new Rule(this, name, 'defaultRule'),
+    );
   }
 
   rule(name) {
-    return this.rules.getOrCompute(name, () => new Rule(this, name));
+    return this.rules.getOrCompute(name, () => new Rule(this, name, 'rule'));
   }
 
   toConfig() {

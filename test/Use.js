@@ -49,5 +49,6 @@ test('toConfig', t => {
   });
 
   t.deepEqual(config.__ruleNames, ['alpha']);
+  t.deepEqual(config.__ruleTypes, ['rule']);
   t.is(config.__useName, 'beta');
 });

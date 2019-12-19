@@ -393,6 +393,20 @@ test('toString', t => {
     .use('babel')
     .loader('babel-loader');
 
+  // Nested rules
+  config.module
+    .rule('alpha')
+    .rule('nested')
+    .use('babel')
+    .loader('babel-loader');
+
+  // Default rules
+  config.module
+    .defaultRule('default')
+    .rule('nested')
+    .use('babel')
+    .loader('babel-loader');
+
   const envPluginPath = require.resolve('webpack/lib/EnvironmentPlugin');
   const stringifiedEnvPluginPath = stringify(envPluginPath);
 
@@ -426,9 +440,36 @@ test('toString', t => {
     ]
   },
   module: {
+    defaultRules: [
+      /* config.module.defaultRule('default') */
+      {
+        rules: [
+          /* config.module.defaultRule('default').rule('nested') */
+          {
+            use: [
+              /* config.module.defaultRule('default').rule('nested').use('babel') */
+              {
+                loader: 'babel-loader'
+              }
+            ]
+          }
+        ]
+      }
+    ],
     rules: [
       /* config.module.rule('alpha') */
       {
+        rules: [
+          /* config.module.rule('alpha').rule('nested') */
+          {
+            use: [
+              /* config.module.rule('alpha').rule('nested').use('babel') */
+              {
+                loader: 'babel-loader'
+              }
+            ]
+          }
+        ],
         oneOf: [
           /* config.module.rule('alpha').oneOf('beta') */
           {

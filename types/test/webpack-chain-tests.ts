@@ -293,6 +293,16 @@ config
         .end()
       .pre()
       .post()
+      .rule('inline')
+        .after('vue')
+        .resourceQuery(/inline/)
+        .use('url')
+          .loader('url-loader')
+          .end()
+        .end()
+      .rules
+        .delete('inline')
+        .end()
       .oneOf('inline')
         .after('vue')
         .uses
