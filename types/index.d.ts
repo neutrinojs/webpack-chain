@@ -206,8 +206,8 @@ declare namespace Config {
     packageMains: ChainedSet<this>
   }
 
-  class Rule extends ChainedMap<Module> {
-    oneOfs: TypedChainedMap<this, OneOf>;
+  class Rule<T = Module> extends ChainedMap<T> implements Orderable {
+    oneOfs: TypedChainedMap<this, Rule<Rule>>;
     uses: TypedChainedMap<this, Use>;
     include: TypedChainedSet<this, webpack.Condition>;
     exclude: TypedChainedSet<this, webpack.Condition>;
@@ -217,10 +217,13 @@ declare namespace Config {
     type(value: 'javascript/auto' | 'javascript/dynamic' | 'javascript/esm' | 'json' | 'webassembly/experimental'): this;
     enforce(value: 'pre' | 'post'): this;
 
-    use(name: string): Use;
-    oneOf(name: string): OneOf;
+    use(name: string): Use<this>;
+    oneOf(name: string): Rule<Rule>;
     pre(): this;
     post(): this;
+    before(name: string): this;
+    after(name: string): this;
+    resourceQuery(value: webpack.Condition | webpack.Condition[]): this;
   }
 
   class Optimization extends ChainedMap<Config> {
@@ -259,15 +262,6 @@ declare namespace Config {
     options(value: LoaderOptions): this;
 
     tap(f: (options: LoaderOptions) => LoaderOptions): this;
-
-    // Orderable
-    before(name: string): this;
-    after(name: string): this;
-  }
-
-  class OneOf extends ChainedMap<Rule> implements Orderable {
-    resourceQuery(value: webpack.Condition | webpack.Condition[]): this;
-    use(name: string): Use<this>;
 
     // Orderable
     before(name: string): this;
