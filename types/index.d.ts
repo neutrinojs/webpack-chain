@@ -14,6 +14,7 @@ declare namespace __Config {
     delete(key: string): this;
     has(key: string): boolean;
     get(key: string): Value;
+    getOrCompute(key: string, compute: () => Value): Value;
     set(key: string, value: Value): this;
     merge(obj: { [key: string]: Value }): this;
     entries(): { [key: string]: Value };
