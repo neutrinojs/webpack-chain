@@ -10,6 +10,8 @@ class ResolvePluginImpl extends webpack.ResolvePlugin {
   apply(resolver: Resolver): void {}
 }
 
+function expectType<T>(value: T) {}
+
 const config = new Config();
 
 config
@@ -322,3 +324,38 @@ config
 
   .merge({})
   .toConfig();
+
+// Test TypedChainedMap
+const entryPoints = config.entryPoints;
+
+expectType<typeof entryPoints>(entryPoints.clear());
+expectType<typeof entryPoints>(entryPoints.delete('key'));
+expectType<boolean>(entryPoints.has('key'));
+expectType<Config.EntryPoint>(entryPoints.get('key'));
+expectType<Config.EntryPoint>(entryPoints.getOrCompute('key', () => new Config.EntryPoint()));
+expectType<typeof entryPoints>(entryPoints.set('key', new Config.EntryPoint()));
+expectType<typeof entryPoints>(entryPoints.merge({
+  key: new Config.EntryPoint(),
+}));
+expectType<Record<string, Config.EntryPoint>>(entryPoints.entries());
+expectType<typeof entryPoints>(entryPoints.when(true, (val) => {
+  expectType<typeof entryPoints>(val);
+}, (val) => {
+  expectType<typeof entryPoints>(val);
+}));
+
+// Test TypedChainedSet
+const extensions = config.resolve.extensions;
+
+expectType<typeof extensions>(extensions.add('.txt'));
+expectType<typeof extensions>(extensions.prepend('.txt'));
+expectType<typeof extensions>(extensions.clear());
+expectType<typeof extensions>(extensions.delete('.txt'));
+expectType<boolean>(extensions.has('.txt'));
+expectType<typeof extensions>(extensions.merge(['.txt']));
+expectType<string[]>(extensions.values());
+expectType<typeof extensions>(extensions.when(true, (val) => {
+  expectType<typeof extensions>(val);
+}, (val) => {
+  expectType<typeof extensions>(val);
+}));
