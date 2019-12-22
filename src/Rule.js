@@ -5,20 +5,24 @@ const Use = require('./Use');
 
 const Rule = Orderable(
   class extends ChainedMap {
-    constructor(parent, name) {
+    constructor(parent, name, ruleType = 'rule') {
       super(parent);
       this.name = name;
       this.names = [];
+      this.ruleType = ruleType;
+      this.ruleTypes = [];
 
       let rule = this;
       while (rule instanceof Rule) {
         this.names.unshift(rule.name);
+        this.ruleTypes.unshift(rule.ruleType);
         rule = rule.parent;
       }
 
       this.uses = new ChainedMap(this);
       this.include = new ChainedSet(this);
       this.exclude = new ChainedSet(this);
+      this.rules = new ChainedMap(this);
       this.oneOfs = new ChainedMap(this);
       this.extend([
         'enforce',
@@ -36,8 +40,15 @@ const Rule = Orderable(
       return this.uses.getOrCompute(name, () => new Use(this, name));
     }
 
+    rule(name) {
+      return this.rules.getOrCompute(name, () => new Rule(this, name, 'rule'));
+    }
+
     oneOf(name) {
-      return this.oneOfs.getOrCompute(name, () => new Rule(this, name));
+      return this.oneOfs.getOrCompute(
+        name,
+        () => new Rule(this, name, 'oneOf'),
+      );
     }
 
     pre() {
@@ -53,6 +64,7 @@ const Rule = Orderable(
         Object.assign(this.entries() || {}, {
           include: this.include.values(),
           exclude: this.exclude.values(),
+          rules: this.rules.values().map(rule => rule.toConfig()),
           oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
           use: this.uses.values().map(use => use.toConfig()),
         }),
@@ -60,6 +72,7 @@ const Rule = Orderable(
 
       Object.defineProperties(config, {
         __ruleNames: { value: this.names },
+        __ruleTypes: { value: this.ruleTypes },
       });
 
       return config;
@@ -77,6 +90,12 @@ const Rule = Orderable(
       if (!omit.includes('use') && 'use' in obj) {
         Object.keys(obj.use).forEach(name =>
           this.use(name).merge(obj.use[name]),
+        );
+      }
+
+      if (!omit.includes('rules') && 'rules' in obj) {
+        Object.keys(obj.rules).forEach(name =>
+          this.rule(name).merge(obj.rules[name]),
         );
       }
 
@@ -99,6 +118,7 @@ const Rule = Orderable(
         'include',
         'exclude',
         'use',
+        'rules',
         'oneOf',
         'test',
       ]);

@@ -33,6 +33,7 @@ module.exports = Orderable(
       Object.defineProperties(config, {
         __useName: { value: this.name },
         __ruleNames: { value: this.parent && this.parent.names },
+        __ruleTypes: { value: this.parent && this.parent.ruleTypes },
       });
 
       return config;

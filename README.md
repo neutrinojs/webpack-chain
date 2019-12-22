@@ -974,6 +974,93 @@ config.module
       }));
 ```
 
+#### Config module rules nested rules:
+
+```js
+config.module.rules{}.rules : ChainedMap<Rule>
+
+config.module
+  .rule(name)
+    .rule(name)
+
+// Example
+
+config.module
+  .rule('css')
+    .test(/\.css$/)
+    .use('style')
+      .loader('style-loader')
+      .end()
+    .rule('postcss')
+      .resourceQuery(/postcss/)
+      .use('postcss')
+        .loader('postcss-loader')
+```
+
+#### Config module rules nested rules: ordering before
+Specify that the current `rule` context should operate before another named
+`rule`. You cannot use both `.before()` and `.after()` on the same `rule`.
+
+```js
+config.module.rules{}.rules : ChainedMap<Rule>
+
+config.module
+  .rule(name)
+    .rule(name)
+      .before(otherName)
+
+// Example
+
+config.module
+  .rule('css')
+    .use('style')
+      .loader('style-loader')
+      .end()
+    .rule('postcss')
+      .resourceQuery(/postcss/)
+      .use('postcss')
+        .loader('postcss-loader')
+        .end()
+      .end()
+    .rule('css-loader')
+      .resourceQuery(/css-loader/)
+      .before('postcss')
+      .use('css-loader')
+        .loader('css-loader')
+```
+
+#### Config module rules nested rules: ordering after
+Specify that the current `rule` context should operate after another named
+`rule`. You cannot use both `.before()` and `.after()` on the same `rule`.
+
+```js
+config.module.rules{}.rules : ChainedMap<Rule>
+
+config.module
+  .rule(name)
+    .rule(name)
+      .after(otherName)
+
+// Example
+
+config.module
+  .rule('css')
+    .use('style')
+      .loader('style-loader')
+      .end()
+    .rule('postcss')
+      .resourceQuery(/postcss/)
+      .after('css-loader')
+      .use('postcss')
+        .loader('postcss-loader')
+        .end()
+      .end()
+    .rule('css-loader')
+      .resourceQuery(/css-loader/)
+      .use('css-loader')
+        .loader('css-loader')
+```
+
 #### Config module rules oneOfs (conditional rules):
 
 ```js
@@ -1232,6 +1319,10 @@ config.merge({
 
         include: [...paths],
         exclude: [...paths],
+
+        rules: {
+          [name]: Rule
+        },
 
         oneOf: {
           [name]: Rule
