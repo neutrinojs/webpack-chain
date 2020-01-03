@@ -218,7 +218,7 @@ values()
 // a ChainedMap that used .before() or .after().
 // returns: Object, undefined if empty
 entries()
-````
+```
 
 ```js
 // Provide an object which maps its properties and values
@@ -1378,7 +1378,7 @@ You can inspect the generated webpack config using `config.toString()`. This
 will generate a stringified version of the config with comment hints for named
 rules, uses and plugins:
 
-``` js
+```js
 config
   .module
     .rule('compile')
@@ -1413,9 +1413,9 @@ if it contains objects and plugins that need to be required. In order to
 generate usable config, you can customize how objects and plugins are
 stringified by setting a special `__expression` property on them:
 
-``` js
+```js
 const sass = require('sass');
-sass.__expression = `require('sass');
+sass.__expression = `require('sass')`;
 
 class MyPlugin {}
 MyPlugin.__expression = `require('my-plugin')`;
@@ -1444,7 +1444,7 @@ config.toString();
 Plugins specified via their path will have their `require()` statement generated
 automatically:
 
-``` js
+```js
 config
   .plugin('env')
     .use(require.resolve('webpack/lib/ProvidePlugin'), [{ jQuery: 'jquery' }])
