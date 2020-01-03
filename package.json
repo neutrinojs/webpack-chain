@@ -11,6 +11,9 @@
     "fluent",
     "api"
   ],
+  "engines": {
+    "node": ">=8"
+  },
   "files": [
     "src",
     "types/*.d.ts"
