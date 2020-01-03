@@ -62,6 +62,14 @@ test('minimizer plugin with args', t => {
   ]);
 });
 
+test('minimizer plugin legacy syntax', t => {
+  const optimization = new Optimization();
+  t.throws(
+    () => optimization.minimizer([new StringifyPlugin()]),
+    /optimization.minimizer\(\) no longer supports being passed an array/,
+  );
+});
+
 test('optimization merge', t => {
   const optimization = new Optimization();
   const obj = {

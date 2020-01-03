@@ -27,6 +27,14 @@ module.exports = class extends ChainedMap {
   }
 
   minimizer(name) {
+    if (Array.isArray(name)) {
+      throw new Error(
+        'optimization.minimizer() no longer supports being passed an array. ' +
+          'Either switch to the new syntax (https://github.com/neutrinojs/webpack-chain#config-optimization-minimizers-adding) or downgrade to webpack-chain 4. ' +
+          'If using Vue this likely means a Vue plugin has not yet been updated to support Vue CLI 4+.',
+      );
+    }
+
     return this.minimizers.getOrCompute(
       name,
       () => new Plugin(this, name, 'optimization.minimizer'),
