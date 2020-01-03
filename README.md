@@ -1151,9 +1151,12 @@ config.module
 ### Merging Config
 
 webpack-chain supports merging in an object to the configuration instance which
-matches a layout similar to how the webpack-chain schema is laid out. Note that
-this is not a webpack configuration object, but you may transform a webpack
-configuration object before providing it to webpack-chain to match its layout.
+matches a layout similar to how the webpack-chain schema is laid out.
+
+**Note:** This object does not match the webpack configuration schema exactly
+(for example the `[name]` keys for entry/rules/plugins), so you may need to transform
+webpack configuration objects (such as those output by webpack-chain's `.toConfig()`)
+to match the layout below prior to passing to `.merge()`.
 
 ```js
 config.merge({ devtool: 'source-map' });
