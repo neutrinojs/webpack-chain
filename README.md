@@ -1230,7 +1230,14 @@ config.merge({
     flagIncludedChunks,
     mergeDuplicateChunks,
     minimize,
-    minimizer,
+    minimizer: {
+      [name]: {
+        plugin: WebpackPlugin,
+        args: [...args],
+        before,
+        after
+      }
+    },
     namedChunks,
     namedModules,
     nodeEnv,
