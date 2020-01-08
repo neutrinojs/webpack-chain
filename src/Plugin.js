@@ -26,6 +26,13 @@ module.exports = Orderable(
       return this;
     }
 
+    set(key, value) {
+      if (key === 'args' && !Array.isArray(value)) {
+        throw new Error('args must be an array of arguments');
+      }
+      return super.set(key, value);
+    }
+
     merge(obj, omit = []) {
       if ('plugin' in obj) {
         this.set('plugin', obj.plugin);

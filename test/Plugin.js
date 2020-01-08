@@ -59,6 +59,30 @@ test('init', t => {
   t.deepEqual(initialized.values, ['gamma', 'delta']);
 });
 
+test('args is validated as being an array', t => {
+  const plugin = new Plugin();
+
+  t.throws(
+    () => plugin.use(StringifyPlugin, { foo: true }),
+    'args must be an array of arguments',
+  );
+
+  plugin.use(StringifyPlugin);
+
+  t.throws(
+    () => plugin.tap(() => ({ foo: true })),
+    'args must be an array of arguments',
+  );
+  t.throws(
+    () => plugin.merge({ args: 5000 }),
+    'args must be an array of arguments',
+  );
+  t.throws(
+    () => plugin.set('args', null),
+    'args must be an array of arguments',
+  );
+});
+
 test('toConfig', t => {
   const plugin = new Plugin(null, 'gamma');
 
