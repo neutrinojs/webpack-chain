@@ -870,6 +870,8 @@ config.devServer.allowedHosts
 
 ```js
 config.devServer
+  .after(after)
+  .before(before)
   .bonjour(bonjour)
   .clientLogLevel(clientLogLevel)
   .color(color)
@@ -882,10 +884,13 @@ config.devServer
   .host(host)
   .hot(hot)
   .hotOnly(hotOnly)
+  .http2(http2)
   .https(https)
-  .inline(inline)
+  .index(index)
   .info(info)
+  .inline(inline)
   .lazy(lazy)
+  .mimeTypes(mimeTypes)
   .noInfo(noInfo)
   .open(open)
   .openPage(openPage)
@@ -906,6 +911,7 @@ config.devServer
   .useLocalIp(useLocalIp)
   .watchContentBase(watchContentBase)
   .watchOptions(watchOptions)
+  .writeToDisk(writeToDisk)
 ```
 
 #### Config module
