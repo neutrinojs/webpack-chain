@@ -136,6 +136,8 @@ declare namespace Config {
     allowedHosts: TypedChainedSet<this, string>;
 
 
+    after(value: (app: any, server: any, compiler: webpack.Compiler) => void): this;
+    before(value: (app: any, server: any, compiler: webpack.Compiler) => void): this;
     bonjour(value: boolean): this;
     clientLogLevel(value: 'none' | 'error' | 'warning' | 'info'): this;
     color(value: boolean): this;
@@ -148,12 +150,16 @@ declare namespace Config {
     host(value: string): this;
     hot(value: boolean): this;
     hotOnly(value: boolean): this;
+    http2(value: boolean): this;
     https(value: boolean | https.ServerOptions): this;
-    inline(value: boolean): this;
+    index(value: string): this;
     info(value: boolean): this;
+    inline(value: boolean): this;
     lazy(value: boolean): this;
+    mimeTypes(value: Object): this;
     noInfo(value: boolean): this;
     open(value: boolean): this;
+    openPage(value: string | string[]): this;
     overlay(value: boolean | { warnings?: boolean, errors?: boolean }): this;
     pfx(value: string): this;
     pfxPassphrase(value: string): this;
@@ -171,6 +177,7 @@ declare namespace Config {
     useLocalIp(value: boolean): this;
     watchContentBase(value: boolean): this;
     watchOptions(value: any): this;
+    writeToDisk(value: boolean): this;
   }
 
   class Performance extends ChainedMap<Config> {

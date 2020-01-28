@@ -215,6 +215,8 @@ config
       .add('host.com')
       .clear()
       .end()
+    .after(() => {})
+    .before(() => {})
     .bonjour(true)
     .clientLogLevel('error')
     .color(true)
@@ -230,12 +232,17 @@ config
     .host('localhost')
     .hot(true)
     .hotOnly(true)
+    .http2(true)
     .https(true)
-    .inline(true)
+    .index('test.html')
     .info(true)
+    .inline(true)
     .lazy(true)
+    .mimeTypes({'text/html': ['phtml']})
     .noInfo(true)
     .open(true)
+    .openPage('/foo')
+    .openPage(['/foo', '/bar'])
     .overlay(true)
     .overlay({
       warnings: true,
@@ -262,6 +269,7 @@ config
     .useLocalIp(true)
     .watchContentBase(true)
     .watchOptions({})
+    .writeToDisk(true)
     .end()
 
   .module
