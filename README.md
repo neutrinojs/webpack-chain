@@ -410,7 +410,7 @@ config.entryPoints
     .clear()
 
 // Set entry to be a single value instead of a ChainedMap
-config.set('singleEntry', 'src/index.js')
+config.set('singleEntry', entryPath)
 ```
 
 #### Config output: shorthand methods
