@@ -408,6 +408,9 @@ config.entryPoints
 config.entryPoints
   .get(name)
     .clear()
+
+// Set entry to be a single value instead of a ChainedMap
+config.set('singleEntry', 'src/index.js')
 ```
 
 #### Config output: shorthand methods
