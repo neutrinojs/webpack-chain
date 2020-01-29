@@ -68,6 +68,7 @@ config
     .chunkLoadTimeout(1000)
     .crossOriginLoading(true)
     .devtoolFallbackModuleFilenameTemplate('')
+    .devtoolNamespace('')
     .devtoolLineToLine('')
     .devtoolModuleFilenameTemplate('')
     .filename('main.js')

@@ -423,6 +423,7 @@ config.output
   .devtoolFallbackModuleFilenameTemplate(devtoolFallbackModuleFilenameTemplate)
   .devtoolLineToLine(devtoolLineToLine)
   .devtoolModuleFilenameTemplate(devtoolModuleFilenameTemplate)
+  .devtoolNamespace(devtoolNamespace)
   .filename(filename)
   .hashFunction(hashFunction)
   .hashDigest(hashDigest)
