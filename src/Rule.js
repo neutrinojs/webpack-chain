@@ -80,11 +80,11 @@ const Rule = Orderable(
 
     merge(obj, omit = []) {
       if (!omit.includes('include') && 'include' in obj) {
-        this.include.merge(obj.include);
+        this.include.merge(toArray(obj.include));
       }
 
       if (!omit.includes('exclude') && 'exclude' in obj) {
-        this.exclude.merge(obj.exclude);
+        this.exclude.merge(toArray(obj.exclude));
       }
 
       if (!omit.includes('use') && 'use' in obj) {
@@ -125,5 +125,9 @@ const Rule = Orderable(
     }
   },
 );
+
+function toArray(arr) {
+  return Array.isArray(arr) ? arr : [arr]
+}
 
 module.exports = Rule;
