@@ -260,6 +260,9 @@ config
     .quiet(false)
     .setup(app => {})
     .socket('socket')
+    .sockHost('localhost')
+    .sockPath('/sockpath/')
+    .sockPort(8080)
     .staticOptions({})
     .stats({
       reasons: true,

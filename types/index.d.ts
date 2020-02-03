@@ -172,6 +172,9 @@ declare namespace Config {
     quiet(value: boolean): this;
     setup(value: (expressApp: any) => void): this;
     socket(value: string): this;
+    sockHost(value: string): this;
+    sockPath(value: string): this;
+    sockPort(value: number): this;
     staticOptions(value: any): this;
     stats(value: webpack.Options.Stats): this;
     stdin(value: boolean): this;
