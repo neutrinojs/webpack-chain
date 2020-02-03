@@ -85,9 +85,15 @@ declare namespace Config {
   class Plugins<Parent, PluginType extends Tapable.Plugin = webpack.Plugin> extends TypedChainedMap<Parent, Plugin<Parent, PluginType>> {}
 
   class Plugin<Parent, PluginType extends Tapable.Plugin = webpack.Plugin> extends ChainedMap<Parent> implements Orderable {
-    init(value: (plugin: PluginType | PluginClass<PluginType>, args: any[]) => PluginType): this;
-    use(plugin: string | PluginType | PluginClass<PluginType>, args?: any[]): this;
-    tap(f: (args: any[]) => any[]): this;
+    init<P extends PluginType | PluginClass<PluginType>>(
+      value: (plugin: P, args: P extends PluginClass ? ConstructorParameters<P> : any[]
+    ) => PluginType): this;
+    use<P extends string | PluginType | PluginClass<PluginType>>(
+      plugin: P, args?: P extends PluginClass ? ConstructorParameters<P> : any[]
+    ): this;
+    tap<P extends PluginClass<PluginType>>(
+      f: (args: ConstructorParameters<P>) => ConstructorParameters<P>
+    ): this;
 
     // Orderable
     before(name: string): this;

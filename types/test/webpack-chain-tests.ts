@@ -176,16 +176,22 @@ config
     .end()
 
   .plugin('foo')
-    .use(webpack.DefinePlugin, [])
+    .use(webpack.DefinePlugin, [{
+      'process.env.NODE_ENV': ""
+    }])
     .end()
 
   .plugin('bar')
-    .use(webpack.DefinePlugin, [])
+    .use(webpack.DefinePlugin, [{
+      'process.env.NODE_ENV': ""
+    }])
     .before('foo')
     .end()
 
   .plugin('baz')
-    .use(webpack.DefinePlugin, [])
+    .use(webpack.DefinePlugin, [{
+      'process.env.NODE_ENV': ""
+    }])
     .after('bar')
     .end()
 
