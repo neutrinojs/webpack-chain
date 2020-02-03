@@ -394,6 +394,22 @@ test('merge with omit', t => {
   });
 });
 
+test('merge with include and exclude not of array type', t => {
+  const rule = new Rule();
+
+  rule.merge({
+    test: /\.jsx$/,
+    include: 'alpha',
+    exclude: 'alpha',
+  });
+
+  t.deepEqual(rule.toConfig(), {
+    test: /\.jsx$/,
+    include: ['alpha'],
+    exclude: ['alpha'],
+  });
+});
+
 test('ordered rules', t => {
   const rule = new Rule();
   rule
