@@ -46,6 +46,18 @@ test('node', t => {
   t.deepEqual(config.node.entries(), { __dirname: 'mock', __filename: 'mock' });
 });
 
+test('node with false value', t => {
+  const config = new Config();
+  const instance = config
+    .set('node', false)
+    .node.set('__dirname', 'mock')
+    .set('__filename', 'mock')
+    .end();
+
+  t.is(instance, config);
+  t.false(config.get('node'));
+});
+
 test('entry', t => {
   const config = new Config();
 
@@ -169,6 +181,19 @@ test('toConfig with values', t => {
         },
       ],
     },
+  });
+});
+
+test('toConfig with node false value', t => {
+  const config = new Config();
+
+  config
+    .set('node', false)
+    .node.set('__dirname', 'mock')
+    .end();
+
+  t.deepEqual(config.toConfig(), {
+    node: false,
   });
 });
 
@@ -321,6 +346,46 @@ test('merge with omit', t => {
       index: ['babel-polyfill', 'src/index.js'],
     },
     plugins: [new StringifyPlugin(), new EnvironmentPlugin()],
+  });
+});
+
+test('merge with node false value', t => {
+  const config = new Config();
+
+  config.node.set('__dirname', 'mock');
+
+  const obj = {
+    node: false,
+  };
+
+  const instance = config.merge(obj);
+
+  t.is(instance, config);
+
+  t.deepEqual(config.toConfig(), {
+    node: false,
+  });
+});
+
+test('merge with node object value', t => {
+  const config = new Config();
+
+  config.set('node', false);
+
+  const obj = {
+    node: {
+      __dirname: 'mock',
+    },
+  };
+
+  const instance = config.merge(obj);
+
+  t.is(instance, config);
+
+  t.deepEqual(config.toConfig(), {
+    node: {
+      __dirname: 'mock',
+    },
   });
 });
 
