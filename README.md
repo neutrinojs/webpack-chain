@@ -4,8 +4,7 @@
 [![NPM downloads][npm-downloads]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
-Use a chaining API to generate and simplify the modification of
-webpack version 2-4 configurations.
+Use a chaining API to generate and simplify the modification of webpack 4 configurations.
 
 This documentation corresponds to v6 of webpack-chain. For previous versions, see:
 
@@ -38,7 +37,7 @@ This is easier explained through the examples following.
 ## Installation
 
 `webpack-chain` requires Node.js 8 or higher. `webpack-chain` also only creates
-configuration objects designed for use in webpack versions 2, 3, and 4.
+configuration objects designed for use with webpack 4.
 
 You may install this package using either Yarn or npm (choose one):
 
