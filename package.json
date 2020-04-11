@@ -36,7 +36,7 @@
     "@types/node": "^12.12.17",
     "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.41.0",
-    "auto-changelog": "^1.16.2",
+    "auto-changelog": "^2.0.0",
     "ava": "^1.4.1",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
