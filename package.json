@@ -37,7 +37,7 @@
     "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.41.0",
     "auto-changelog": "^2.0.0",
-    "ava": "^1.4.1",
+    "ava": "^3.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
