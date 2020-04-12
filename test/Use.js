@@ -1,40 +1,39 @@
-import test from 'ava';
-import Rule from '../src/Rule';
-import Use from '../src/Use';
+const Rule = require('../src/Rule');
+const Use = require('../src/Use');
 
-test('is Chainable', (t) => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const use = new Use(parent);
 
-  t.is(use.end(), parent);
+  expect(use.end()).toBe(parent);
 });
 
-test('shorthand methods', (t) => {
+test('shorthand methods', () => {
   const use = new Use();
   const obj = {};
 
   use.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(use[method]('alpha'), use);
+    expect(use[method]('alpha')).toBe(use);
   });
 
-  t.deepEqual(use.entries(), obj);
+  expect(use.entries()).toStrictEqual(obj);
 });
 
-test('tap', (t) => {
+test('tap', () => {
   const use = new Use();
 
   use.loader('babel-loader').options({ presets: ['alpha'] });
 
   use.tap((options) => {
-    t.deepEqual(options, { presets: ['alpha'] });
+    expect(options).toStrictEqual({ presets: ['alpha'] });
     return { presets: ['beta'] };
   });
 
-  t.deepEqual(use.store.get('options'), { presets: ['beta'] });
+  expect(use.store.get('options')).toStrictEqual({ presets: ['beta'] });
 });
 
-test('toConfig', (t) => {
+test('toConfig', () => {
   const rule = new Rule(null, 'alpha');
   const use = rule
     .use('beta')
@@ -43,12 +42,12 @@ test('toConfig', (t) => {
 
   const config = use.toConfig();
 
-  t.deepEqual(config, {
+  expect(config).toStrictEqual({
     loader: 'babel-loader',
     options: { presets: ['alpha'] },
   });
 
-  t.deepEqual(config.__ruleNames, ['alpha']);
-  t.deepEqual(config.__ruleTypes, ['rule']);
-  t.is(config.__useName, 'beta');
+  expect(config.__ruleNames).toStrictEqual(['alpha']);
+  expect(config.__ruleTypes).toStrictEqual(['rule']);
+  expect(config.__useName).toBe('beta');
 });

@@ -1,5 +1,4 @@
-import test from 'ava';
-import Optimization from '../src/Optimization';
+const Optimization = require('../src/Optimization');
 
 class StringifyPlugin {
   constructor(...args) {
@@ -11,66 +10,69 @@ class StringifyPlugin {
   }
 }
 
-test('is Chainable', (t) => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const optimization = new Optimization(parent);
 
-  t.is(optimization.end(), parent);
+  expect(optimization.end()).toBe(parent);
 });
 
-test('shorthand methods', (t) => {
+test('shorthand methods', () => {
   const optimization = new Optimization();
   const obj = {};
 
   optimization.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(optimization[method]('alpha'), optimization);
+    expect(optimization[method]('alpha')).toBe(optimization);
   });
 
-  t.deepEqual(optimization.entries(), obj);
+  expect(optimization.entries()).toStrictEqual(obj);
 });
 
-test('minimizer plugin with name', (t) => {
+test('minimizer plugin with name', () => {
   const optimization = new Optimization();
   optimization.minimizer('alpha');
 
-  t.is(optimization.minimizers.get('alpha').name, 'alpha');
-  t.is(optimization.minimizers.get('alpha').type, 'optimization.minimizer');
+  expect(optimization.minimizers.get('alpha').name).toBe('alpha');
+  expect(optimization.minimizers.get('alpha').type).toBe(
+    'optimization.minimizer',
+  );
 });
 
-test('minimizer plugin empty', (t) => {
+test('minimizer plugin empty', () => {
   const optimization = new Optimization();
   const instance = optimization
     .minimizer('stringify')
     .use(StringifyPlugin)
     .end();
 
-  t.is(instance, optimization);
-  t.true(optimization.minimizers.has('stringify'));
-  t.deepEqual(optimization.minimizers.get('stringify').get('args'), []);
+  expect(instance).toBe(optimization);
+  expect(optimization.minimizers.has('stringify')).toBe(true);
+  expect(optimization.minimizers.get('stringify').get('args')).toStrictEqual(
+    [],
+  );
 });
 
-test('minimizer plugin with args', (t) => {
+test('minimizer plugin with args', () => {
   const optimization = new Optimization();
 
   optimization.minimizer('stringify').use(StringifyPlugin, ['alpha', 'beta']);
 
-  t.true(optimization.minimizers.has('stringify'));
-  t.deepEqual(optimization.minimizers.get('stringify').get('args'), [
+  expect(optimization.minimizers.has('stringify')).toBe(true);
+  expect(optimization.minimizers.get('stringify').get('args')).toStrictEqual([
     'alpha',
     'beta',
   ]);
 });
 
-test('minimizer plugin legacy syntax', (t) => {
+test('minimizer plugin legacy syntax', () => {
   const optimization = new Optimization();
-  t.throws(
-    () => optimization.minimizer([new StringifyPlugin()]),
+  expect(() => optimization.minimizer([new StringifyPlugin()])).toThrow(
     /optimization.minimizer\(\) no longer supports being passed an array/,
   );
 });
 
-test('optimization merge', (t) => {
+test('optimization merge', () => {
   const optimization = new Optimization();
   const obj = {
     minimizer: {
@@ -81,28 +83,28 @@ test('optimization merge', (t) => {
     },
   };
 
-  t.is(optimization.merge(obj), optimization);
-  t.true(optimization.minimizers.has('stringify'));
-  t.deepEqual(optimization.minimizers.get('stringify').get('args'), [
+  expect(optimization.merge(obj)).toBe(optimization);
+  expect(optimization.minimizers.has('stringify')).toBe(true);
+  expect(optimization.minimizers.get('stringify').get('args')).toStrictEqual([
     'alpha',
     'beta',
   ]);
 });
 
-test('toConfig empty', (t) => {
+test('toConfig empty', () => {
   const optimization = new Optimization();
 
-  t.deepEqual(optimization.toConfig(), {});
+  expect(optimization.toConfig()).toStrictEqual({});
 });
 
-test('toConfig with values', (t) => {
+test('toConfig with values', () => {
   const optimization = new Optimization();
 
   optimization.minimizer('foo').use(StringifyPlugin).end().splitChunks({
     chunks: 'all',
   });
 
-  t.deepEqual(optimization.toConfig(), {
+  expect(optimization.toConfig()).toStrictEqual({
     minimizer: [new StringifyPlugin()],
     splitChunks: {
       chunks: 'all',
