@@ -11,18 +11,18 @@ class StringifyPlugin {
   }
 }
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const optimization = new Optimization(parent);
 
   t.is(optimization.end(), parent);
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', (t) => {
   const optimization = new Optimization();
   const obj = {};
 
-  optimization.shorthands.forEach(method => {
+  optimization.shorthands.forEach((method) => {
     obj[method] = 'alpha';
     t.is(optimization[method]('alpha'), optimization);
   });
@@ -30,7 +30,7 @@ test('shorthand methods', t => {
   t.deepEqual(optimization.entries(), obj);
 });
 
-test('minimizer plugin with name', t => {
+test('minimizer plugin with name', (t) => {
   const optimization = new Optimization();
   optimization.minimizer('alpha');
 
@@ -38,7 +38,7 @@ test('minimizer plugin with name', t => {
   t.is(optimization.minimizers.get('alpha').type, 'optimization.minimizer');
 });
 
-test('minimizer plugin empty', t => {
+test('minimizer plugin empty', (t) => {
   const optimization = new Optimization();
   const instance = optimization
     .minimizer('stringify')
@@ -50,7 +50,7 @@ test('minimizer plugin empty', t => {
   t.deepEqual(optimization.minimizers.get('stringify').get('args'), []);
 });
 
-test('minimizer plugin with args', t => {
+test('minimizer plugin with args', (t) => {
   const optimization = new Optimization();
 
   optimization.minimizer('stringify').use(StringifyPlugin, ['alpha', 'beta']);
@@ -62,7 +62,7 @@ test('minimizer plugin with args', t => {
   ]);
 });
 
-test('minimizer plugin legacy syntax', t => {
+test('minimizer plugin legacy syntax', (t) => {
   const optimization = new Optimization();
   t.throws(
     () => optimization.minimizer([new StringifyPlugin()]),
@@ -70,7 +70,7 @@ test('minimizer plugin legacy syntax', t => {
   );
 });
 
-test('optimization merge', t => {
+test('optimization merge', (t) => {
   const optimization = new Optimization();
   const obj = {
     minimizer: {
@@ -89,22 +89,18 @@ test('optimization merge', t => {
   ]);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', (t) => {
   const optimization = new Optimization();
 
   t.deepEqual(optimization.toConfig(), {});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', (t) => {
   const optimization = new Optimization();
 
-  optimization
-    .minimizer('foo')
-    .use(StringifyPlugin)
-    .end()
-    .splitChunks({
-      chunks: 'all',
-    });
+  optimization.minimizer('foo').use(StringifyPlugin).end().splitChunks({
+    chunks: 'all',
+  });
 
   t.deepEqual(optimization.toConfig(), {
     minimizer: [new StringifyPlugin()],

@@ -4,7 +4,7 @@ import ChainedMap from '../src/ChainedMap';
 
 const Ordered = Orderable(class Test extends ChainedMap {});
 
-test('before', t => {
+test('before', (t) => {
   const ordered = new Ordered();
   const instance = ordered.set('gamma').before('beta');
 
@@ -12,7 +12,7 @@ test('before', t => {
   t.is(ordered.__before, 'beta');
 });
 
-test('after', t => {
+test('after', (t) => {
   const ordered = new Ordered();
   const instance = ordered.set('gamma').after('alpha');
 
@@ -20,43 +20,43 @@ test('after', t => {
   t.is(ordered.__after, 'alpha');
 });
 
-test('before throws with after', t => {
+test('before throws with after', (t) => {
   const ordered = new Ordered();
 
   t.throws(() => ordered.after('alpha').before('beta'));
 });
 
-test('after throws with before', t => {
+test('after throws with before', (t) => {
   const ordered = new Ordered();
 
   t.throws(() => ordered.before('beta').after('alpha'));
 });
 
-test('ordering before', t => {
+test('ordering before', (t) => {
   const map = new ChainedMap();
 
   map.set('beta', new Ordered().set('beta', 'beta'));
   map.set('alpha', new Ordered().set('alpha', 'alpha').before('beta'));
 
   t.deepEqual(
-    map.values().map(o => o.values()),
+    map.values().map((o) => o.values()),
     [['alpha'], ['beta']],
   );
 });
 
-test('ordering after', t => {
+test('ordering after', (t) => {
   const map = new ChainedMap();
 
   map.set('beta', new Ordered().set('beta', 'beta').after('alpha'));
   map.set('alpha', new Ordered().set('alpha', 'alpha'));
 
   t.deepEqual(
-    map.values().map(o => o.values()),
+    map.values().map((o) => o.values()),
     [['alpha'], ['beta']],
   );
 });
 
-test('ordering before and after', t => {
+test('ordering before and after', (t) => {
   const map = new ChainedMap();
 
   map.set('beta', new Ordered().set('beta', 'beta'));
@@ -64,12 +64,12 @@ test('ordering before and after', t => {
   map.set('alpha', new Ordered().set('alpha', 'alpha').before('beta'));
 
   t.deepEqual(
-    map.values().map(o => o.values()),
+    map.values().map((o) => o.values()),
     [['alpha'], ['beta'], ['gamma']],
   );
 });
 
-test('merge with before', t => {
+test('merge with before', (t) => {
   const ordered = new Ordered();
   const instance = ordered.set('gamma').merge({
     before: 'beta',
@@ -79,7 +79,7 @@ test('merge with before', t => {
   t.is(ordered.__before, 'beta');
 });
 
-test('merge with after', t => {
+test('merge with after', (t) => {
   const ordered = new Ordered();
   const instance = ordered.set('gamma').merge({
     after: 'alpha',
@@ -89,6 +89,6 @@ test('merge with after', t => {
   t.is(ordered.__after, 'alpha');
 });
 
-test('merging throws using before with after', t => {
+test('merging throws using before with after', (t) => {
   t.throws(() => new Ordered().merge({ before: 'beta', after: 'alpha' }));
 });

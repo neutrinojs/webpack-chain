@@ -13,14 +13,14 @@ class StringifyPlugin {
   }
 }
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const plugin = new Plugin(parent);
 
   t.is(plugin.end(), parent);
 });
 
-test('use', t => {
+test('use', (t) => {
   const plugin = new Plugin();
   const instance = plugin.use(StringifyPlugin, ['alpha', 'beta']);
 
@@ -29,7 +29,7 @@ test('use', t => {
   t.deepEqual(plugin.get('args'), ['alpha', 'beta']);
 });
 
-test('tap', t => {
+test('tap', (t) => {
   const plugin = new Plugin();
 
   plugin.use(StringifyPlugin, ['alpha', 'beta']);
@@ -40,7 +40,7 @@ test('tap', t => {
   t.deepEqual(plugin.get('args'), ['gamma', 'delta']);
 });
 
-test('init', t => {
+test('init', (t) => {
   const plugin = new Plugin();
 
   plugin.use(StringifyPlugin);
@@ -59,7 +59,7 @@ test('init', t => {
   t.deepEqual(initialized.values, ['gamma', 'delta']);
 });
 
-test('args is validated as being an array', t => {
+test('args is validated as being an array', (t) => {
   const plugin = new Plugin();
 
   t.throws(
@@ -83,7 +83,7 @@ test('args is validated as being an array', t => {
   );
 });
 
-test('toConfig', t => {
+test('toConfig', (t) => {
   const plugin = new Plugin(null, 'gamma');
 
   plugin.use(StringifyPlugin, ['delta']);
@@ -98,14 +98,14 @@ test('toConfig', t => {
   t.is(initialized.__pluginConstructorName, 'StringifyPlugin');
 });
 
-test('toConfig with custom type', t => {
+test('toConfig with custom type', (t) => {
   const plugin = new Plugin(null, 'gamma', 'optimization.minimizer');
   plugin.use(StringifyPlugin);
 
   t.is(plugin.toConfig().__pluginType, 'optimization.minimizer');
 });
 
-test('toConfig with custom expression', t => {
+test('toConfig with custom expression', (t) => {
   const plugin = new Plugin(null, 'gamma');
 
   class TestPlugin {}
@@ -118,7 +118,7 @@ test('toConfig with custom expression', t => {
   t.is(initialized.__pluginConstructorName, `(require('my-plugin'))`);
 });
 
-test('toConfig with object literal plugin', t => {
+test('toConfig with object literal plugin', (t) => {
   const plugin = new Plugin(null, 'gamma');
 
   const TestPlugin = {
@@ -132,7 +132,7 @@ test('toConfig with object literal plugin', t => {
   t.is(initialized, TestPlugin);
 });
 
-test('toConfig with plugin as path', t => {
+test('toConfig with plugin as path', (t) => {
   const plugin = new Plugin(null, 'gamma');
   const envPluginPath = require.resolve('webpack/lib/EnvironmentPlugin');
 

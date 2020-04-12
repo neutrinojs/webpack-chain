@@ -1,34 +1,34 @@
 import test from 'ava';
 import ChainedMap from '../src/ChainedMap';
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const map = new ChainedMap(parent);
 
   t.is(map.end(), parent);
 });
 
-test('creates a backing Map', t => {
+test('creates a backing Map', (t) => {
   const map = new ChainedMap();
 
   t.true(map.store instanceof Map);
 });
 
-test('set', t => {
+test('set', (t) => {
   const map = new ChainedMap();
 
   t.is(map.set('a', 'alpha'), map);
   t.is(map.store.get('a'), 'alpha');
 });
 
-test('get', t => {
+test('get', (t) => {
   const map = new ChainedMap();
 
   t.is(map.set('a', 'alpha'), map);
   t.is(map.get('a'), 'alpha');
 });
 
-test('getOrCompute', t => {
+test('getOrCompute', (t) => {
   const map = new ChainedMap();
 
   t.is(map.get('a'), undefined);
@@ -39,7 +39,7 @@ test('getOrCompute', t => {
   t.is(map.get('a'), 'alpha');
 });
 
-test('clear', t => {
+test('clear', (t) => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
@@ -51,7 +51,7 @@ test('clear', t => {
   t.is(map.store.size, 0);
 });
 
-test('delete', t => {
+test('delete', (t) => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
@@ -63,7 +63,7 @@ test('delete', t => {
   t.false(map.store.has('b'));
 });
 
-test('has', t => {
+test('has', (t) => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
@@ -75,7 +75,7 @@ test('has', t => {
   t.is(map.has('b'), map.store.has('b'));
 });
 
-test('values', t => {
+test('values', (t) => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
@@ -85,7 +85,7 @@ test('values', t => {
   t.deepEqual(map.values(), ['alpha', 'beta', 'gamma']);
 });
 
-test('entries with values', t => {
+test('entries with values', (t) => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
@@ -95,13 +95,13 @@ test('entries with values', t => {
   t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma' });
 });
 
-test('entries with no values', t => {
+test('entries with no values', (t) => {
   const map = new ChainedMap();
 
   t.is(map.entries(), undefined);
 });
 
-test('merge with no values', t => {
+test('merge with no values', (t) => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
@@ -109,7 +109,7 @@ test('merge with no values', t => {
   t.deepEqual(map.entries(), obj);
 });
 
-test('merge with existing values', t => {
+test('merge with existing values', (t) => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
@@ -119,7 +119,7 @@ test('merge with existing values', t => {
   t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma', d: 'delta' });
 });
 
-test('merge with overriding values', t => {
+test('merge with overriding values', (t) => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
@@ -129,7 +129,7 @@ test('merge with overriding values', t => {
   t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma' });
 });
 
-test('merge with omitting keys', t => {
+test('merge with omitting keys', (t) => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
@@ -138,13 +138,13 @@ test('merge with omitting keys', t => {
   t.deepEqual(map.entries(), { a: 'alpha', c: 'gamma' });
 });
 
-test('when true', t => {
+test('when true', (t) => {
   const map = new ChainedMap();
-  const right = instance => {
+  const right = (instance) => {
     t.is(instance, map);
     instance.set('alpha', 'a');
   };
-  const left = instance => {
+  const left = (instance) => {
     instance.set('beta', 'b');
   };
 
@@ -153,12 +153,12 @@ test('when true', t => {
   t.false(map.has('beta'));
 });
 
-test('when false', t => {
+test('when false', (t) => {
   const map = new ChainedMap();
-  const right = instance => {
+  const right = (instance) => {
     instance.set('alpha', 'a');
   };
-  const left = instance => {
+  const left = (instance) => {
     t.is(instance, map);
     instance.set('beta', 'b');
   };
@@ -168,7 +168,7 @@ test('when false', t => {
   t.true(map.has('beta'));
 });
 
-test('clean undefined', t => {
+test('clean undefined', (t) => {
   const map = new ChainedMap();
   map.set('alpha', undefined);
   map.set('beta', 'b');
@@ -177,14 +177,14 @@ test('clean undefined', t => {
   t.true('beta' in map.clean(map.entries()));
 });
 
-test('clean empty array', t => {
+test('clean empty array', (t) => {
   const map = new ChainedMap();
   map.set('alpha', []);
   t.true('alpha' in map.entries());
   t.false('alpha' in map.clean(map.entries()));
 });
 
-test('clean empty object', t => {
+test('clean empty object', (t) => {
   const map = new ChainedMap();
   map.set('alpha', {});
   t.true('alpha' in map.entries());

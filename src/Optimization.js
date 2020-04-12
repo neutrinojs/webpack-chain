@@ -44,14 +44,14 @@ module.exports = class extends ChainedMap {
   toConfig() {
     return this.clean(
       Object.assign(this.entries() || {}, {
-        minimizer: this.minimizers.values().map(plugin => plugin.toConfig()),
+        minimizer: this.minimizers.values().map((plugin) => plugin.toConfig()),
       }),
     );
   }
 
   merge(obj, omit = []) {
     if (!omit.includes('minimizer') && 'minimizer' in obj) {
-      Object.keys(obj.minimizer).forEach(name =>
+      Object.keys(obj.minimizer).forEach((name) =>
         this.minimizer(name).merge(obj.minimizer[name]),
       );
     }

@@ -1,14 +1,14 @@
 import test from 'ava';
 import Module from '../src/Module';
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const module = new Module(parent);
 
   t.is(module.end(), parent);
 });
 
-test('is ChainedMap', t => {
+test('is ChainedMap', (t) => {
   const module = new Module();
 
   module.set('a', 'alpha');
@@ -16,7 +16,7 @@ test('is ChainedMap', t => {
   t.is(module.get('a'), 'alpha');
 });
 
-test('rule', t => {
+test('rule', (t) => {
   const module = new Module();
   const instance = module.rule('compile').end();
 
@@ -24,7 +24,7 @@ test('rule', t => {
   t.true(module.rules.has('compile'));
 });
 
-test('defaultRule', t => {
+test('defaultRule', (t) => {
   const module = new Module();
   const instance = module.defaultRule('banner').end();
 
@@ -32,13 +32,13 @@ test('defaultRule', t => {
   t.true(module.defaultRules.has('banner'));
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', (t) => {
   const module = new Module();
 
   t.deepEqual(module.toConfig(), {});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', (t) => {
   const module = new Module();
 
   module.rule('compile').test(/\.js$/);

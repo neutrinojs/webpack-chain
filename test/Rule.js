@@ -1,18 +1,18 @@
 import test from 'ava';
 import Rule from '../src/Rule';
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const rule = new Rule(parent);
 
   t.is(rule.end(), parent);
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', (t) => {
   const rule = new Rule();
   const obj = {};
 
-  rule.shorthands.forEach(method => {
+  rule.shorthands.forEach((method) => {
     obj[method] = 'alpha';
     t.is(rule[method]('alpha'), rule);
   });
@@ -20,7 +20,7 @@ test('shorthand methods', t => {
   t.deepEqual(rule.entries(), obj);
 });
 
-test('use', t => {
+test('use', (t) => {
   const rule = new Rule();
   const instance = rule.use('babel').end();
 
@@ -28,7 +28,7 @@ test('use', t => {
   t.true(rule.uses.has('babel'));
 });
 
-test('rule', t => {
+test('rule', (t) => {
   const rule = new Rule();
   const instance = rule.rule('babel').end();
 
@@ -36,7 +36,7 @@ test('rule', t => {
   t.true(rule.rules.has('babel'));
 });
 
-test('oneOf', t => {
+test('oneOf', (t) => {
   const rule = new Rule();
   const instance = rule.oneOf('babel').end();
 
@@ -44,7 +44,7 @@ test('oneOf', t => {
   t.true(rule.oneOfs.has('babel'));
 });
 
-test('pre', t => {
+test('pre', (t) => {
   const rule = new Rule();
   const instance = rule.pre();
 
@@ -52,7 +52,7 @@ test('pre', t => {
   t.is(rule.get('enforce'), 'pre');
 });
 
-test('post', t => {
+test('post', (t) => {
   const rule = new Rule();
   const instance = rule.post();
 
@@ -60,7 +60,7 @@ test('post', t => {
   t.is(rule.get('enforce'), 'post');
 });
 
-test('sets methods', t => {
+test('sets methods', (t) => {
   const rule = new Rule();
   const instance = rule.include
     .add('alpha')
@@ -75,13 +75,13 @@ test('sets methods', t => {
   t.deepEqual(rule.exclude.values(), ['alpha', 'beta']);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', (t) => {
   const rule = new Rule();
 
   t.deepEqual(rule.toConfig(), {});
 });
 
-test('toConfig with name', t => {
+test('toConfig with name', (t) => {
   const parent = new Rule(null, 'alpha');
   const child = parent.oneOf('beta');
   const grandChild = child.oneOf('gamma');
@@ -97,7 +97,7 @@ test('toConfig with name', t => {
   t.deepEqual(ruleChild.toConfig().__ruleTypes, ['rule', 'rule']);
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', (t) => {
   const rule = new Rule();
 
   rule.include
@@ -161,16 +161,16 @@ test('toConfig with values', t => {
   });
 });
 
-test('toConfig with test function', t => {
+test('toConfig with test function', (t) => {
   const rule = new Rule();
-  const test = s => s.includes('.js');
+  const test = (s) => s.includes('.js');
 
   rule.test(test);
 
   t.deepEqual(rule.toConfig(), { test });
 });
 
-test('merge empty', t => {
+test('merge empty', (t) => {
   const rule = new Rule();
   const obj = {
     enforce: 'pre',
@@ -245,7 +245,7 @@ test('merge empty', t => {
   });
 });
 
-test('merge with values', t => {
+test('merge with values', (t) => {
   const rule = new Rule();
 
   rule
@@ -328,7 +328,7 @@ test('merge with values', t => {
   });
 });
 
-test('merge with omit', t => {
+test('merge with omit', (t) => {
   const rule = new Rule();
 
   rule
@@ -394,7 +394,7 @@ test('merge with omit', t => {
   });
 });
 
-test('merge with include and exclude not of array type', t => {
+test('merge with include and exclude not of array type', (t) => {
   const rule = new Rule();
 
   rule.merge({
@@ -410,7 +410,7 @@ test('merge with include and exclude not of array type', t => {
   });
 });
 
-test('ordered rules', t => {
+test('ordered rules', (t) => {
   const rule = new Rule();
   rule
     .rule('first')
@@ -431,12 +431,12 @@ test('ordered rules', t => {
     .after('second');
 
   t.deepEqual(
-    rule.toConfig().rules.map(o => o.test),
+    rule.toConfig().rules.map((o) => o.test),
     [/\.alpha$/, /\.first$/, /\.second$/, /\.beta$/, /\.third$/],
   );
 });
 
-test('ordered oneOfs', t => {
+test('ordered oneOfs', (t) => {
   const rule = new Rule();
   rule
     .oneOf('first')
@@ -457,7 +457,7 @@ test('ordered oneOfs', t => {
     .after('second');
 
   t.deepEqual(
-    rule.toConfig().oneOf.map(o => o.test),
+    rule.toConfig().oneOf.map((o) => o.test),
     [/\.alpha$/, /\.first$/, /\.second$/, /\.beta$/, /\.third$/],
   );
 });

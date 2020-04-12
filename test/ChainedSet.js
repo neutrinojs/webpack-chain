@@ -1,20 +1,20 @@
 import test from 'ava';
 import ChainedSet from '../src/ChainedSet';
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const set = new ChainedSet(parent);
 
   t.is(set.end(), parent);
 });
 
-test('creates a backing Set', t => {
+test('creates a backing Set', (t) => {
   const set = new ChainedSet();
 
   t.true(set.store instanceof Set);
 });
 
-test('add', t => {
+test('add', (t) => {
   const set = new ChainedSet();
 
   t.is(set.add('alpha'), set);
@@ -22,7 +22,7 @@ test('add', t => {
   t.is(set.store.size, 1);
 });
 
-test('prepend', t => {
+test('prepend', (t) => {
   const set = new ChainedSet();
 
   set.add('alpha');
@@ -32,7 +32,7 @@ test('prepend', t => {
   t.deepEqual([...set.store], ['beta', 'alpha']);
 });
 
-test('clear', t => {
+test('clear', (t) => {
   const set = new ChainedSet();
 
   set.add('alpha');
@@ -44,7 +44,7 @@ test('clear', t => {
   t.is(set.store.size, 0);
 });
 
-test('delete', t => {
+test('delete', (t) => {
   const set = new ChainedSet();
 
   set.add('alpha');
@@ -56,7 +56,7 @@ test('delete', t => {
   t.false(set.store.has('beta'));
 });
 
-test('has', t => {
+test('has', (t) => {
   const set = new ChainedSet();
 
   set.add('alpha');
@@ -68,7 +68,7 @@ test('has', t => {
   t.is(set.has('beta'), set.store.has('beta'));
 });
 
-test('values', t => {
+test('values', (t) => {
   const set = new ChainedSet();
 
   set.add('alpha');
@@ -78,7 +78,7 @@ test('values', t => {
   t.deepEqual(set.values(), ['alpha', 'beta', 'gamma']);
 });
 
-test('merge with no values', t => {
+test('merge with no values', (t) => {
   const set = new ChainedSet();
   const arr = ['alpha', 'beta', 'gamma'];
 
@@ -86,7 +86,7 @@ test('merge with no values', t => {
   t.deepEqual(set.values(), arr);
 });
 
-test('merge with existing values', t => {
+test('merge with existing values', (t) => {
   const set = new ChainedSet();
   const arr = ['alpha', 'beta', 'gamma'];
 
@@ -96,13 +96,13 @@ test('merge with existing values', t => {
   t.deepEqual(set.values(), ['delta', 'alpha', 'beta', 'gamma']);
 });
 
-test('when true', t => {
+test('when true', (t) => {
   const set = new ChainedSet();
-  const right = instance => {
+  const right = (instance) => {
     t.is(instance, set);
     instance.add('alpha');
   };
-  const left = instance => {
+  const left = (instance) => {
     instance.add('beta');
   };
 
@@ -111,12 +111,12 @@ test('when true', t => {
   t.false(set.has('beta'));
 });
 
-test('when false', t => {
+test('when false', (t) => {
   const set = new ChainedSet();
-  const right = instance => {
+  const right = (instance) => {
     instance.add('alpha');
   };
-  const left = instance => {
+  const left = (instance) => {
     t.is(instance, set);
     instance.add('beta');
   };
