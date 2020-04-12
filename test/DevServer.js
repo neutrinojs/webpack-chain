@@ -1,14 +1,14 @@
 import test from 'ava';
 import DevServer from '../src/DevServer';
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const devServer = new DevServer(parent);
 
   t.is(devServer.end(), parent);
 });
 
-test('sets allowed hosts', t => {
+test('sets allowed hosts', (t) => {
   const devServer = new DevServer();
   const instance = devServer.allowedHosts.add('https://github.com').end();
 
@@ -16,11 +16,11 @@ test('sets allowed hosts', t => {
   t.deepEqual(devServer.toConfig(), { allowedHosts: ['https://github.com'] });
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', (t) => {
   const devServer = new DevServer();
   const obj = {};
 
-  devServer.shorthands.forEach(method => {
+  devServer.shorthands.forEach((method) => {
     obj[method] = 'alpha';
     t.is(devServer[method]('alpha'), devServer);
   });

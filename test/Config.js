@@ -15,7 +15,7 @@ class StringifyPlugin {
   }
 }
 
-test('is ChainedMap', t => {
+test('is ChainedMap', (t) => {
   const config = new Config();
 
   config.set('a', 'alpha');
@@ -23,11 +23,11 @@ test('is ChainedMap', t => {
   t.is(config.store.get('a'), 'alpha');
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', (t) => {
   const config = new Config();
   const obj = {};
 
-  config.shorthands.forEach(method => {
+  config.shorthands.forEach((method) => {
     obj[method] = 'alpha';
     t.is(config[method]('alpha'), config);
   });
@@ -35,7 +35,7 @@ test('shorthand methods', t => {
   t.deepEqual(config.entries(), obj);
 });
 
-test('node', t => {
+test('node', (t) => {
   const config = new Config();
   const instance = config.node
     .set('__dirname', 'mock')
@@ -46,13 +46,10 @@ test('node', t => {
   t.deepEqual(config.node.entries(), { __dirname: 'mock', __filename: 'mock' });
 });
 
-test('entry', t => {
+test('entry', (t) => {
   const config = new Config();
 
-  config
-    .entry('index')
-    .add('babel-polyfill')
-    .add('src/index.js');
+  config.entry('index').add('babel-polyfill').add('src/index.js');
 
   t.true(config.entryPoints.has('index'));
   t.deepEqual(config.entryPoints.get('index').values(), [
@@ -61,19 +58,16 @@ test('entry', t => {
   ]);
 });
 
-test('plugin empty', t => {
+test('plugin empty', (t) => {
   const config = new Config();
-  const instance = config
-    .plugin('stringify')
-    .use(StringifyPlugin)
-    .end();
+  const instance = config.plugin('stringify').use(StringifyPlugin).end();
 
   t.is(instance, config);
   t.true(config.plugins.has('stringify'));
   t.deepEqual(config.plugins.get('stringify').get('args'), []);
 });
 
-test('plugin with args', t => {
+test('plugin with args', (t) => {
   const config = new Config();
 
   config.plugin('stringify').use(StringifyPlugin, ['alpha', 'beta']);
@@ -82,13 +76,13 @@ test('plugin with args', t => {
   t.deepEqual(config.plugins.get('stringify').get('args'), ['alpha', 'beta']);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', (t) => {
   const config = new Config();
 
   t.deepEqual(config.toConfig(), {});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', (t) => {
   const config = new Config();
 
   config.output
@@ -172,7 +166,7 @@ test('toConfig with values', t => {
   });
 });
 
-test('merge empty', t => {
+test('merge empty', (t) => {
   const config = new Config();
 
   const obj = {
@@ -216,7 +210,7 @@ test('merge empty', t => {
   });
 });
 
-test('merge with values', t => {
+test('merge with values', (t) => {
   const config = new Config();
 
   config.output
@@ -270,7 +264,7 @@ test('merge with values', t => {
   });
 });
 
-test('merge with omit', t => {
+test('merge with omit', (t) => {
   const config = new Config();
 
   config.output
@@ -324,7 +318,7 @@ test('merge with omit', t => {
   });
 });
 
-test('validate empty', t => {
+test('validate empty', (t) => {
   const config = new Config();
 
   const errors = validate(config.toConfig());
@@ -332,7 +326,7 @@ test('validate empty', t => {
   t.is(errors.length, 0);
 });
 
-test('validate with entry', t => {
+test('validate with entry', (t) => {
   const config = new Config();
 
   config.entry('index').add('src/index.js');
@@ -342,7 +336,7 @@ test('validate with entry', t => {
   t.is(errors.length, 0);
 });
 
-test('validate with values', t => {
+test('validate with values', (t) => {
   const config = new Config();
 
   config
@@ -384,14 +378,10 @@ test('validate with values', t => {
   t.is(errors.length, 0);
 });
 
-test('toString', t => {
+test('toString', (t) => {
   const config = new Config();
 
-  config.module
-    .rule('alpha')
-    .oneOf('beta')
-    .use('babel')
-    .loader('babel-loader');
+  config.module.rule('alpha').oneOf('beta').use('babel').loader('babel-loader');
 
   // Nested rules
   config.module
@@ -519,7 +509,7 @@ test('toString', t => {
   );
 });
 
-test('toString for functions with custom expression', t => {
+test('toString for functions with custom expression', (t) => {
   const fn = function foo() {};
   fn.__expression = `require('foo')`;
 
@@ -546,7 +536,7 @@ test('toString for functions with custom expression', t => {
   );
 });
 
-test('toString with custom prefix', t => {
+test('toString with custom prefix', (t) => {
   const config = new Config();
 
   config.plugin('foo').use(class TestPlugin {});
@@ -564,7 +554,7 @@ test('toString with custom prefix', t => {
   );
 });
 
-test('static Config.toString', t => {
+test('static Config.toString', (t) => {
   const config = new Config();
   const sass = {
     __expression: `require('sass')`,

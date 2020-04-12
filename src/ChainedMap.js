@@ -9,8 +9,8 @@ module.exports = class extends Chainable {
 
   extend(methods) {
     this.shorthands = methods;
-    methods.forEach(method => {
-      this[method] = value => this.set(method, value);
+    methods.forEach((method) => {
+      this[method] = (value) => this.set(method, value);
     });
     return this;
   }
@@ -33,7 +33,7 @@ module.exports = class extends Chainable {
     const names = Object.keys(entries);
     const order = [...names];
 
-    names.forEach(name => {
+    names.forEach((name) => {
       if (!entries[name]) {
         return;
       }
@@ -65,7 +65,7 @@ module.exports = class extends Chainable {
   values() {
     const { entries, order } = this.order();
 
-    return order.map(name => entries[name]);
+    return order.map((name) => entries[name]);
   }
 
   get(key) {
@@ -89,7 +89,7 @@ module.exports = class extends Chainable {
   }
 
   merge(obj, omit = []) {
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       if (omit.includes(key)) {
         return;
       }

@@ -1,4 +1,4 @@
-module.exports = Class =>
+module.exports = (Class) =>
   class extends Class {
     before(name) {
       if (this.__after) {

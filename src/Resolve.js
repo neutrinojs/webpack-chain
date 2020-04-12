@@ -41,7 +41,7 @@ module.exports = class extends ChainedMap {
         mainFields: this.mainFields.values(),
         mainFiles: this.mainFiles.values(),
         modules: this.modules.values(),
-        plugins: this.plugins.values().map(plugin => plugin.toConfig()),
+        plugins: this.plugins.values().map((plugin) => plugin.toConfig()),
       }),
     );
   }
@@ -58,12 +58,12 @@ module.exports = class extends ChainedMap {
     ];
 
     if (!omit.includes('plugin') && 'plugin' in obj) {
-      Object.keys(obj.plugin).forEach(name =>
+      Object.keys(obj.plugin).forEach((name) =>
         this.plugin(name).merge(obj.plugin[name]),
       );
     }
 
-    omissions.forEach(key => {
+    omissions.forEach((key) => {
       if (!omit.includes(key) && key in obj) {
         this[key].merge(obj[key]);
       }

@@ -23,21 +23,21 @@ module.exports = class extends ChainedMap {
   toConfig() {
     return this.clean(
       Object.assign(this.entries() || {}, {
-        defaultRules: this.defaultRules.values().map(r => r.toConfig()),
-        rules: this.rules.values().map(r => r.toConfig()),
+        defaultRules: this.defaultRules.values().map((r) => r.toConfig()),
+        rules: this.rules.values().map((r) => r.toConfig()),
       }),
     );
   }
 
   merge(obj, omit = []) {
     if (!omit.includes('rule') && 'rule' in obj) {
-      Object.keys(obj.rule).forEach(name =>
+      Object.keys(obj.rule).forEach((name) =>
         this.rule(name).merge(obj.rule[name]),
       );
     }
 
     if (!omit.includes('defaultRule') && 'defaultRule' in obj) {
-      Object.keys(obj.defaultRule).forEach(name =>
+      Object.keys(obj.defaultRule).forEach((name) =>
         this.defaultRule(name).merge(obj.defaultRule[name]),
       );
     }

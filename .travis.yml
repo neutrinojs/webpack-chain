@@ -2,10 +2,18 @@ dist: bionic
 language: node_js
 cache: yarn
 node_js:
-- '8'
 - '10'
 - '12'
 - '13'
+jobs:
+  include:
+  # Prettier has dropped support for Node 8, so we have to skip linting and use --ignore-engines.
+  - node_js: 8
+    install:
+    - yarn --frozen-lockfile --ignore-engines
+    script:
+    - yarn test
+    - yarn test:types
 install:
 - yarn --frozen-lockfile
 script:

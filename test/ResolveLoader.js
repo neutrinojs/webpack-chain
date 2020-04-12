@@ -1,18 +1,18 @@
 import test from 'ava';
 import ResolveLoader from '../src/ResolveLoader';
 
-test('is Chainable', t => {
+test('is Chainable', (t) => {
   const parent = { parent: true };
   const resolveLoader = new ResolveLoader(parent);
 
   t.is(resolveLoader.end(), parent);
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', (t) => {
   const resolveLoader = new ResolveLoader();
   const obj = {};
 
-  resolveLoader.shorthands.forEach(method => {
+  resolveLoader.shorthands.forEach((method) => {
     obj[method] = 'alpha';
     t.is(resolveLoader[method]('alpha'), resolveLoader);
   });
@@ -20,7 +20,7 @@ test('shorthand methods', t => {
   t.deepEqual(resolveLoader.entries(), obj);
 });
 
-test('sets methods', t => {
+test('sets methods', (t) => {
   const resolveLoader = new ResolveLoader();
   const instance = resolveLoader.modules.add('src').end();
 
@@ -28,19 +28,16 @@ test('sets methods', t => {
   t.deepEqual(resolveLoader.toConfig(), { modules: ['src'] });
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', (t) => {
   const resolveLoader = new ResolveLoader();
 
   t.deepEqual(resolveLoader.toConfig(), {});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', (t) => {
   const resolveLoader = new ResolveLoader();
 
-  resolveLoader.modules
-    .add('src')
-    .end()
-    .set('moduleExtensions', ['-loader']);
+  resolveLoader.modules.add('src').end().set('moduleExtensions', ['-loader']);
 
   t.deepEqual(resolveLoader.toConfig(), {
     modules: ['src'],
@@ -48,7 +45,7 @@ test('toConfig with values', t => {
   });
 });
 
-test('merge empty', t => {
+test('merge empty', (t) => {
   const resolveLoader = new ResolveLoader();
   const obj = {
     modules: ['src'],
@@ -60,13 +57,10 @@ test('merge empty', t => {
   t.deepEqual(resolveLoader.toConfig(), obj);
 });
 
-test('merge with values', t => {
+test('merge with values', (t) => {
   const resolveLoader = new ResolveLoader();
 
-  resolveLoader.modules
-    .add('src')
-    .end()
-    .moduleExtensions.add('-loader');
+  resolveLoader.modules.add('src').end().moduleExtensions.add('-loader');
 
   resolveLoader.merge({
     modules: ['dist'],
@@ -79,13 +73,10 @@ test('merge with values', t => {
   });
 });
 
-test('merge with omit', t => {
+test('merge with omit', (t) => {
   const resolveLoader = new ResolveLoader();
 
-  resolveLoader.modules
-    .add('src')
-    .end()
-    .moduleExtensions.add('-loader');
+  resolveLoader.modules.add('src').end().moduleExtensions.add('-loader');
 
   resolveLoader.merge(
     {
@@ -101,7 +92,7 @@ test('merge with omit', t => {
   });
 });
 
-test('plugin with name', t => {
+test('plugin with name', (t) => {
   const resolveLoader = new ResolveLoader();
 
   resolveLoader.plugin('alpha');

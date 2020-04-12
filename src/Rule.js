@@ -68,9 +68,9 @@ const Rule = Orderable(
         Object.assign(this.entries() || {}, {
           include: this.include.values(),
           exclude: this.exclude.values(),
-          rules: this.rules.values().map(rule => rule.toConfig()),
-          oneOf: this.oneOfs.values().map(oneOf => oneOf.toConfig()),
-          use: this.uses.values().map(use => use.toConfig()),
+          rules: this.rules.values().map((rule) => rule.toConfig()),
+          oneOf: this.oneOfs.values().map((oneOf) => oneOf.toConfig()),
+          use: this.uses.values().map((use) => use.toConfig()),
         }),
       );
 
@@ -92,19 +92,19 @@ const Rule = Orderable(
       }
 
       if (!omit.includes('use') && 'use' in obj) {
-        Object.keys(obj.use).forEach(name =>
+        Object.keys(obj.use).forEach((name) =>
           this.use(name).merge(obj.use[name]),
         );
       }
 
       if (!omit.includes('rules') && 'rules' in obj) {
-        Object.keys(obj.rules).forEach(name =>
+        Object.keys(obj.rules).forEach((name) =>
           this.rule(name).merge(obj.rules[name]),
         );
       }
 
       if (!omit.includes('oneOf') && 'oneOf' in obj) {
-        Object.keys(obj.oneOf).forEach(name =>
+        Object.keys(obj.oneOf).forEach((name) =>
           this.oneOf(name).merge(obj.oneOf[name]),
         );
       }

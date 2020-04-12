@@ -126,7 +126,7 @@ module.exports = class extends ChainedMap {
         devServer: this.devServer.toConfig(),
         module: this.module.toConfig(),
         optimization: this.optimization.toConfig(),
-        plugins: this.plugins.values().map(plugin => plugin.toConfig()),
+        plugins: this.plugins.values().map((plugin) => plugin.toConfig()),
         performance: this.performance.entries(),
         entry: Object.keys(entryPoints).reduce(
           (acc, key) =>
@@ -154,18 +154,18 @@ module.exports = class extends ChainedMap {
     ];
 
     if (!omit.includes('entry') && 'entry' in obj) {
-      Object.keys(obj.entry).forEach(name =>
+      Object.keys(obj.entry).forEach((name) =>
         this.entry(name).merge([].concat(obj.entry[name])),
       );
     }
 
     if (!omit.includes('plugin') && 'plugin' in obj) {
-      Object.keys(obj.plugin).forEach(name =>
+      Object.keys(obj.plugin).forEach((name) =>
         this.plugin(name).merge(obj.plugin[name]),
       );
     }
 
-    omissions.forEach(key => {
+    omissions.forEach((key) => {
       if (!omit.includes(key) && key in obj) {
         this[key].merge(obj[key]);
       }
