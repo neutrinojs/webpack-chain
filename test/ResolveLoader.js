@@ -1,51 +1,50 @@
-import test from 'ava';
-import ResolveLoader from '../src/ResolveLoader';
+const ResolveLoader = require('../src/ResolveLoader');
 
-test('is Chainable', (t) => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const resolveLoader = new ResolveLoader(parent);
 
-  t.is(resolveLoader.end(), parent);
+  expect(resolveLoader.end()).toBe(parent);
 });
 
-test('shorthand methods', (t) => {
+test('shorthand methods', () => {
   const resolveLoader = new ResolveLoader();
   const obj = {};
 
   resolveLoader.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(resolveLoader[method]('alpha'), resolveLoader);
+    expect(resolveLoader[method]('alpha')).toBe(resolveLoader);
   });
 
-  t.deepEqual(resolveLoader.entries(), obj);
+  expect(resolveLoader.entries()).toStrictEqual(obj);
 });
 
-test('sets methods', (t) => {
+test('sets methods', () => {
   const resolveLoader = new ResolveLoader();
   const instance = resolveLoader.modules.add('src').end();
 
-  t.is(instance, resolveLoader);
-  t.deepEqual(resolveLoader.toConfig(), { modules: ['src'] });
+  expect(instance).toBe(resolveLoader);
+  expect(resolveLoader.toConfig()).toStrictEqual({ modules: ['src'] });
 });
 
-test('toConfig empty', (t) => {
+test('toConfig empty', () => {
   const resolveLoader = new ResolveLoader();
 
-  t.deepEqual(resolveLoader.toConfig(), {});
+  expect(resolveLoader.toConfig()).toStrictEqual({});
 });
 
-test('toConfig with values', (t) => {
+test('toConfig with values', () => {
   const resolveLoader = new ResolveLoader();
 
   resolveLoader.modules.add('src').end().set('moduleExtensions', ['-loader']);
 
-  t.deepEqual(resolveLoader.toConfig(), {
+  expect(resolveLoader.toConfig()).toStrictEqual({
     modules: ['src'],
     moduleExtensions: ['-loader'],
   });
 });
 
-test('merge empty', (t) => {
+test('merge empty', () => {
   const resolveLoader = new ResolveLoader();
   const obj = {
     modules: ['src'],
@@ -53,11 +52,11 @@ test('merge empty', (t) => {
   };
   const instance = resolveLoader.merge(obj);
 
-  t.is(instance, resolveLoader);
-  t.deepEqual(resolveLoader.toConfig(), obj);
+  expect(instance).toBe(resolveLoader);
+  expect(resolveLoader.toConfig()).toStrictEqual(obj);
 });
 
-test('merge with values', (t) => {
+test('merge with values', () => {
   const resolveLoader = new ResolveLoader();
 
   resolveLoader.modules.add('src').end().moduleExtensions.add('-loader');
@@ -67,13 +66,13 @@ test('merge with values', (t) => {
     moduleExtensions: ['-fake'],
   });
 
-  t.deepEqual(resolveLoader.toConfig(), {
+  expect(resolveLoader.toConfig()).toStrictEqual({
     modules: ['src', 'dist'],
     moduleExtensions: ['-loader', '-fake'],
   });
 });
 
-test('merge with omit', (t) => {
+test('merge with omit', () => {
   const resolveLoader = new ResolveLoader();
 
   resolveLoader.modules.add('src').end().moduleExtensions.add('-loader');
@@ -86,16 +85,16 @@ test('merge with omit', (t) => {
     ['moduleExtensions'],
   );
 
-  t.deepEqual(resolveLoader.toConfig(), {
+  expect(resolveLoader.toConfig()).toStrictEqual({
     modules: ['src', 'dist'],
     moduleExtensions: ['-loader'],
   });
 });
 
-test('plugin with name', (t) => {
+test('plugin with name', () => {
   const resolveLoader = new ResolveLoader();
 
   resolveLoader.plugin('alpha');
 
-  t.is(resolveLoader.plugins.get('alpha').name, 'alpha');
+  expect(resolveLoader.plugins.get('alpha').name).toBe('alpha');
 });

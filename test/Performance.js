@@ -1,21 +1,20 @@
-import test from 'ava';
-import Performance from '../src/Performance';
+const Performance = require('../src/Performance');
 
-test('is Chainable', (t) => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const performance = new Performance(parent);
 
-  t.is(performance.end(), parent);
+  expect(performance.end()).toBe(parent);
 });
 
-test('shorthand methods', (t) => {
+test('shorthand methods', () => {
   const performance = new Performance();
   const obj = {};
 
   performance.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(performance[method]('alpha'), performance);
+    expect(performance[method]('alpha')).toBe(performance);
   });
 
-  t.deepEqual(performance.entries(), obj);
+  expect(performance.entries()).toStrictEqual(obj);
 });

@@ -11,9 +11,10 @@ module.exports = {
     'eslint-config-airbnb-base',
     'plugin:prettier/recommended',
     'prettier/babel',
-    'plugin:ava/recommended',
+    'plugin:jest/recommended',
+    'plugin:jest/style',
   ],
-  plugins: ['eslint-plugin-babel', 'eslint-plugin-ava'],
+  plugins: ['eslint-plugin-babel'],
   parser: 'babel-eslint',
   env: {
     es6: true,

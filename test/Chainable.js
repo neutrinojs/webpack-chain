@@ -1,18 +1,17 @@
-import test from 'ava';
-import Chainable from '../src/Chainable';
+const Chainable = require('../src/Chainable');
 
-test('Calling .end() returns parent', (t) => {
+test('calling .end() returns parent', () => {
   const parent = { parent: true };
   const chain = new Chainable(parent);
 
-  t.is(chain.end(), parent);
+  expect(chain.end()).toBe(parent);
 });
 
-test('Using .batch() receives context', (t) => {
+test('using .batch() receives context', () => {
   const chain = new Chainable();
   const context = chain.batch((current) => {
-    t.is(current, chain);
+    expect(current).toBe(chain);
   });
 
-  t.is(context, chain);
+  expect(context).toBe(chain);
 });

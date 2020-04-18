@@ -1,29 +1,30 @@
-import test from 'ava';
-import DevServer from '../src/DevServer';
+const DevServer = require('../src/DevServer');
 
-test('is Chainable', (t) => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const devServer = new DevServer(parent);
 
-  t.is(devServer.end(), parent);
+  expect(devServer.end()).toBe(parent);
 });
 
-test('sets allowed hosts', (t) => {
+test('sets allowed hosts', () => {
   const devServer = new DevServer();
   const instance = devServer.allowedHosts.add('https://github.com').end();
 
-  t.is(instance, devServer);
-  t.deepEqual(devServer.toConfig(), { allowedHosts: ['https://github.com'] });
+  expect(instance).toBe(devServer);
+  expect(devServer.toConfig()).toStrictEqual({
+    allowedHosts: ['https://github.com'],
+  });
 });
 
-test('shorthand methods', (t) => {
+test('shorthand methods', () => {
   const devServer = new DevServer();
   const obj = {};
 
   devServer.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(devServer[method]('alpha'), devServer);
+    expect(devServer[method]('alpha')).toBe(devServer);
   });
 
-  t.deepEqual(devServer.entries(), obj);
+  expect(devServer.entries()).toStrictEqual(obj);
 });
