@@ -19,7 +19,7 @@ module.exports = class extends Resolve {
   merge(obj, omit = []) {
     const omissions = ['moduleExtensions', 'packageMains'];
 
-    omissions.forEach(key => {
+    omissions.forEach((key) => {
       if (!omit.includes(key) && key in obj) {
         this[key].merge(obj[key]);
       }

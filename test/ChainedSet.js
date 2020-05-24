@@ -1,127 +1,126 @@
-import test from 'ava';
-import ChainedSet from '../src/ChainedSet';
+const ChainedSet = require('../src/ChainedSet');
 
-test('is Chainable', t => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const set = new ChainedSet(parent);
 
-  t.is(set.end(), parent);
+  expect(set.end()).toBe(parent);
 });
 
-test('creates a backing Set', t => {
+test('creates a backing Set', () => {
   const set = new ChainedSet();
 
-  t.true(set.store instanceof Set);
+  expect(set.store instanceof Set).toBe(true);
 });
 
-test('add', t => {
+test('add', () => {
   const set = new ChainedSet();
 
-  t.is(set.add('alpha'), set);
-  t.true(set.store.has('alpha'));
-  t.is(set.store.size, 1);
+  expect(set.add('alpha')).toBe(set);
+  expect(set.store.has('alpha')).toBe(true);
+  expect(set.store.size).toBe(1);
 });
 
-test('prepend', t => {
-  const set = new ChainedSet();
-
-  set.add('alpha');
-
-  t.is(set.prepend('beta'), set);
-  t.true(set.store.has('beta'));
-  t.deepEqual([...set.store], ['beta', 'alpha']);
-});
-
-test('clear', t => {
+test('prepend', () => {
   const set = new ChainedSet();
 
   set.add('alpha');
-  set.add('beta');
-  set.add('gamma');
 
-  t.is(set.store.size, 3);
-  t.is(set.clear(), set);
-  t.is(set.store.size, 0);
+  expect(set.prepend('beta')).toBe(set);
+  expect(set.store.has('beta')).toBe(true);
+  expect([...set.store]).toStrictEqual(['beta', 'alpha']);
 });
 
-test('delete', t => {
+test('clear', () => {
   const set = new ChainedSet();
 
   set.add('alpha');
   set.add('beta');
   set.add('gamma');
 
-  t.is(set.delete('beta'), set);
-  t.is(set.store.size, 2);
-  t.false(set.store.has('beta'));
+  expect(set.store.size).toBe(3);
+  expect(set.clear()).toBe(set);
+  expect(set.store.size).toBe(0);
 });
 
-test('has', t => {
+test('delete', () => {
   const set = new ChainedSet();
 
   set.add('alpha');
   set.add('beta');
   set.add('gamma');
 
-  t.true(set.has('beta'));
-  t.false(set.has('delta'));
-  t.is(set.has('beta'), set.store.has('beta'));
+  expect(set.delete('beta')).toBe(set);
+  expect(set.store.size).toBe(2);
+  expect(set.store.has('beta')).toBe(false);
 });
 
-test('values', t => {
+test('has', () => {
   const set = new ChainedSet();
 
   set.add('alpha');
   set.add('beta');
   set.add('gamma');
 
-  t.deepEqual(set.values(), ['alpha', 'beta', 'gamma']);
+  expect(set.has('beta')).toBe(true);
+  expect(set.has('delta')).toBe(false);
+  expect(set.has('beta')).toBe(set.store.has('beta'));
 });
 
-test('merge with no values', t => {
+test('values', () => {
+  const set = new ChainedSet();
+
+  set.add('alpha');
+  set.add('beta');
+  set.add('gamma');
+
+  expect(set.values()).toStrictEqual(['alpha', 'beta', 'gamma']);
+});
+
+test('merge with no values', () => {
   const set = new ChainedSet();
   const arr = ['alpha', 'beta', 'gamma'];
 
-  t.is(set.merge(arr), set);
-  t.deepEqual(set.values(), arr);
+  expect(set.merge(arr)).toBe(set);
+  expect(set.values()).toStrictEqual(arr);
 });
 
-test('merge with existing values', t => {
+test('merge with existing values', () => {
   const set = new ChainedSet();
   const arr = ['alpha', 'beta', 'gamma'];
 
   set.add('delta');
 
-  t.is(set.merge(arr), set);
-  t.deepEqual(set.values(), ['delta', 'alpha', 'beta', 'gamma']);
+  expect(set.merge(arr)).toBe(set);
+  expect(set.values()).toStrictEqual(['delta', 'alpha', 'beta', 'gamma']);
 });
 
-test('when true', t => {
+test('when true', () => {
   const set = new ChainedSet();
-  const right = instance => {
-    t.is(instance, set);
+  const right = (instance) => {
+    expect(instance).toBe(set);
     instance.add('alpha');
   };
-  const left = instance => {
+  const left = (instance) => {
     instance.add('beta');
   };
 
-  t.is(set.when(true, right, left), set);
-  t.true(set.has('alpha'));
-  t.false(set.has('beta'));
+  expect(set.when(true, right, left)).toBe(set);
+  expect(set.has('alpha')).toBe(true);
+  expect(set.has('beta')).toBe(false);
 });
 
-test('when false', t => {
+test('when false', () => {
   const set = new ChainedSet();
-  const right = instance => {
+  const right = (instance) => {
     instance.add('alpha');
   };
-  const left = instance => {
-    t.is(instance, set);
+  const left = (instance) => {
+    expect(instance).toBe(set);
     instance.add('beta');
   };
 
-  t.is(set.when(false, right, left), set);
-  t.false(set.has('alpha'));
-  t.true(set.has('beta'));
+  expect(set.when(false, right, left)).toBe(set);
+  expect(set.has('alpha')).toBe(false);
+  expect(set.has('beta')).toBe(true);
 });

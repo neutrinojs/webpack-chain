@@ -1,50 +1,49 @@
-import test from 'ava';
-import Module from '../src/Module';
+const Module = require('../src/Module');
 
-test('is Chainable', t => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const module = new Module(parent);
 
-  t.is(module.end(), parent);
+  expect(module.end()).toBe(parent);
 });
 
-test('is ChainedMap', t => {
+test('is ChainedMap', () => {
   const module = new Module();
 
   module.set('a', 'alpha');
 
-  t.is(module.get('a'), 'alpha');
+  expect(module.get('a')).toBe('alpha');
 });
 
-test('rule', t => {
+test('rule', () => {
   const module = new Module();
   const instance = module.rule('compile').end();
 
-  t.is(instance, module);
-  t.true(module.rules.has('compile'));
+  expect(instance).toBe(module);
+  expect(module.rules.has('compile')).toBe(true);
 });
 
-test('defaultRule', t => {
+test('defaultRule', () => {
   const module = new Module();
   const instance = module.defaultRule('banner').end();
 
-  t.is(instance, module);
-  t.true(module.defaultRules.has('banner'));
+  expect(instance).toBe(module);
+  expect(module.defaultRules.has('banner')).toBe(true);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', () => {
   const module = new Module();
 
-  t.deepEqual(module.toConfig(), {});
+  expect(module.toConfig()).toStrictEqual({});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', () => {
   const module = new Module();
 
   module.rule('compile').test(/\.js$/);
   module.noParse(/.min.js/);
 
-  t.deepEqual(module.toConfig(), {
+  expect(module.toConfig()).toStrictEqual({
     rules: [{ test: /\.js$/ }],
     noParse: /.min.js/,
   });

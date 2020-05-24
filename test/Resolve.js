@@ -1,5 +1,4 @@
-import test from 'ava';
-import Resolve from '../src/Resolve';
+const Resolve = require('../src/Resolve');
 
 class StringifyPlugin {
   constructor(...args) {
@@ -11,43 +10,39 @@ class StringifyPlugin {
   }
 }
 
-test('is Chainable', t => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const resolve = new Resolve(parent);
 
-  t.is(resolve.end(), parent);
+  expect(resolve.end()).toBe(parent);
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', () => {
   const resolve = new Resolve();
   const obj = {};
 
-  resolve.shorthands.forEach(method => {
+  resolve.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(resolve[method]('alpha'), resolve);
+    expect(resolve[method]('alpha')).toBe(resolve);
   });
 
-  t.deepEqual(resolve.entries(), obj);
+  expect(resolve.entries()).toStrictEqual(obj);
 });
 
-test('sets methods', t => {
+test('sets methods', () => {
   const resolve = new Resolve();
-  const instance = resolve.modules
-    .add('src')
-    .end()
-    .extensions.add('.js')
-    .end();
+  const instance = resolve.modules.add('src').end().extensions.add('.js').end();
 
-  t.is(instance, resolve);
+  expect(instance).toBe(resolve);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', () => {
   const resolve = new Resolve();
 
-  t.deepEqual(resolve.toConfig(), {});
+  expect(resolve.toConfig()).toStrictEqual({});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', () => {
   const resolve = new Resolve();
 
   resolve
@@ -60,7 +55,7 @@ test('toConfig with values', t => {
     .end()
     .alias.set('React', 'src/react');
 
-  t.deepEqual(resolve.toConfig(), {
+  expect(resolve.toConfig()).toStrictEqual({
     plugins: [new StringifyPlugin()],
     modules: ['src'],
     extensions: ['.js'],
@@ -68,7 +63,7 @@ test('toConfig with values', t => {
   });
 });
 
-test('merge empty', t => {
+test('merge empty', () => {
   const resolve = new Resolve();
   const obj = {
     modules: ['src'],
@@ -77,11 +72,11 @@ test('merge empty', t => {
   };
   const instance = resolve.merge(obj);
 
-  t.is(instance, resolve);
-  t.deepEqual(resolve.toConfig(), obj);
+  expect(instance).toBe(resolve);
+  expect(resolve.toConfig()).toStrictEqual(obj);
 });
 
-test('merge with values', t => {
+test('merge with values', () => {
   const resolve = new Resolve();
 
   resolve.modules
@@ -97,14 +92,14 @@ test('merge with values', t => {
     alias: { ReactDOM: 'src/react-dom' },
   });
 
-  t.deepEqual(resolve.toConfig(), {
+  expect(resolve.toConfig()).toStrictEqual({
     modules: ['src', 'dist'],
     extensions: ['.js', '.jsx'],
     alias: { React: 'src/react', ReactDOM: 'src/react-dom' },
   });
 });
 
-test('merge with omit', t => {
+test('merge with omit', () => {
   const resolve = new Resolve();
 
   resolve.modules
@@ -123,39 +118,39 @@ test('merge with omit', t => {
     ['alias'],
   );
 
-  t.deepEqual(resolve.toConfig(), {
+  expect(resolve.toConfig()).toStrictEqual({
     modules: ['src', 'dist'],
     extensions: ['.js', '.jsx'],
     alias: { React: 'src/react' },
   });
 });
 
-test('plugin with name', t => {
+test('plugin with name', () => {
   const resolve = new Resolve();
 
   resolve.plugin('alpha');
 
-  t.is(resolve.plugins.get('alpha').name, 'alpha');
-  t.is(resolve.plugins.get('alpha').type, 'resolve.plugin');
+  expect(resolve.plugins.get('alpha').name).toBe('alpha');
+  expect(resolve.plugins.get('alpha').type).toBe('resolve.plugin');
 });
 
-test('plugin empty', t => {
+test('plugin empty', () => {
   const resolve = new Resolve();
-  const instance = resolve
-    .plugin('stringify')
-    .use(StringifyPlugin)
-    .end();
+  const instance = resolve.plugin('stringify').use(StringifyPlugin).end();
 
-  t.is(instance, resolve);
-  t.true(resolve.plugins.has('stringify'));
-  t.deepEqual(resolve.plugins.get('stringify').get('args'), []);
+  expect(instance).toBe(resolve);
+  expect(resolve.plugins.has('stringify')).toBe(true);
+  expect(resolve.plugins.get('stringify').get('args')).toStrictEqual([]);
 });
 
-test('plugin with args', t => {
+test('plugin with args', () => {
   const resolve = new Resolve();
 
   resolve.plugin('stringify').use(StringifyPlugin, ['alpha', 'beta']);
 
-  t.true(resolve.plugins.has('stringify'));
-  t.deepEqual(resolve.plugins.get('stringify').get('args'), ['alpha', 'beta']);
+  expect(resolve.plugins.has('stringify')).toBe(true);
+  expect(resolve.plugins.get('stringify').get('args')).toStrictEqual([
+    'alpha',
+    'beta',
+  ]);
 });

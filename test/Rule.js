@@ -1,66 +1,65 @@
-import test from 'ava';
-import Rule from '../src/Rule';
+const Rule = require('../src/Rule');
 
-test('is Chainable', t => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const rule = new Rule(parent);
 
-  t.is(rule.end(), parent);
+  expect(rule.end()).toBe(parent);
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', () => {
   const rule = new Rule();
   const obj = {};
 
-  rule.shorthands.forEach(method => {
+  rule.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(rule[method]('alpha'), rule);
+    expect(rule[method]('alpha')).toBe(rule);
   });
 
-  t.deepEqual(rule.entries(), obj);
+  expect(rule.entries()).toStrictEqual(obj);
 });
 
-test('use', t => {
+test('use', () => {
   const rule = new Rule();
   const instance = rule.use('babel').end();
 
-  t.is(instance, rule);
-  t.true(rule.uses.has('babel'));
+  expect(instance).toBe(rule);
+  expect(rule.uses.has('babel')).toBe(true);
 });
 
-test('rule', t => {
+test('rule', () => {
   const rule = new Rule();
   const instance = rule.rule('babel').end();
 
-  t.is(instance, rule);
-  t.true(rule.rules.has('babel'));
+  expect(instance).toBe(rule);
+  expect(rule.rules.has('babel')).toBe(true);
 });
 
-test('oneOf', t => {
+test('oneOf', () => {
   const rule = new Rule();
   const instance = rule.oneOf('babel').end();
 
-  t.is(instance, rule);
-  t.true(rule.oneOfs.has('babel'));
+  expect(instance).toBe(rule);
+  expect(rule.oneOfs.has('babel')).toBe(true);
 });
 
-test('pre', t => {
+test('pre', () => {
   const rule = new Rule();
   const instance = rule.pre();
 
-  t.is(instance, rule);
-  t.is(rule.get('enforce'), 'pre');
+  expect(instance).toBe(rule);
+  expect(rule.get('enforce')).toBe('pre');
 });
 
-test('post', t => {
+test('post', () => {
   const rule = new Rule();
   const instance = rule.post();
 
-  t.is(instance, rule);
-  t.is(rule.get('enforce'), 'post');
+  expect(instance).toBe(rule);
+  expect(rule.get('enforce')).toBe('post');
 });
 
-test('sets methods', t => {
+test('sets methods', () => {
   const rule = new Rule();
   const instance = rule.include
     .add('alpha')
@@ -70,34 +69,42 @@ test('sets methods', t => {
     .add('beta')
     .end();
 
-  t.is(instance, rule);
-  t.deepEqual(rule.include.values(), ['alpha', 'beta']);
-  t.deepEqual(rule.exclude.values(), ['alpha', 'beta']);
+  expect(instance).toBe(rule);
+  expect(rule.include.values()).toStrictEqual(['alpha', 'beta']);
+  expect(rule.exclude.values()).toStrictEqual(['alpha', 'beta']);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', () => {
   const rule = new Rule();
 
-  t.deepEqual(rule.toConfig(), {});
+  expect(rule.toConfig()).toStrictEqual({});
 });
 
-test('toConfig with name', t => {
+test('toConfig with name', () => {
   const parent = new Rule(null, 'alpha');
   const child = parent.oneOf('beta');
   const grandChild = child.oneOf('gamma');
   const ruleChild = parent.rule('delta');
 
-  t.deepEqual(parent.toConfig().__ruleNames, ['alpha']);
-  t.deepEqual(parent.toConfig().__ruleTypes, ['rule']);
-  t.deepEqual(child.toConfig().__ruleNames, ['alpha', 'beta']);
-  t.deepEqual(child.toConfig().__ruleTypes, ['rule', 'oneOf']);
-  t.deepEqual(grandChild.toConfig().__ruleNames, ['alpha', 'beta', 'gamma']);
-  t.deepEqual(grandChild.toConfig().__ruleTypes, ['rule', 'oneOf', 'oneOf']);
-  t.deepEqual(ruleChild.toConfig().__ruleNames, ['alpha', 'delta']);
-  t.deepEqual(ruleChild.toConfig().__ruleTypes, ['rule', 'rule']);
+  expect(parent.toConfig().__ruleNames).toStrictEqual(['alpha']);
+  expect(parent.toConfig().__ruleTypes).toStrictEqual(['rule']);
+  expect(child.toConfig().__ruleNames).toStrictEqual(['alpha', 'beta']);
+  expect(child.toConfig().__ruleTypes).toStrictEqual(['rule', 'oneOf']);
+  expect(grandChild.toConfig().__ruleNames).toStrictEqual([
+    'alpha',
+    'beta',
+    'gamma',
+  ]);
+  expect(grandChild.toConfig().__ruleTypes).toStrictEqual([
+    'rule',
+    'oneOf',
+    'oneOf',
+  ]);
+  expect(ruleChild.toConfig().__ruleNames).toStrictEqual(['alpha', 'delta']);
+  expect(ruleChild.toConfig().__ruleTypes).toStrictEqual(['rule', 'rule']);
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', () => {
   const rule = new Rule();
 
   rule.include
@@ -125,7 +132,7 @@ test('toConfig with values', t => {
     .use('url')
     .loader('url-loader');
 
-  t.deepEqual(rule.toConfig(), {
+  expect(rule.toConfig()).toStrictEqual({
     test: /\.js$/,
     enforce: 'pre',
     include: ['alpha', 'beta'],
@@ -161,16 +168,16 @@ test('toConfig with values', t => {
   });
 });
 
-test('toConfig with test function', t => {
+test('toConfig with test function', () => {
   const rule = new Rule();
-  const test = s => s.includes('.js');
+  const test = (s) => s.includes('.js');
 
   rule.test(test);
 
-  t.deepEqual(rule.toConfig(), { test });
+  expect(rule.toConfig()).toStrictEqual({ test });
 });
 
-test('merge empty', t => {
+test('merge empty', () => {
   const rule = new Rule();
   const obj = {
     enforce: 'pre',
@@ -208,8 +215,8 @@ test('merge empty', t => {
   };
   const instance = rule.merge(obj);
 
-  t.is(instance, rule);
-  t.deepEqual(rule.toConfig(), {
+  expect(instance).toBe(rule);
+  expect(rule.toConfig()).toStrictEqual({
     enforce: 'pre',
     test: /\.js$/,
     include: ['alpha', 'beta'],
@@ -245,7 +252,7 @@ test('merge empty', t => {
   });
 });
 
-test('merge with values', t => {
+test('merge with values', () => {
   const rule = new Rule();
 
   rule
@@ -292,7 +299,7 @@ test('merge with values', t => {
     },
   });
 
-  t.deepEqual(rule.toConfig(), {
+  expect(rule.toConfig()).toStrictEqual({
     test: /\.jsx$/,
     enforce: 'pre',
     include: ['gamma', 'delta', 'alpha', 'beta'],
@@ -328,7 +335,7 @@ test('merge with values', t => {
   });
 });
 
-test('merge with omit', t => {
+test('merge with omit', () => {
   const rule = new Rule();
 
   rule
@@ -378,7 +385,7 @@ test('merge with omit', t => {
     ['use', 'oneOf', 'rules'],
   );
 
-  t.deepEqual(rule.toConfig(), {
+  expect(rule.toConfig()).toStrictEqual({
     test: /\.jsx$/,
     enforce: 'pre',
     include: ['gamma', 'delta', 'alpha', 'beta'],
@@ -394,7 +401,7 @@ test('merge with omit', t => {
   });
 });
 
-test('merge with include and exclude not of array type', t => {
+test('merge with include and exclude not of array type', () => {
   const rule = new Rule();
 
   rule.merge({
@@ -403,14 +410,14 @@ test('merge with include and exclude not of array type', t => {
     exclude: 'alpha',
   });
 
-  t.deepEqual(rule.toConfig(), {
+  expect(rule.toConfig()).toStrictEqual({
     test: /\.jsx$/,
     include: ['alpha'],
     exclude: ['alpha'],
   });
 });
 
-test('ordered rules', t => {
+test('ordered rules', () => {
   const rule = new Rule();
   rule
     .rule('first')
@@ -430,13 +437,16 @@ test('ordered rules', t => {
     .test(/\.beta$/)
     .after('second');
 
-  t.deepEqual(
-    rule.toConfig().rules.map(o => o.test),
-    [/\.alpha$/, /\.first$/, /\.second$/, /\.beta$/, /\.third$/],
-  );
+  expect(rule.toConfig().rules.map((o) => o.test)).toStrictEqual([
+    /\.alpha$/,
+    /\.first$/,
+    /\.second$/,
+    /\.beta$/,
+    /\.third$/,
+  ]);
 });
 
-test('ordered oneOfs', t => {
+test('ordered oneOfs', () => {
   const rule = new Rule();
   rule
     .oneOf('first')
@@ -456,8 +466,11 @@ test('ordered oneOfs', t => {
     .test(/\.beta$/)
     .after('second');
 
-  t.deepEqual(
-    rule.toConfig().oneOf.map(o => o.test),
-    [/\.alpha$/, /\.first$/, /\.second$/, /\.beta$/, /\.third$/],
-  );
+  expect(rule.toConfig().oneOf.map((o) => o.test)).toStrictEqual([
+    /\.alpha$/,
+    /\.first$/,
+    /\.second$/,
+    /\.beta$/,
+    /\.third$/,
+  ]);
 });

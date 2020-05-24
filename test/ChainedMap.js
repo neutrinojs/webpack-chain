@@ -1,192 +1,193 @@
-import test from 'ava';
-import ChainedMap from '../src/ChainedMap';
+const ChainedMap = require('../src/ChainedMap');
 
-test('is Chainable', t => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const map = new ChainedMap(parent);
 
-  t.is(map.end(), parent);
+  expect(map.end()).toBe(parent);
 });
 
-test('creates a backing Map', t => {
+test('creates a backing Map', () => {
   const map = new ChainedMap();
 
-  t.true(map.store instanceof Map);
+  expect(map.store instanceof Map).toBe(true);
 });
 
-test('set', t => {
+test('set', () => {
   const map = new ChainedMap();
 
-  t.is(map.set('a', 'alpha'), map);
-  t.is(map.store.get('a'), 'alpha');
+  expect(map.set('a', 'alpha')).toBe(map);
+  expect(map.store.get('a')).toBe('alpha');
 });
 
-test('get', t => {
+test('get', () => {
   const map = new ChainedMap();
 
-  t.is(map.set('a', 'alpha'), map);
-  t.is(map.get('a'), 'alpha');
+  expect(map.set('a', 'alpha')).toBe(map);
+  expect(map.get('a')).toBe('alpha');
 });
 
-test('getOrCompute', t => {
+test('getOrCompute', () => {
   const map = new ChainedMap();
 
-  t.is(map.get('a'), undefined);
-  t.is(
-    map.getOrCompute('a', () => 'alpha'),
-    'alpha',
-  );
-  t.is(map.get('a'), 'alpha');
+  expect(map.get('a')).toBeUndefined();
+  expect(map.getOrCompute('a', () => 'alpha')).toBe('alpha');
+  expect(map.get('a')).toBe('alpha');
 });
 
-test('clear', t => {
+test('clear', () => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
   map.set('b', 'beta');
   map.set('c', 'gamma');
 
-  t.is(map.store.size, 3);
-  t.is(map.clear(), map);
-  t.is(map.store.size, 0);
+  expect(map.store.size).toBe(3);
+  expect(map.clear()).toBe(map);
+  expect(map.store.size).toBe(0);
 });
 
-test('delete', t => {
+test('delete', () => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
   map.set('b', 'beta');
   map.set('c', 'gamma');
 
-  t.is(map.delete('b'), map);
-  t.is(map.store.size, 2);
-  t.false(map.store.has('b'));
+  expect(map.delete('b')).toBe(map);
+  expect(map.store.size).toBe(2);
+  expect(map.store.has('b')).toBe(false);
 });
 
-test('has', t => {
+test('has', () => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
   map.set('b', 'beta');
   map.set('c', 'gamma');
 
-  t.true(map.has('b'));
-  t.false(map.has('d'));
-  t.is(map.has('b'), map.store.has('b'));
+  expect(map.has('b')).toBe(true);
+  expect(map.has('d')).toBe(false);
+  expect(map.has('b')).toBe(map.store.has('b'));
 });
 
-test('values', t => {
+test('values', () => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
   map.set('b', 'beta');
   map.set('c', 'gamma');
 
-  t.deepEqual(map.values(), ['alpha', 'beta', 'gamma']);
+  expect(map.values()).toStrictEqual(['alpha', 'beta', 'gamma']);
 });
 
-test('entries with values', t => {
+test('entries with values', () => {
   const map = new ChainedMap();
 
   map.set('a', 'alpha');
   map.set('b', 'beta');
   map.set('c', 'gamma');
 
-  t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma' });
+  expect(map.entries()).toStrictEqual({ a: 'alpha', b: 'beta', c: 'gamma' });
 });
 
-test('entries with no values', t => {
+test('entries with no values', () => {
   const map = new ChainedMap();
 
-  t.is(map.entries(), undefined);
+  expect(map.entries()).toBeUndefined();
 });
 
-test('merge with no values', t => {
+test('merge with no values', () => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
-  t.is(map.merge(obj), map);
-  t.deepEqual(map.entries(), obj);
+  expect(map.merge(obj)).toBe(map);
+  expect(map.entries()).toStrictEqual(obj);
 });
 
-test('merge with existing values', t => {
+test('merge with existing values', () => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   map.set('d', 'delta');
 
-  t.is(map.merge(obj), map);
-  t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma', d: 'delta' });
+  expect(map.merge(obj)).toBe(map);
+  expect(map.entries()).toStrictEqual({
+    a: 'alpha',
+    b: 'beta',
+    c: 'gamma',
+    d: 'delta',
+  });
 });
 
-test('merge with overriding values', t => {
+test('merge with overriding values', () => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   map.set('b', 'delta');
 
-  t.is(map.merge(obj), map);
-  t.deepEqual(map.entries(), { a: 'alpha', b: 'beta', c: 'gamma' });
+  expect(map.merge(obj)).toBe(map);
+  expect(map.entries()).toStrictEqual({ a: 'alpha', b: 'beta', c: 'gamma' });
 });
 
-test('merge with omitting keys', t => {
+test('merge with omitting keys', () => {
   const map = new ChainedMap();
   const obj = { a: 'alpha', b: 'beta', c: 'gamma' };
 
   map.merge(obj, ['b']);
 
-  t.deepEqual(map.entries(), { a: 'alpha', c: 'gamma' });
+  expect(map.entries()).toStrictEqual({ a: 'alpha', c: 'gamma' });
 });
 
-test('when true', t => {
+test('when true', () => {
   const map = new ChainedMap();
-  const right = instance => {
-    t.is(instance, map);
+  const right = (instance) => {
+    expect(instance).toBe(map);
     instance.set('alpha', 'a');
   };
-  const left = instance => {
+  const left = (instance) => {
     instance.set('beta', 'b');
   };
 
-  t.is(map.when(true, right, left), map);
-  t.true(map.has('alpha'));
-  t.false(map.has('beta'));
+  expect(map.when(true, right, left)).toBe(map);
+  expect(map.has('alpha')).toBe(true);
+  expect(map.has('beta')).toBe(false);
 });
 
-test('when false', t => {
+test('when false', () => {
   const map = new ChainedMap();
-  const right = instance => {
+  const right = (instance) => {
     instance.set('alpha', 'a');
   };
-  const left = instance => {
-    t.is(instance, map);
+  const left = (instance) => {
+    expect(instance).toBe(map);
     instance.set('beta', 'b');
   };
 
-  t.is(map.when(false, right, left), map);
-  t.false(map.has('alpha'));
-  t.true(map.has('beta'));
+  expect(map.when(false, right, left)).toBe(map);
+  expect(map.has('alpha')).toBe(false);
+  expect(map.has('beta')).toBe(true);
 });
 
-test('clean undefined', t => {
+test('clean undefined', () => {
   const map = new ChainedMap();
   map.set('alpha', undefined);
   map.set('beta', 'b');
-  t.true('alpha' in map.entries());
-  t.false('alpha' in map.clean(map.entries()));
-  t.true('beta' in map.clean(map.entries()));
+  expect('alpha' in map.entries()).toBe(true);
+  expect('alpha' in map.clean(map.entries())).toBe(false);
+  expect('beta' in map.clean(map.entries())).toBe(true);
 });
 
-test('clean empty array', t => {
+test('clean empty array', () => {
   const map = new ChainedMap();
   map.set('alpha', []);
-  t.true('alpha' in map.entries());
-  t.false('alpha' in map.clean(map.entries()));
+  expect('alpha' in map.entries()).toBe(true);
+  expect('alpha' in map.clean(map.entries())).toBe(false);
 });
 
-test('clean empty object', t => {
+test('clean empty object', () => {
   const map = new ChainedMap();
   map.set('alpha', {});
-  t.true('alpha' in map.entries());
-  t.false('alpha' in map.clean(map.entries()));
+  expect('alpha' in map.entries()).toBe(true);
+  expect('alpha' in map.clean(map.entries())).toBe(false);
 });

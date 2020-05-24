@@ -1,21 +1,20 @@
-import test from 'ava';
-import Output from '../src/Output';
+const Output = require('../src/Output');
 
-test('is Chainable', t => {
+test('is Chainable', () => {
   const parent = { parent: true };
   const output = new Output(parent);
 
-  t.is(output.end(), parent);
+  expect(output.end()).toBe(parent);
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', () => {
   const output = new Output();
   const obj = {};
 
-  output.shorthands.forEach(method => {
+  output.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(output[method]('alpha'), output);
+    expect(output[method]('alpha')).toBe(output);
   });
 
-  t.deepEqual(output.entries(), obj);
+  expect(output.entries()).toStrictEqual(obj);
 });

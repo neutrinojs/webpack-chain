@@ -1,9 +1,8 @@
 /* eslint-disable max-classes-per-file */
-import test from 'ava';
-import { validate } from 'webpack';
-import EnvironmentPlugin from 'webpack/lib/EnvironmentPlugin';
-import { stringify } from 'javascript-stringify';
-import Config from '../src/Config';
+const { validate } = require('webpack');
+const { stringify } = require('javascript-stringify');
+const EnvironmentPlugin = require('webpack/lib/EnvironmentPlugin');
+const Config = require('../src/Config');
 
 class StringifyPlugin {
   constructor(...args) {
@@ -15,38 +14,41 @@ class StringifyPlugin {
   }
 }
 
-test('is ChainedMap', t => {
+test('is ChainedMap', () => {
   const config = new Config();
 
   config.set('a', 'alpha');
 
-  t.is(config.store.get('a'), 'alpha');
+  expect(config.store.get('a')).toBe('alpha');
 });
 
-test('shorthand methods', t => {
+test('shorthand methods', () => {
   const config = new Config();
   const obj = {};
 
-  config.shorthands.forEach(method => {
+  config.shorthands.forEach((method) => {
     obj[method] = 'alpha';
-    t.is(config[method]('alpha'), config);
+    expect(config[method]('alpha')).toBe(config);
   });
 
-  t.deepEqual(config.entries(), obj);
+  expect(config.entries()).toStrictEqual(obj);
 });
 
-test('node', t => {
+test('node', () => {
   const config = new Config();
   const instance = config.node
     .set('__dirname', 'mock')
     .set('__filename', 'mock')
     .end();
 
-  t.is(instance, config);
-  t.deepEqual(config.node.entries(), { __dirname: 'mock', __filename: 'mock' });
+  expect(instance).toBe(config);
+  expect(config.node.entries()).toStrictEqual({
+    __dirname: 'mock',
+    __filename: 'mock',
+  });
 });
 
-test('node with false value', t => {
+test('node with false value', () => {
   const config = new Config();
   const instance = config
     .set('node', false)
@@ -54,53 +56,50 @@ test('node with false value', t => {
     .set('__filename', 'mock')
     .end();
 
-  t.is(instance, config);
-  t.false(config.get('node'));
+  expect(instance).toBe(config);
+  expect(config.get('node')).toBe(false);
 });
 
-test('entry', t => {
+test('entry', () => {
   const config = new Config();
 
-  config
-    .entry('index')
-    .add('babel-polyfill')
-    .add('src/index.js');
+  config.entry('index').add('babel-polyfill').add('src/index.js');
 
-  t.true(config.entryPoints.has('index'));
-  t.deepEqual(config.entryPoints.get('index').values(), [
+  expect(config.entryPoints.has('index')).toBe(true);
+  expect(config.entryPoints.get('index').values()).toStrictEqual([
     'babel-polyfill',
     'src/index.js',
   ]);
 });
 
-test('plugin empty', t => {
+test('plugin empty', () => {
   const config = new Config();
-  const instance = config
-    .plugin('stringify')
-    .use(StringifyPlugin)
-    .end();
+  const instance = config.plugin('stringify').use(StringifyPlugin).end();
 
-  t.is(instance, config);
-  t.true(config.plugins.has('stringify'));
-  t.deepEqual(config.plugins.get('stringify').get('args'), []);
+  expect(instance).toBe(config);
+  expect(config.plugins.has('stringify')).toBe(true);
+  expect(config.plugins.get('stringify').get('args')).toStrictEqual([]);
 });
 
-test('plugin with args', t => {
+test('plugin with args', () => {
   const config = new Config();
 
   config.plugin('stringify').use(StringifyPlugin, ['alpha', 'beta']);
 
-  t.true(config.plugins.has('stringify'));
-  t.deepEqual(config.plugins.get('stringify').get('args'), ['alpha', 'beta']);
+  expect(config.plugins.has('stringify')).toBe(true);
+  expect(config.plugins.get('stringify').get('args')).toStrictEqual([
+    'alpha',
+    'beta',
+  ]);
 });
 
-test('toConfig empty', t => {
+test('toConfig empty', () => {
   const config = new Config();
 
-  t.deepEqual(config.toConfig(), {});
+  expect(config.toConfig()).toStrictEqual({});
 });
 
-test('toConfig with values', t => {
+test('toConfig with values', () => {
   const config = new Config();
 
   config.output
@@ -141,7 +140,7 @@ test('toConfig with values', t => {
     .loader('babel-loader')
     .options({ presets: ['alpha'] });
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     mode: 'development',
     node: {
       __dirname: 'mock',
@@ -184,20 +183,17 @@ test('toConfig with values', t => {
   });
 });
 
-test('toConfig with node false value', t => {
+test('toConfig with node false value', () => {
   const config = new Config();
 
-  config
-    .set('node', false)
-    .node.set('__dirname', 'mock')
-    .end();
+  config.set('node', false).node.set('__dirname', 'mock').end();
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     node: false,
   });
 });
 
-test('merge empty', t => {
+test('merge empty', () => {
   const config = new Config();
 
   const obj = {
@@ -220,9 +216,9 @@ test('merge empty', t => {
 
   const instance = config.merge(obj);
 
-  t.is(instance, config);
+  expect(instance).toBe(config);
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     mode: 'development',
     node: {
       __dirname: 'mock',
@@ -241,7 +237,7 @@ test('merge empty', t => {
   });
 });
 
-test('merge with values', t => {
+test('merge with values', () => {
   const config = new Config();
 
   config.output
@@ -274,9 +270,9 @@ test('merge with values', t => {
 
   const instance = config.merge(obj);
 
-  t.is(instance, config);
+  expect(instance).toBe(config);
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     mode: 'production',
     node: {
       __dirname: 'mock',
@@ -295,7 +291,7 @@ test('merge with values', t => {
   });
 });
 
-test('merge with omit', t => {
+test('merge with omit', () => {
   const config = new Config();
 
   config.output
@@ -328,9 +324,9 @@ test('merge with omit', t => {
 
   const instance = config.merge(obj, ['target']);
 
-  t.is(instance, config);
+  expect(instance).toBe(config);
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     mode: 'production',
     node: {
       __dirname: 'mock',
@@ -349,7 +345,7 @@ test('merge with omit', t => {
   });
 });
 
-test('merge with node false value', t => {
+test('merge with node false value', () => {
   const config = new Config();
 
   config.node.set('__dirname', 'mock');
@@ -360,14 +356,14 @@ test('merge with node false value', t => {
 
   const instance = config.merge(obj);
 
-  t.is(instance, config);
+  expect(instance).toBe(config);
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     node: false,
   });
 });
 
-test('merge with node object value', t => {
+test('merge with node object value', () => {
   const config = new Config();
 
   config.set('node', false);
@@ -380,34 +376,34 @@ test('merge with node object value', t => {
 
   const instance = config.merge(obj);
 
-  t.is(instance, config);
+  expect(instance).toBe(config);
 
-  t.deepEqual(config.toConfig(), {
+  expect(config.toConfig()).toStrictEqual({
     node: {
       __dirname: 'mock',
     },
   });
 });
 
-test('validate empty', t => {
+test('validate empty', () => {
   const config = new Config();
 
   const errors = validate(config.toConfig());
 
-  t.is(errors.length, 0);
+  expect(errors).toHaveLength(0);
 });
 
-test('validate with entry', t => {
+test('validate with entry', () => {
   const config = new Config();
 
   config.entry('index').add('src/index.js');
 
   const errors = validate(config.toConfig());
 
-  t.is(errors.length, 0);
+  expect(errors).toHaveLength(0);
 });
 
-test('validate with values', t => {
+test('validate with values', () => {
   const config = new Config();
 
   config
@@ -446,17 +442,13 @@ test('validate with values', t => {
 
   const errors = validate(config.toConfig());
 
-  t.is(errors.length, 0);
+  expect(errors).toHaveLength(0);
 });
 
-test('toString', t => {
+test('toString', () => {
   const config = new Config();
 
-  config.module
-    .rule('alpha')
-    .oneOf('beta')
-    .use('babel')
-    .loader('babel-loader');
+  config.module.rule('alpha').oneOf('beta').use('babel').loader('babel-loader');
 
   // Nested rules
   config.module
@@ -494,8 +486,7 @@ test('toString', t => {
   config.resolve.plugin('resolver').use(FooPlugin);
   config.optimization.minimizer('minifier').use(FooPlugin);
 
-  t.is(
-    config.toString().trim(),
+  expect(config.toString().trim()).toBe(
     `
 {
   resolve: {
@@ -584,7 +575,7 @@ test('toString', t => {
   );
 });
 
-test('toString for functions with custom expression', t => {
+test('toString for functions with custom expression', () => {
   const fn = function foo() {};
   fn.__expression = `require('foo')`;
 
@@ -592,8 +583,7 @@ test('toString for functions with custom expression', t => {
 
   config.module.rule('alpha').include.add(fn);
 
-  t.is(
-    config.toString().trim(),
+  expect(config.toString().trim()).toBe(
     `
 {
   module: {
@@ -611,13 +601,12 @@ test('toString for functions with custom expression', t => {
   );
 });
 
-test('toString with custom prefix', t => {
+test('toString with custom prefix', () => {
   const config = new Config();
 
   config.plugin('foo').use(class TestPlugin {});
 
-  t.is(
-    config.toString({ configPrefix: 'neutrino.config' }).trim(),
+  expect(config.toString({ configPrefix: 'neutrino.config' }).trim()).toBe(
     `
 {
   plugins: [
@@ -629,7 +618,7 @@ test('toString with custom prefix', t => {
   );
 });
 
-test('static Config.toString', t => {
+test('static Config.toString', () => {
   const config = new Config();
   const sass = {
     __expression: `require('sass')`,
@@ -638,7 +627,7 @@ test('static Config.toString', t => {
 
   config.plugin('foo').use(class TestPlugin {});
 
-  t.is(
+  expect(
     Config.toString(
       Object.assign(config.toConfig(), {
         module: {
@@ -658,6 +647,7 @@ test('static Config.toString', t => {
         },
       }),
     ).trim(),
+  ).toBe(
     `
 {
   plugins: [
