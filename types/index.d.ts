@@ -199,7 +199,7 @@ declare namespace Config {
 
   class EntryPoint extends TypedChainedSet<Config, string> {}
 
-  class Resolve extends ChainedMap<Config> {
+  class Resolve<T = Config> extends ChainedMap<T> {
     alias: TypedChainedMap<this, string>;
     aliasFields: TypedChainedSet<this, string>;
     descriptionFiles: TypedChainedSet<this, string>;
@@ -230,6 +230,7 @@ declare namespace Config {
     uses: TypedChainedMap<this, Use>;
     include: TypedChainedSet<this, webpack.Condition>;
     exclude: TypedChainedSet<this, webpack.Condition>;
+    resolve: Resolve<Rule<T>>;
 
     parser(value: { [optName: string]: any }): this;
     test(value: webpack.Condition | webpack.Condition[]): this;
