@@ -1156,6 +1156,29 @@ config.module
         .loader('sass-vars-to-js-loader')
 ```
 
+#### Config module rules resolve
+
+Specify a resolve configuration to be merged over the default `config.resolve`
+for modules that match the rule.
+
+See "Config resolve" sections above for full syntax.
+
+**Note:** This option is supported by webpack since 4.36.1.
+
+```js
+config.module
+  .rule(name)
+    .resolve
+
+// Example
+
+config.module
+  .rule('scss')
+    .test(/\.scss$/)
+    .resolve
+      .symlinks(true)
+```
+
 ---
 
 ### Merging Config

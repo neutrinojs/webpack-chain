@@ -319,6 +319,9 @@ config
         .use('url')
           .loader('url-loader')
           .end()
+        .resolve
+          .symlinks(true)
+          .end()
         .end()
       .rules
         .delete('inline')
@@ -335,6 +338,9 @@ config
         .end()
       .oneOfs
         .delete('inline')
+        .end()
+      .resolve
+        .symlinks(true)
         .end()
       .end()
     .rules
