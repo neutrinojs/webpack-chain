@@ -425,6 +425,29 @@ test('merge with include and exclude not of array type', () => {
   });
 });
 
+test('merge with resolve', () => {
+  const rule = new Rule();
+
+  rule.merge({
+    resolve: {
+      alias: { foo: 'bar' },
+    },
+  });
+
+  rule.merge({
+    resolve: {
+      extensions: ['.js', '.mjs'],
+    },
+  });
+
+  expect(rule.toConfig()).toStrictEqual({
+    resolve: {
+      alias: { foo: 'bar' },
+      extensions: ['.js', '.mjs'],
+    },
+  });
+});
+
 test('ordered rules', () => {
   const rule = new Rule();
   rule

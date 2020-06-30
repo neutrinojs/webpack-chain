@@ -112,6 +112,10 @@ const Rule = Orderable(
         );
       }
 
+      if (!omit.includes('resolve') && 'resolve' in obj) {
+        this.resolve.merge(obj.resolve);
+      }
+
       if (!omit.includes('test') && 'test' in obj) {
         this.test(
           obj.test instanceof RegExp || typeof obj.test === 'function'
@@ -127,6 +131,7 @@ const Rule = Orderable(
         'use',
         'rules',
         'oneOf',
+        'resolve',
         'test',
       ]);
     }
