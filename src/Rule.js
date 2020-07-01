@@ -2,6 +2,7 @@ const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
 const Orderable = require('./Orderable');
 const Use = require('./Use');
+const Resolve = require('./Resolve');
 
 function toArray(arr) {
   return Array.isArray(arr) ? arr : [arr];
@@ -28,6 +29,7 @@ const Rule = Orderable(
       this.exclude = new ChainedSet(this);
       this.rules = new ChainedMap(this);
       this.oneOfs = new ChainedMap(this);
+      this.resolve = new Resolve(this);
       this.extend([
         'enforce',
         'issuer',
@@ -71,6 +73,7 @@ const Rule = Orderable(
           rules: this.rules.values().map((rule) => rule.toConfig()),
           oneOf: this.oneOfs.values().map((oneOf) => oneOf.toConfig()),
           use: this.uses.values().map((use) => use.toConfig()),
+          resolve: this.resolve.toConfig(),
         }),
       );
 
@@ -109,6 +112,10 @@ const Rule = Orderable(
         );
       }
 
+      if (!omit.includes('resolve') && 'resolve' in obj) {
+        this.resolve.merge(obj.resolve);
+      }
+
       if (!omit.includes('test') && 'test' in obj) {
         this.test(
           obj.test instanceof RegExp || typeof obj.test === 'function'
@@ -124,6 +131,7 @@ const Rule = Orderable(
         'use',
         'rules',
         'oneOf',
+        'resolve',
         'test',
       ]);
     }

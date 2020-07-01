@@ -43,6 +43,14 @@ test('oneOf', () => {
   expect(rule.oneOfs.has('babel')).toBe(true);
 });
 
+test('resolve', () => {
+  const rule = new Rule();
+  const instance = rule.resolve.alias.set('foo', 'bar').end().end();
+
+  expect(instance).toBe(rule);
+  expect(rule.resolve.alias.has('foo')).toBe(true);
+});
+
 test('pre', () => {
   const rule = new Rule();
   const instance = rule.pre();
@@ -414,6 +422,29 @@ test('merge with include and exclude not of array type', () => {
     test: /\.jsx$/,
     include: ['alpha'],
     exclude: ['alpha'],
+  });
+});
+
+test('merge with resolve', () => {
+  const rule = new Rule();
+
+  rule.merge({
+    resolve: {
+      alias: { foo: 'bar' },
+    },
+  });
+
+  rule.merge({
+    resolve: {
+      extensions: ['.js', '.mjs'],
+    },
+  });
+
+  expect(rule.toConfig()).toStrictEqual({
+    resolve: {
+      alias: { foo: 'bar' },
+      extensions: ['.js', '.mjs'],
+    },
   });
 });
 
