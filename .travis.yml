@@ -4,7 +4,7 @@ cache: yarn
 node_js:
 - '10'
 - '12'
-- '13'
+- '14'
 jobs:
   include:
   # Prettier has dropped support for Node 8, so we have to skip linting and use --ignore-engines.
