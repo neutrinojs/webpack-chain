@@ -1,4 +1,4 @@
-import {Tapable} from 'tapable';
+import { Tapable } from 'tapable';
 import * as webpack from 'webpack';
 import * as https from 'https';
 
@@ -19,7 +19,11 @@ declare namespace __Config {
     merge(obj: { [key: string]: Value }): this;
     entries(): { [key: string]: Value };
     values(): Value[];
-    when(condition: boolean, trueBrancher: (obj: this) => void, falseBrancher?: (obj: this) => void): this;
+    when(
+      condition: boolean,
+      trueBrancher: (obj: this) => void,
+      falseBrancher?: (obj: this) => void,
+    ): this;
   }
 
   class ChainedMap<Parent> extends TypedChainedMap<Parent, any> {}
@@ -32,7 +36,11 @@ declare namespace __Config {
     has(key: string): boolean;
     merge(arr: Value[]): this;
     values(): Value[];
-    when(condition: boolean, trueBrancher: (obj: this) => void, falseBrancher?: (obj: this) => void): this;
+    when(
+      condition: boolean,
+      trueBrancher: (obj: this) => void,
+      falseBrancher?: (obj: this) => void,
+    ): this;
   }
 
   class ChainedSet<Parent> extends TypedChainedSet<Parent, any> {}
@@ -58,8 +66,8 @@ declare class Config extends __Config.ChainedMap<void> {
   externals(value: webpack.ExternalsElement | webpack.ExternalsElement[]): this;
   loader(value: any): this;
   name(value: string): this;
-  mode(value: 'none' | 'development' | 'production') : this;
-  parallelism(value: number) : this;
+  mode(value: 'none' | 'development' | 'production'): this;
+  parallelism(value: number): this;
   profile(value: boolean): this;
   recordsPath(value: string): this;
   recordsInputPath(value: string): this;
@@ -77,22 +85,37 @@ declare class Config extends __Config.ChainedMap<void> {
 
 declare namespace Config {
   class Chained<Parent> extends __Config.Chained<Parent> {}
-  class TypedChainedMap<Parent, Value> extends __Config.TypedChainedMap<Parent, Value> {}
+  class TypedChainedMap<Parent, Value> extends __Config.TypedChainedMap<
+    Parent,
+    Value
+  > {}
   class ChainedMap<Parent> extends __Config.TypedChainedMap<Parent, any> {}
-  class TypedChainedSet<Parent, Value> extends __Config.TypedChainedSet<Parent, Value> {}
+  class TypedChainedSet<Parent, Value> extends __Config.TypedChainedSet<
+    Parent,
+    Value
+  > {}
   class ChainedSet<Parent> extends __Config.TypedChainedSet<Parent, any> {}
 
-  class Plugins<Parent, PluginType extends Tapable.Plugin = webpack.Plugin> extends TypedChainedMap<Parent, Plugin<Parent, PluginType>> {}
+  class Plugins<
+    Parent,
+    PluginType extends Tapable.Plugin = webpack.Plugin
+  > extends TypedChainedMap<Parent, Plugin<Parent, PluginType>> {}
 
-  class Plugin<Parent, PluginType extends Tapable.Plugin = webpack.Plugin> extends ChainedMap<Parent> implements Orderable {
+  class Plugin<Parent, PluginType extends Tapable.Plugin = webpack.Plugin>
+    extends ChainedMap<Parent>
+    implements Orderable {
     init<P extends PluginType | PluginClass<PluginType>>(
-      value: (plugin: P, args: P extends PluginClass ? ConstructorParameters<P> : any[]
-    ) => PluginType): this;
+      value: (
+        plugin: P,
+        args: P extends PluginClass ? ConstructorParameters<P> : any[],
+      ) => PluginType,
+    ): this;
     use<P extends string | PluginType | PluginClass<PluginType>>(
-      plugin: P, args?: P extends PluginClass ? ConstructorParameters<P> : any[]
+      plugin: P,
+      args?: P extends PluginClass ? ConstructorParameters<P> : any[],
     ): this;
     tap<P extends PluginClass<PluginType>>(
-      f: (args: ConstructorParameters<P>) => ConstructorParameters<P>
+      f: (args: ConstructorParameters<P>) => ConstructorParameters<P>,
     ): this;
 
     // Orderable
@@ -103,12 +126,14 @@ declare namespace Config {
   class Module extends ChainedMap<Config> {
     rules: TypedChainedMap<this, Rule>;
     rule(name: string): Rule;
-    noParse(noParse: RegExp | RegExp[] | ((contentPath: string) => boolean)): this;
+    noParse(
+      noParse: RegExp | RegExp[] | ((contentPath: string) => boolean),
+    ): this;
     strictExportPresence(value: boolean): this;
   }
 
   class Output extends ChainedMap<Config> {
-    auxiliaryComment(value: string | { [comment:string]: string }): this;
+    auxiliaryComment(value: string | { [comment: string]: string }): this;
     chunkFilename(value: string): this;
     chunkLoadTimeout(value: number): this;
     crossOriginLoading(value: boolean | string): this;
@@ -142,9 +167,12 @@ declare namespace Config {
   class DevServer extends ChainedMap<Config> {
     allowedHosts: TypedChainedSet<this, string>;
 
-
-    after(value: (app: any, server: any, compiler: webpack.Compiler) => void): this;
-    before(value: (app: any, server: any, compiler: webpack.Compiler) => void): this;
+    after(
+      value: (app: any, server: any, compiler: webpack.Compiler) => void,
+    ): this;
+    before(
+      value: (app: any, server: any, compiler: webpack.Compiler) => void,
+    ): this;
     bonjour(value: boolean): this;
     clientLogLevel(value: 'none' | 'error' | 'warning' | 'info'): this;
     color(value: boolean): this;
@@ -167,7 +195,7 @@ declare namespace Config {
     noInfo(value: boolean): this;
     open(value: boolean): this;
     openPage(value: string | string[]): this;
-    overlay(value: boolean | { warnings?: boolean, errors?: boolean }): this;
+    overlay(value: boolean | { warnings?: boolean; errors?: boolean }): this;
     pfx(value: string): this;
     pfxPassphrase(value: string): this;
     port(value: number): this;
@@ -213,7 +241,9 @@ declare namespace Config {
     enforceModuleExtension(value: boolean): this;
     unsafeCache(value: boolean | RegExp | RegExp[]): this;
     symlinks(value: boolean): this;
-    cachePredicate(value: (data: { path: string, request: string }) => boolean): this;
+    cachePredicate(
+      value: (data: { path: string; request: string }) => boolean,
+    ): this;
     cacheWithContext(value: boolean): this;
 
     plugin(name: string): Plugin<this, webpack.ResolvePlugin>;
@@ -221,7 +251,7 @@ declare namespace Config {
 
   class ResolveLoader extends Resolve {
     moduleExtensions: ChainedSet<this>;
-    packageMains: ChainedSet<this>
+    packageMains: ChainedSet<this>;
   }
 
   class Rule<T = Module> extends ChainedMap<T> implements Orderable {
@@ -234,7 +264,14 @@ declare namespace Config {
 
     parser(value: { [optName: string]: any }): this;
     test(value: webpack.Condition | webpack.Condition[]): this;
-    type(value: 'javascript/auto' | 'javascript/dynamic' | 'javascript/esm' | 'json' | 'webassembly/experimental'): this;
+    type(
+      value:
+        | 'javascript/auto'
+        | 'javascript/dynamic'
+        | 'javascript/esm'
+        | 'json'
+        | 'webassembly/experimental',
+    ): this;
     enforce(value: 'pre' | 'post'): this;
 
     use(name: string): Use<this>;
@@ -262,7 +299,7 @@ declare namespace Config {
     providedExports(value: boolean): this;
     removeAvailableModules(value: boolean): this;
     removeEmptyChunks(value: boolean): this;
-    runtimeChunk(value: boolean | "single" | "multiple" | RuntimeChunk): this;
+    runtimeChunk(value: boolean | 'single' | 'multiple' | RuntimeChunk): this;
     sideEffects(value: boolean): this;
     splitChunks(value: SplitChunksOptions): this;
     usedExports(value: boolean): this;
@@ -274,9 +311,13 @@ declare namespace Config {
 
   type RuntimeChunkFunction = (entryPoint: EntryPoint) => string;
 
-  interface SplitChunksOptions { [name: string]: any; }
+  interface SplitChunksOptions {
+    [name: string]: any;
+  }
 
-  interface LoaderOptions { [name: string]: any; }
+  interface LoaderOptions {
+    [name: string]: any;
+  }
 
   class Use<Parent = Rule> extends ChainedMap<Parent> implements Orderable {
     loader(value: string): this;
@@ -289,19 +330,52 @@ declare namespace Config {
     after(name: string): this;
   }
 
-  type DevTool = 'eval' | 'inline-source-map' | 'cheap-eval-source-map' | 'cheap-source-map' |
-    'cheap-module-eval-source-map' | 'cheap-module-source-map' | 'eval-source-map' | 'source-map' |
-    'nosources-source-map' | 'hidden-source-map' | 'nosources-source-map' | '@eval' |
-    '@inline-source-map' | '@cheap-eval-source-map' | '@cheap-source-map' |
-    '@cheap-module-eval-source-map' | '@cheap-module-source-map' | '@eval-source-map' |
-    '@source-map' | '@nosources-source-map' | '@hidden-source-map' | '@nosources-source-map' |
-    '#eval' | '#inline-source-map' | '#cheap-eval-source-map' | '#cheap-source-map' |
-    '#cheap-module-eval-source-map' | '#cheap-module-source-map' | '#eval-source-map' |
-    '#source-map' | '#nosources-source-map' | '#hidden-source-map' | '#nosources-source-map' |
-    '#@eval' | '#@inline-source-map' | '#@cheap-eval-source-map' | '#@cheap-source-map' |
-    '#@cheap-module-eval-source-map' | '#@cheap-module-source-map' | '#@eval-source-map' |
-    '#@source-map' | '#@nosources-source-map' | '#@hidden-source-map' | '#@nosources-source-map' |
-    boolean;
+  type DevTool =
+    | 'eval'
+    | 'inline-source-map'
+    | 'cheap-eval-source-map'
+    | 'cheap-source-map'
+    | 'cheap-module-eval-source-map'
+    | 'cheap-module-source-map'
+    | 'eval-source-map'
+    | 'source-map'
+    | 'nosources-source-map'
+    | 'hidden-source-map'
+    | 'nosources-source-map'
+    | '@eval'
+    | '@inline-source-map'
+    | '@cheap-eval-source-map'
+    | '@cheap-source-map'
+    | '@cheap-module-eval-source-map'
+    | '@cheap-module-source-map'
+    | '@eval-source-map'
+    | '@source-map'
+    | '@nosources-source-map'
+    | '@hidden-source-map'
+    | '@nosources-source-map'
+    | '#eval'
+    | '#inline-source-map'
+    | '#cheap-eval-source-map'
+    | '#cheap-source-map'
+    | '#cheap-module-eval-source-map'
+    | '#cheap-module-source-map'
+    | '#eval-source-map'
+    | '#source-map'
+    | '#nosources-source-map'
+    | '#hidden-source-map'
+    | '#nosources-source-map'
+    | '#@eval'
+    | '#@inline-source-map'
+    | '#@cheap-eval-source-map'
+    | '#@cheap-source-map'
+    | '#@cheap-module-eval-source-map'
+    | '#@cheap-module-source-map'
+    | '#@eval-source-map'
+    | '#@source-map'
+    | '#@nosources-source-map'
+    | '#@hidden-source-map'
+    | '#@nosources-source-map'
+    | boolean;
 
   interface PluginClass<PluginType extends Tapable.Plugin = webpack.Plugin> {
     new (...opts: any[]): PluginType;
