@@ -26,7 +26,7 @@ config
   .externals(/node_modules/)
   .externals({ test: false, foo: 'bar' })
   .externals(['foo', 'bar'])
-  .externals((context, request, cb) => cb(null, true))
+  .externals((context, request, cb) => cb(null, 'foo'))
   .loader({})
   .name("config-name")
   .mode("none")
