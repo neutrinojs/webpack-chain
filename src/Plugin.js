@@ -22,6 +22,11 @@ module.exports = Orderable(
     }
 
     tap(f) {
+      if (!this.has('plugin')) {
+        throw new Error(
+          `Cannot call .tap() on a plugin that has not yet been defined. Call ${this.type}('${this.name}').use(<Plugin>) first.`,
+        );
+      }
       this.set('args', f(this.get('args') || []));
       return this;
     }
