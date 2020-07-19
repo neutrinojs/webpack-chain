@@ -51,6 +51,12 @@ module.exports = Orderable(
       const args = this.get('args');
       let pluginPath = null;
 
+      if (plugin === undefined) {
+        throw new Error(
+          `Invalid ${this.type} configuration: ${this.type}('${this.name}').use(<Plugin>) was not called to specify the plugin`,
+        );
+      }
+
       // Support using the path to a plugin rather than the plugin itself,
       // allowing expensive require()s to be skipped in cases where the plugin
       // or webpack configuration won't end up being used.
