@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@types/enhanced-resolve": "^3.0.6",
-    "@types/node": "^12.12.17",
     "@types/tapable": "^1.0.6",
     "@types/webpack": "^4.41.21",
     "auto-changelog": "^2.2.0",
