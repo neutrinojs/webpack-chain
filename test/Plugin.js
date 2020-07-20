@@ -139,3 +139,11 @@ test('toConfig with plugin as path', () => {
   expect(initialized.__pluginConstructorName).toBe('EnvironmentPlugin');
   expect(initialized.__pluginPath).toBe(envPluginPath);
 });
+
+test('toConfig without having called use()', () => {
+  const plugin = new Plugin(null, 'gamma', 'optimization.minimizer');
+
+  expect(() => plugin.toConfig()).toThrow(
+    "Invalid optimization.minimizer configuration: optimization.minimizer('gamma').use(<Plugin>) was not called to specify the plugin",
+  );
+});
