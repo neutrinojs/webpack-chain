@@ -147,3 +147,11 @@ test('toConfig without having called use()', () => {
     "Invalid optimization.minimizer configuration: optimization.minimizer('gamma').use(<Plugin>) was not called to specify the plugin",
   );
 });
+
+test('tap() without having called use()', () => {
+  const plugin = new Plugin(null, 'gamma', 'optimization.minimizer');
+
+  expect(() => plugin.tap(() => [])).toThrow(
+    "Cannot call .tap() on a plugin that has not yet been defined. Call optimization.minimizer('gamma').use(<Plugin>) first.",
+  );
+});
