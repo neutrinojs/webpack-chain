@@ -12,7 +12,7 @@
     "api"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "files": [
     "src",
@@ -44,10 +44,10 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.18.0",
+    "eslint-plugin-jest": "^24.0.0",
     "jest": "^25.3.0",
     "prettier": "^2.0.5",
-    "typescript": "^3.9.7",
+    "typescript": "^4.0.0",
     "webpack": "^4.43.0"
   }
 }
