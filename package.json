@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "deepmerge": "^1.5.2",
-    "javascript-stringify": "^2.0.1"
+    "javascript-stringify": "^2.1.0"
   },
   "devDependencies": {
     "@types/enhanced-resolve": "^3.0.6",
