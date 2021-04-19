@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/enhanced-resolve": "^3.0.6",
     "@types/tapable": "^1.0.6",
-    "@types/webpack": "^4.41.21",
+    "@types/webpack": "^4.41.26",
     "auto-changelog": "^2.2.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb-base": "^14.2.0",
