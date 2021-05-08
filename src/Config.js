@@ -1,4 +1,5 @@
 const ChainedMap = require('./ChainedMap');
+const ChainedValueMap = require('./ChainedValueMap');
 const ChainedSet = require('./ChainedSet');
 const Resolve = require('./Resolve');
 const ResolveLoader = require('./ResolveLoader');
@@ -15,7 +16,7 @@ module.exports = class extends ChainedMap {
     this.devServer = new DevServer(this);
     this.entryPoints = new ChainedMap(this);
     this.module = new Module(this);
-    this.node = new ChainedMap(this);
+    this.node = new ChainedValueMap(this);
     this.optimization = new Optimization(this);
     this.output = new Output(this);
     this.performance = new Performance(this);
@@ -31,7 +32,7 @@ module.exports = class extends ChainedMap {
       'externals',
       'loader',
       'mode',
-      'name',
+      '_name',
       'parallelism',
       'profile',
       'recordsInputPath',

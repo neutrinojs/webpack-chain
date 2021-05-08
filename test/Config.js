@@ -48,6 +48,16 @@ test('node is object', () => {
   });
 });
 
+test('node is value', () => {
+  const config = new Config();
+  const instance = config
+    .node(false)
+    .end();
+
+  expect(instance).toBe(config);
+  expect(config.node.entries()).toStrictEqual(false);
+});
+
 test('entry', () => {
   const config = new Config();
 

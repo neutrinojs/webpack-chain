@@ -96,5 +96,5 @@ test('plugin with name', () => {
 
   resolveLoader.plugin('alpha');
 
-  expect(resolveLoader.plugins.get('alpha').name).toBe('alpha');
+  expect(resolveLoader.plugins.get('alpha').pluginName).toBe('alpha');
 });

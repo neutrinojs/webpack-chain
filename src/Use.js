@@ -6,7 +6,7 @@ module.exports = Orderable(
   class extends ChainedMap {
     constructor(parent, name) {
       super(parent);
-      this.name = name;
+      this.useName = name;
       this.extend(['loader', 'options']);
     }
 
@@ -31,7 +31,7 @@ module.exports = Orderable(
       const config = this.clean(this.entries() || {});
 
       Object.defineProperties(config, {
-        __useName: { value: this.name },
+        __useName: { value: this.useName },
         __ruleNames: { value: this.parent && this.parent.names },
         __ruleTypes: { value: this.parent && this.parent.ruleTypes },
       });

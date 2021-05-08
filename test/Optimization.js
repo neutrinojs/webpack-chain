@@ -33,7 +33,7 @@ test('minimizer plugin with name', () => {
   const optimization = new Optimization();
   optimization.minimizer('alpha');
 
-  expect(optimization.minimizers.get('alpha').name).toBe('alpha');
+  expect(optimization.minimizers.get('alpha').pluginName).toBe('alpha');
   expect(optimization.minimizers.get('alpha').type).toBe(
     'optimization.minimizer',
   );

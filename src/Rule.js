@@ -12,14 +12,14 @@ const Rule = Orderable(
   class extends ChainedMap {
     constructor(parent, name, ruleType = 'rule') {
       super(parent);
-      this.name = name;
+      this.ruleName = name;
       this.names = [];
       this.ruleType = ruleType;
       this.ruleTypes = [];
 
       let rule = this;
       while (rule instanceof Rule) {
-        this.names.unshift(rule.name);
+        this.names.unshift(rule.ruleName);
         this.ruleTypes.unshift(rule.ruleType);
         rule = rule.parent;
       }

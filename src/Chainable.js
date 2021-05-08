@@ -1,5 +1,8 @@
-module.exports = class {
+const Callable = require('./Callable')
+
+module.exports = class extends Callable {
   constructor(parent) {
+    super()
     this.parent = parent;
   }
 
