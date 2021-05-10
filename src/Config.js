@@ -13,35 +13,54 @@ const Performance = require('./Performance');
 module.exports = class extends ChainedMap {
   constructor() {
     super();
-    this.devServer = new DevServer(this);
     this.entryPoints = new ChainedMap(this);
     this.module = new Module(this);
     this.node = new ChainedValueMap(this);
-    this.optimization = new Optimization(this);
     this.output = new Output(this);
-    this.performance = new Performance(this);
-    this.plugins = new ChainedMap(this);
     this.resolve = new Resolve(this);
     this.resolveLoader = new ResolveLoader(this);
+    // https://webpack.js.org/configuration/optimization/
+    this.optimization = new Optimization(this);
+    // https://webpack.js.org/configuration/plugins/
+    this.plugins = new ChainedMap(this);
+    // https://webpack.js.org/configuration/dev-server/
+    this.devServer = new DevServer(this);
+    // https://webpack.js.org/configuration/performance/
+    this.performance = new Performance(this);
     this.extend([
+      'context',
+      'externals',
+      'mode',
+      // https://webpack.js.org/configuration/devtool/
+      'devtool',
+      // https://webpack.js.org/configuration/target/
+      'target',
+      // https://webpack.js.org/configuration/watch/
+      'watch',
+      'watchOptions',
+      // https://webpack.js.org/configuration/externals/
+      'externals',
+      'externalsType',
+      'externalsPresets',
+      // https://webpack.js.org/configuration/stats/
+      'stats',
+      // https://webpack.js.org/configuration/experiments
+      'experiments',
+      // https://webpack.js.org/configuration/other-options
       'amd',
       'bail',
       'cache',
-      'context',
-      'devtool',
-      'externals',
+      'dependencies',
+      'ignoreWarnings',
       'loader',
-      'mode',
-      '_name',
       'parallelism',
       'profile',
-      'recordsInputPath',
       'recordsPath',
+      'recordsInputPath',
       'recordsOutputPath',
-      'stats',
-      'target',
-      'watch',
-      'watchOptions',
+      '_name',
+      'infrastructureLogging',
+      'snapshot'
     ]);
   }
 

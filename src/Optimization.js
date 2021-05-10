@@ -6,23 +6,26 @@ module.exports = class extends ChainedMap {
     super(parent);
     this.minimizers = new ChainedMap(this);
     this.extend([
-      'concatenateModules',
-      'flagIncludedChunks',
-      'mergeDuplicateChunks',
       'minimize',
-      'namedChunks',
-      'namedModules',
+      'splitChunks',
+      'runtimeChunk',
+      'emitOnErrors',
+      'moduleIds',
+      'chunkIds',
       'nodeEnv',
-      'noEmitOnErrors',
-      'occurrenceOrder',
-      'portableRecords',
-      'providedExports',
+      'mangleWasmImports',
       'removeAvailableModules',
       'removeEmptyChunks',
-      'runtimeChunk',
-      'sideEffects',
-      'splitChunks',
+      'mergeDuplicateChunks',
+      'flagIncludedChunks',
+      'providedExports',
       'usedExports',
+      'concatenateModules',
+      'sideEffects',
+      'portableRecords',
+      'mangleExports',
+      'innerGraph',
+      'realContentHash'
     ]);
   }
 

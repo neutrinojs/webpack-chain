@@ -58,6 +58,40 @@ test('node is value', () => {
   expect(config.node.entries()).toStrictEqual(false);
 });
 
+test('bail', () => {
+  const config = new Config();
+  const instance = config.bail(false)
+
+  expect(instance.toConfig()).toStrictEqual({
+    bail: false,
+  });
+})
+
+test('cache', () => {
+  const config = new Config();
+
+  const instanceBoolean = config.cache(false)
+  expect(instanceBoolean.toConfig()).toStrictEqual({
+    cache: false,
+  });
+
+  const instanceObject = config.cache({
+    allowCollectingMemory: true,
+    cacheDirectory: './'
+  })
+
+  expect(instanceBoolean.get('cache')).toStrictEqual({
+    allowCollectingMemory: true,
+    cacheDirectory: './'
+  });
+  expect(instanceObject.toConfig()).toStrictEqual({
+    cache: {
+      allowCollectingMemory: true,
+      cacheDirectory: './'
+    }
+  });
+})
+
 test('entry', () => {
   const config = new Config();
 
