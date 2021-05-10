@@ -30,7 +30,7 @@ const Rule = Orderable(
       this.rules = new ChainedMap(this);
       this.oneOfs = new ChainedMap(this);
       this.resolve = new Resolve(this);
-      this.resolve.extend(['fullySpecified'])
+      this.resolve.extend(['fullySpecified']);
       this.extend([
         'enforce',
         'issuer',

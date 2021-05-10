@@ -50,9 +50,7 @@ test('node is object', () => {
 
 test('node is value', () => {
   const config = new Config();
-  const instance = config
-    .node(false)
-    .end();
+  const instance = config.node(false).end();
 
   expect(instance).toBe(config);
   expect(config.node.entries()).toStrictEqual(false);
@@ -60,45 +58,45 @@ test('node is value', () => {
 
 test('bail', () => {
   const config = new Config();
-  const instance = config.bail(false)
+  const instance = config.bail(false);
 
   expect(instance.toConfig()).toStrictEqual({
     bail: false,
   });
-})
+});
 
 test('cache', () => {
   const config = new Config();
 
-  const instanceBoolean = config.cache(false)
+  const instanceBoolean = config.cache(false);
   expect(instanceBoolean.toConfig()).toStrictEqual({
     cache: false,
   });
 
   const instanceObject = config.cache({
     allowCollectingMemory: true,
-    cacheDirectory: './'
-  })
+    cacheDirectory: './',
+  });
 
   expect(instanceBoolean.get('cache')).toStrictEqual({
     allowCollectingMemory: true,
-    cacheDirectory: './'
+    cacheDirectory: './',
   });
   expect(instanceObject.toConfig()).toStrictEqual({
     cache: {
       allowCollectingMemory: true,
-      cacheDirectory: './'
-    }
+      cacheDirectory: './',
+    },
   });
-})
+});
 
 test('name', () => {
   const config = new Config();
-  const instance = config.configName('aaa')
+  const instance = config.configName('aaa');
   expect(instance.toConfig()).toStrictEqual({
     name: 'aaa',
   });
-})
+});
 
 test('entry', () => {
   const config = new Config();
@@ -379,7 +377,7 @@ test('validate empty', () => {
   const config = new Config();
 
   expect(() => {
-    validate(config.toConfig())
+    validate(config.toConfig());
   }).not.toThrow();
 });
 
@@ -389,7 +387,7 @@ test('validate with entry', () => {
   config.entry('index').add('src/index.js');
 
   expect(() => {
-    validate(config.toConfig())
+    validate(config.toConfig());
   }).not.toThrow();
 });
 
@@ -431,7 +429,7 @@ test('validate with values', () => {
     .options({ presets: ['alpha'] });
 
   expect(() => {
-    validate(config.toConfig())
+    validate(config.toConfig());
   }).not.toThrow();
 });
 

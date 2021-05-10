@@ -25,7 +25,7 @@ module.exports = class extends ChainedMap {
       'portableRecords',
       'mangleExports',
       'innerGraph',
-      'realContentHash'
+      'realContentHash',
     ]);
   }
 

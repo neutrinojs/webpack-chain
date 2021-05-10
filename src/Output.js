@@ -49,7 +49,7 @@ module.exports = class extends ChainedMap {
       'enabledWasmLoadingTypes',
       'iife',
       'module',
-      'clean'
+      'clean',
     ]);
   }
 };

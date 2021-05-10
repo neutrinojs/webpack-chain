@@ -196,15 +196,15 @@ test('should apply set value', () => {
   const map = new ChainedValueMap();
   map('aaa');
   expect(map.value).toBe('aaa');
-})
+});
 
 test('set will clean value', () => {
   const map = new ChainedValueMap();
-  map('aaa')
+  map('aaa');
   expect(map.set('a', 'alpha')).toBe(map);
   expect(map.store.get('a')).toBe('alpha');
   expect(map.value).toBeUndefined();
-})
+});
 
 test('fn value will clear store', () => {
   const map = new ChainedValueMap();
@@ -213,11 +213,11 @@ test('fn value will clear store', () => {
   map('aaa');
   expect(map.value).toBe('aaa');
   expect(map.store.size).toBe(0);
-})
+});
 
 test('getOrCompute will clean value', () => {
   const map = new ChainedValueMap();
-  map('aaa')
+  map('aaa');
   expect(map.getOrCompute('a', () => 'alpha')).toBe('alpha');
   expect(map.get('a')).toBe('alpha');
   expect(map.value).toBeUndefined();
@@ -227,9 +227,9 @@ test('clear will clean value', () => {
   const map = new ChainedValueMap();
   map('aaa');
   expect(map.value).toBe('aaa');
-  map.clear()
-  expect(map.value).toBeUndefined()
-})
+  map.clear();
+  expect(map.value).toBeUndefined();
+});
 
 test('entries with return value or map', () => {
   const map = new ChainedValueMap();
