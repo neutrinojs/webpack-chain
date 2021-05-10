@@ -30,10 +30,15 @@ const Rule = Orderable(
       this.rules = new ChainedMap(this);
       this.oneOfs = new ChainedMap(this);
       this.resolve = new Resolve(this);
+      this.resolve.extend(['fullySpecified'])
       this.extend([
         'enforce',
         'issuer',
+        'issuerLayer',
+        'layer',
+        'mimetype',
         'parser',
+        'generator',
         'resource',
         'resourceQuery',
         'sideEffects',
