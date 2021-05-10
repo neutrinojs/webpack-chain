@@ -92,6 +92,14 @@ test('cache', () => {
   });
 })
 
+test('name', () => {
+  const config = new Config();
+  const instance = config.configName('aaa')
+  expect(instance.toConfig()).toStrictEqual({
+    name: 'aaa',
+  });
+})
+
 test('entry', () => {
   const config = new Config();
 

@@ -30,7 +30,7 @@ module.exports = class extends Chainable {
       acc[key] = value;
       return acc;
     }, {});
-    const names = Object.keys(entries).map(t => t.replace(/^_/, ''));
+    const names = Object.keys(entries);
     const order = [...names];
 
     names.forEach((name) => {

@@ -13,11 +13,15 @@ const Performance = require('./Performance');
 module.exports = class extends ChainedMap {
   constructor() {
     super();
+    // https://webpack.js.org/configuration/entry-context/
     this.entryPoints = new ChainedMap(this);
-    this.module = new Module(this);
-    this.node = new ChainedValueMap(this);
+    // https://webpack.js.org/configuration/output/
     this.output = new Output(this);
+    // https://webpack.js.org/configuration/module/
+    this.module = new Module(this);
+    // https://webpack.js.org/configuration/resolve
     this.resolve = new Resolve(this);
+    // https://webpack.js.org/configuration/resolve/#resolveloader
     this.resolveLoader = new ResolveLoader(this);
     // https://webpack.js.org/configuration/optimization/
     this.optimization = new Optimization(this);
@@ -27,9 +31,12 @@ module.exports = class extends ChainedMap {
     this.devServer = new DevServer(this);
     // https://webpack.js.org/configuration/performance/
     this.performance = new Performance(this);
+    // https://webpack.js.org/configuration/node/
+    this.node = new ChainedValueMap(this);
     this.extend([
+      // https://webpack.js.org/configuration/entry-context/
       'context',
-      'externals',
+      // https://webpack.js.org/configuration/mode/
       'mode',
       // https://webpack.js.org/configuration/devtool/
       'devtool',
@@ -58,7 +65,8 @@ module.exports = class extends ChainedMap {
       'recordsPath',
       'recordsInputPath',
       'recordsOutputPath',
-      '_name',
+      // rename `name` to `configName` avoid conflict with Function readonly property
+      'configName',
       'infrastructureLogging',
       'snapshot'
     ]);
@@ -136,9 +144,14 @@ module.exports = class extends ChainedMap {
 
   toConfig() {
     const entryPoints = this.entryPoints.entries() || {};
+    const baseConfig = this.entries() || {}
+    if(baseConfig.configName) {
+      baseConfig.name = baseConfig.configName
+      delete baseConfig.configName
+    }
 
     return this.clean(
-      Object.assign(this.entries() || {}, {
+      Object.assign(baseConfig, {
         node: this.node.entries(),
         output: this.output.entries(),
         resolve: this.resolve.toConfig(),
