@@ -1,17 +1,3 @@
-const Callable = require('./Callable');
+const createChainable = require('./createClass/createChainable');
 
-module.exports = class extends Callable {
-  constructor(parent) {
-    super();
-    this.parent = parent;
-  }
-
-  batch(handler) {
-    handler(this);
-    return this;
-  }
-
-  end() {
-    return this.parent;
-  }
-};
+module.exports = createChainable(Object);

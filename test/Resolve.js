@@ -130,7 +130,7 @@ test('plugin with name', () => {
 
   resolve.plugin('alpha');
 
-  expect(resolve.plugins.get('alpha').pluginName).toBe('alpha');
+  expect(resolve.plugins.get('alpha').name).toBe('alpha');
   expect(resolve.plugins.get('alpha').type).toBe('resolve.plugin');
 });
 

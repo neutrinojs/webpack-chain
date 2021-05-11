@@ -5,7 +5,7 @@ module.exports = Orderable(
   class extends ChainedMap {
     constructor(parent, name, type = 'plugin') {
       super(parent);
-      this.pluginName = name;
+      this.name = name;
       this.type = type;
       this.extend(['init']);
 
@@ -24,7 +24,7 @@ module.exports = Orderable(
     tap(f) {
       if (!this.has('plugin')) {
         throw new Error(
-          `Cannot call .tap() on a plugin that has not yet been defined. Call ${this.type}('${this.pluginName}').use(<Plugin>) first.`,
+          `Cannot call .tap() on a plugin that has not yet been defined. Call ${this.type}('${this.name}').use(<Plugin>) first.`,
         );
       }
       this.set('args', f(this.get('args') || []));
@@ -58,7 +58,7 @@ module.exports = Orderable(
 
       if (plugin === undefined) {
         throw new Error(
-          `Invalid ${this.type} configuration: ${this.type}('${this.pluginName}').use(<Plugin>) was not called to specify the plugin`,
+          `Invalid ${this.type} configuration: ${this.type}('${this.name}').use(<Plugin>) was not called to specify the plugin`,
         );
       }
 
@@ -78,7 +78,7 @@ module.exports = Orderable(
       const config = init(plugin, args);
 
       Object.defineProperties(config, {
-        __pluginName: { value: this.pluginName },
+        __pluginName: { value: this.name },
         __pluginType: { value: this.type },
         __pluginArgs: { value: args },
         __pluginConstructorName: { value: constructorName },

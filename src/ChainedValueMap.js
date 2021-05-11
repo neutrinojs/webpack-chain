@@ -1,41 +1,6 @@
-const ChainedMap = require('./ChainedMap');
+const Callable = require('./Callable');
+const createMap = require('./createClass/createMap');
+const createChainable = require('./createClass/createChainable');
+const createValue = require('./createClass/createValue');
 
-module.exports = class extends ChainedMap {
-  constructor(parent) {
-    super(parent);
-    this.value = undefined;
-    this.useMap = true;
-  }
-
-  set(...args) {
-    this.useMap = true;
-    this.value = undefined;
-    return super.set(...args);
-  }
-
-  clear() {
-    this.value = undefined;
-    return super.clear();
-  }
-
-  classCall(value) {
-    this.clear();
-    this.useMap = false;
-    this.value = value;
-    return this;
-  }
-
-  entries() {
-    if (this.useMap) {
-      return super.entries();
-    }
-    return this.value;
-  }
-
-  values() {
-    if (this.useMap) {
-      return super.values();
-    }
-    return this.value;
-  }
-};
+module.exports = createValue(createMap(createChainable(Callable)));

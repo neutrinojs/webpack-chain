@@ -65,8 +65,7 @@ module.exports = class extends ChainedMap {
       'recordsPath',
       'recordsInputPath',
       'recordsOutputPath',
-      // rename `name` to `configName` avoid conflict with Function readonly property
-      'configName',
+      'name',
       'infrastructureLogging',
       'snapshot',
     ]);
@@ -145,10 +144,6 @@ module.exports = class extends ChainedMap {
   toConfig() {
     const entryPoints = this.entryPoints.entries() || {};
     const baseConfig = this.entries() || {};
-    if (baseConfig.configName) {
-      baseConfig.name = baseConfig.configName;
-      delete baseConfig.configName;
-    }
 
     return this.clean(
       Object.assign(baseConfig, {
