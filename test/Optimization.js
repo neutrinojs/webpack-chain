@@ -100,8 +100,11 @@ test('toConfig empty', () => {
 test('toConfig with values', () => {
   const optimization = new Optimization();
 
-  optimization.minimizer('foo').use(StringifyPlugin).end()
-    .splitChunks.set('chunks', 'all')
+  optimization
+    .minimizer('foo')
+    .use(StringifyPlugin)
+    .end()
+    .splitChunks.set('chunks', 'all');
 
   expect(optimization.toConfig()).toStrictEqual({
     minimizer: [new StringifyPlugin()],
