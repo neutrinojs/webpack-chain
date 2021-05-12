@@ -365,7 +365,7 @@ config
   .bail(true)
   .cache(false)
   .cache({
-    type: 'filesystem'
+    type: 'filesystem',
   })
   .devtool('hidden-source-map')
   .devtool(false)
