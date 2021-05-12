@@ -56,6 +56,14 @@ test('node is value', () => {
   expect(config.node.entries()).toStrictEqual(false);
 });
 
+test('performance is false', () => {
+  const config = new Config();
+  const instance = config.performance(false).end();
+
+  expect(instance).toBe(config);
+  expect(config.performance.entries()).toStrictEqual(false);
+});
+
 test('bail', () => {
   const config = new Config();
   const instance = config.bail(false);
