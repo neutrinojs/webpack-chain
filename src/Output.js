@@ -42,7 +42,6 @@ module.exports = class extends ChainedMap {
       'umdNamedDefine',
       'workerChunkLoading',
       'enabledLibraryTypes',
-      'futureEmitAssets',
       'environment',
       'compareBeforeEmit',
       'wasmLoading',

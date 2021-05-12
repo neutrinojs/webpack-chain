@@ -23,7 +23,6 @@ module.exports = class extends ChainedMap {
       'cachePredicate',
       'cacheWithContext',
       'enforceExtension',
-      'enforceModuleExtension',
       'symlinks',
       'unsafeCache',
       'preferRelative',
