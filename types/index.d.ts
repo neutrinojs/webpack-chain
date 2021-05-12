@@ -429,7 +429,7 @@ declare namespace Config {
   class Optimization extends ChainedMap<Config> {
     minimizer(name: string): Config.Plugin<this, WebpackPluginInstance>;
     splitChunks: TypedChainedMap<this, SplitChunksObject> &
-      ((value: boolean) => this);
+      ((value: SplitChunksObject | false) => this);
 
     minimize(value: WebpackOptimization['minimize']): this;
     runtimeChunk(value: WebpackOptimization['runtimeChunk']): this;

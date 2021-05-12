@@ -248,8 +248,11 @@ when(condition, whenTruthy, whenFalsy)
 
 ## ChainedValueMap
 
-`ChainedValueMap` inherited `ChainedMap` but callable. It is chainable, 
-so calling it will return the original instance, allowing you to continue to chain.
+`ChainedValueMap` inherited `ChainedMap` but callable. call it by value means to 
+set it to it and clean all data in map. set any key/value in map will clear value 
+setted by call it.
+
+It is chainable,so calling it will return the original instance, allowing you to continue to chain.
 For example, `config.node` is a `ChainedValueMap` instance, so it can be used as:
 
 ```js
@@ -835,9 +838,12 @@ config.optimization.minimizers.delete(name)
 #### Config optimization splitChunks
 
 ```js
-config.optimization.splitChunks : ChainedMap
+config.optimization.splitChunks : ChainedValueMap
 
-config.optimization.splitChunks
+config.optimization
+  .splitChunks({
+    chunks: all
+  }
   .set(key, value)
   .set(key, value)
   .delete(key)
