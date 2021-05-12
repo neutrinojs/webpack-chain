@@ -11,6 +11,7 @@ export = Config;
 
 declare namespace __Config {
   class Chained<Parent> {
+    batch(handler: (chained: this) => void): this;
     end(): Parent;
   }
   class TypedChainedMap<Parent, OptionsType> extends Chained<Parent> {

@@ -38,6 +38,7 @@ config
     (entry) => entry.clear(),
     (entry) => entry.clear(),
   )
+  .batch((x) => {})
   .end()
   // entryPoints
   .entryPoints.delete('main')
