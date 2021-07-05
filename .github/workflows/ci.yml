@@ -1,11 +1,5 @@
 name: 'ci'
-on:
-  push:
-    branches:
-      - '**'
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   lint:
