@@ -98,12 +98,13 @@ declare namespace Config {
 
   class Plugins<
     Parent,
-    PluginType extends Tapable.Plugin = webpack.Plugin
+    PluginType extends Tapable.Plugin = webpack.Plugin,
   > extends TypedChainedMap<Parent, Plugin<Parent, PluginType>> {}
 
   class Plugin<Parent, PluginType extends Tapable.Plugin = webpack.Plugin>
     extends ChainedMap<Parent>
-    implements Orderable {
+    implements Orderable
+  {
     init<P extends PluginType | PluginClass<PluginType>>(
       value: (
         plugin: P,
