@@ -116,7 +116,7 @@ declare namespace Config {
 
   class Plugins<
     Parent,
-    PluginType extends WebpackPluginInstance
+    PluginType extends WebpackPluginInstance,
   > extends TypedChainedMap<
     Parent,
     { [key: string]: Plugin<Parent, PluginType> }
@@ -531,7 +531,7 @@ declare namespace Config {
     | boolean;
 
   interface PluginClass<
-    PluginType extends WebpackPluginInstance | ResolvePlugin
+    PluginType extends WebpackPluginInstance | ResolvePlugin,
   > {
     new (...opts: any[]): PluginType;
   }
