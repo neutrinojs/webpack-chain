@@ -2,10 +2,9 @@
 
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][npm-downloads]][npm-url]
-[![Build Status][travis-image]][travis-url]
+[![CI Status][ci-image]][ci-url]
 
-Use a chaining API to generate and simplify the modification of
-webpack version 2-4 configurations.
+Use a chaining API to generate and simplify the modification of webpack 4 configurations.
 
 This documentation corresponds to v6 of webpack-chain. For previous versions, see:
 
@@ -38,7 +37,7 @@ This is easier explained through the examples following.
 ## Installation
 
 `webpack-chain` requires Node.js 10 or higher. `webpack-chain` also only creates
-configuration objects designed for use in webpack versions 2, 3, and 4.
+configuration objects designed for use with webpack 4.
 
 You may install this package using either Yarn or npm (choose one):
 
@@ -1757,5 +1756,5 @@ Config.toString({
 [npm-image]: https://img.shields.io/npm/v/webpack-chain.svg
 [npm-downloads]: https://img.shields.io/npm/dt/webpack-chain.svg
 [npm-url]: https://www.npmjs.com/package/webpack-chain
-[travis-image]: https://api.travis-ci.com/neutrinojs/webpack-chain.svg?branch=master
-[travis-url]: https://travis-ci.com/neutrinojs/webpack-chain
+[ci-image]: https://github.com/neutrinojs/webpack-chain/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/neutrinojs/webpack-chain/actions/workflows/ci.yml

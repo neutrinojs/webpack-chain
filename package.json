@@ -36,6 +36,9 @@
     "javascript-stringify": "^2.0.1"
   },
   "devDependencies": {
+    "@types/enhanced-resolve": "^3.0.6",
+    "@types/tapable": "^1.0.6",
+    "@types/webpack": "^5.0.0",
     "auto-changelog": "^2.2.0",
     "enhanced-resolve": "^5.8.2",
     "eslint": "^7.5.0",
@@ -43,7 +46,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^24.0.0",
-    "jest": "^25.3.0",
+    "jest": "^27.0.0",
     "prettier": "^2.0.5",
     "typescript": "^4.0.0",
     "webpack": "^5.0.0"

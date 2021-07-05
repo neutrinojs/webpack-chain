@@ -124,7 +124,8 @@ declare namespace Config {
 
   class Plugin<Parent, PluginType extends WebpackPluginInstance | ResolvePlugin>
     extends ChainedMap<Parent>
-    implements Orderable {
+    implements Orderable
+  {
     init<P extends PluginType | PluginClass<PluginType>>(
       value: (
         plugin: P,
