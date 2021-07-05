@@ -42,7 +42,7 @@
     "auto-changelog": "^2.2.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^24.0.0",
     "jest": "^27.0.0",
