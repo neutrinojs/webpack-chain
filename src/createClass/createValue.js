@@ -21,7 +21,7 @@ module.exports = function createValue(superClass) {
       this.clear();
       this.useMap = false;
       this.value = value;
-      return this;
+      return this.parent;
     }
 
     entries() {
