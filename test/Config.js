@@ -50,7 +50,7 @@ test('node is object', () => {
 
 test('node is value', () => {
   const config = new Config();
-  const instance = config.node(false)
+  const instance = config.node(false);
 
   expect(instance).toBe(config);
   expect(config.node.entries()).toStrictEqual(false);
@@ -58,7 +58,7 @@ test('node is value', () => {
 
 test('performance is false', () => {
   const config = new Config();
-  const instance = config.performance(false)
+  const instance = config.performance(false);
 
   expect(instance).toBe(config);
   expect(config.performance.entries()).toStrictEqual(false);
