@@ -39,6 +39,7 @@
     "@types/enhanced-resolve": "^3.0.6",
     "@types/tapable": "^1.0.6",
     "@types/webpack": "^5.0.0",
+    "@types/webpack-dev-server": "^4.1.0",
     "auto-changelog": "^2.2.0",
     "enhanced-resolve": "^5.8.2",
     "eslint": "^7.5.0",

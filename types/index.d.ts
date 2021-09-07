@@ -5,6 +5,10 @@ import {
   RuleSetRule,
   ResolveOptions,
 } from 'webpack';
+import {
+  Configuration as DevServerConfiguration,
+  Static,
+} from 'webpack-dev-server';
 import * as https from 'https';
 
 export = Config;
@@ -242,85 +246,44 @@ declare namespace Config {
     clean(value: WebpackOutput['clean']): this;
   }
 
-  // await for @types/webpack-dev-server update do v4 to remove all any
+  type DevServerClient = Required<
+    NonNullable<DevServerConfiguration['client']>
+  >;
+  type DevServerStatic = Required<NonNullable<Static>>;
+
   class DevServer extends ChainedMap<Config> {
     allowedHosts: TypedChainedSet<this, string>;
-    after(value: (app: any, server: any, compiler: Compiler) => void): this;
-    before(value: (app: any, server: any, compiler: Compiler) => void): this;
-    bonjour(value: boolean): this;
-    clientLogLevel(
-      value:
-        | 'silent'
-        | 'trace'
-        | 'debug'
-        | 'info'
-        | 'warn'
-        | 'error'
-        | 'none'
-        | 'warning',
+    client: TypedChainedMap<this, DevServerClient>;
+    static: TypedChainedMap<this, DevServerStatic> &
+      ((value: boolean | string | Array<string | Static>) => this);
+
+    bonjour(value: DevServerConfiguration['bonjour']): this;
+    compress(value: DevServerConfiguration['compress']): this;
+    devMiddleware(value: DevServerConfiguration['devMiddleware']): this;
+    http2(value: DevServerConfiguration['http2']): this;
+    https(value: DevServerConfiguration['https']): this;
+    headers(value: DevServerConfiguration['headers']): this;
+    historyApiFallback(
+      value: DevServerConfiguration['historyApiFallback'],
     ): this;
-    compress(value: boolean): this;
-    contentBase(value: boolean | string | string[]): this;
-    contentBasePublicPath(value: string): this;
-    disableHostCheck(value: boolean): this;
-    filename(value: string): this;
-    headers(value: { [header: string]: string }): this;
-    historyApiFallback(value: boolean | any): this;
-    host(value: string): this;
-    hot(value: boolean): this;
-    hotOnly(value: boolean): this;
-    http2(value: boolean): this;
-    https(value: boolean | https.ServerOptions): this;
-    index(value: string): this;
-    injectClient(value: boolean | ((compiler: Compiler) => boolean)): this;
-    injectHot(value: boolean | ((compiler: Compiler) => boolean)): this;
-    inline(value: boolean): this;
-    lazy(value: boolean): this;
-    liveReload(value: boolean): this;
-    mimeTypes(value: Object): this;
-    noInfo(value: boolean): this;
-    onListening(value: (server: any) => void): this;
-    open(value: boolean): this;
-    openPage(value: string | string[]): this;
-    overlay(value: boolean | { warnings?: boolean; errors?: boolean }): this;
-    pfx(value: string): this;
-    pfxPassphrase(value: string): this;
-    port(value: number): this;
-    progress(value: boolean): this;
-    proxy(value: any): this;
-    public(value: string): this;
-    publicPath(publicPath: string): this;
-    quiet(value: boolean): this;
-    serveIndex(value: boolean): this;
-    setup(value: (expressApp: any) => void): this;
-    socket(value: string): this;
-    sockHost(value: string): this;
-    sockPath(value: string): this;
-    sockPort(value: number): this;
-    staticOptions(value: any): this;
-    stats(value: Configuration['stats']): this;
-    stdin(value: boolean): this;
-    transportMode(
-      value:
-        | 'sockjs'
-        | 'ws'
-        | {
-            server: 'ws';
-            client: object;
-          }
-        | {
-            client: 'sockjs';
-            server: object;
-          }
-        | {
-            client: object;
-            server: object;
-          },
+    host(value: DevServerConfiguration['host']): this;
+    hot(value: DevServerConfiguration['hot']): this;
+    ipc(value: DevServerConfiguration['ipc']): this;
+    liveReload(value: DevServerConfiguration['liveReload']): this;
+    magicHtml(value: DevServerConfiguration['magicHtml']): this;
+    onAfterSetupMiddleware(
+      value: DevServerConfiguration['onAfterSetupMiddleware'],
     ): this;
-    useLocalIp(value: boolean): this;
-    watchContentBase(value: boolean): this;
-    watchOptions(value: Configuration['watchOptions']): this;
-    writeToDisk(value: boolean): this;
+    onBeforeSetupMiddleware(
+      value: DevServerConfiguration['onBeforeSetupMiddleware'],
+    ): this;
+    onListening(value: DevServerConfiguration['onListening']): this;
+    open(value: DevServerConfiguration['open']): this;
+    port(value: DevServerConfiguration['port']): this;
+    proxy(value: DevServerConfiguration['proxy']): this;
+    setupExitSignals(value: DevServerConfiguration['setupExitSignals']): this;
+    watchFiles(value: DevServerConfiguration['watchFiles']): this;
+    webSocketServer(value: DevServerConfiguration['webSocketServer']): this;
   }
 
   type WebpackPerformance = Exclude<

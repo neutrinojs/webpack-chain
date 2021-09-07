@@ -281,70 +281,61 @@ config
   .devServer.allowedHosts.add('host.com')
   .clear()
   .end()
-  .after(() => {})
-  .before(() => {})
+  .onAfterSetupMiddleware(() => {})
+  .onBeforeSetupMiddleware(() => {})
   .bonjour(true)
-  .clientLogLevel('error')
-  .compress(false)
-  .contentBase('/')
-  .contentBase(['foo', 'bar'])
-  .contentBasePublicPath('asd')
-  .disableHostCheck(true)
-  .filename('hello')
-  .headers({
-    'Content-Type': 'text/css',
+  .client.set('logging', 'verbose')
+  .set('overlay', false)
+  .set('progress', true)
+  .set('webSocketTransport', 'ws')
+  .set('webSocketURL', {
+    hostname: '0.0.0.0',
+    pathname: '/ws',
+    password: 'dev-server',
+    port: 8080,
+    protocol: 'ws',
+    username: 'webpack',
   })
-  .historyApiFallback(true)
-  .host('localhost')
-  .hot(true)
-  .hotOnly(true)
-  .http2(true)
-  .https(true)
-  .index('test.html')
-  .injectClient(false)
-  .injectHot(() => false)
-  .inline(true)
-  .lazy(true)
-  .mimeTypes({ 'text/html': ['phtml'] })
-  .noInfo(true)
-  .open(true)
-  .openPage('/foo')
-  .openPage(['/foo', '/bar'])
-  .overlay(true)
-  .overlay({
-    warnings: true,
-    errors: true,
+  .end()
+  .compress(true)
+  .devMiddleware({
+    index: true,
+    mimeTypes: {
+      'text/html': 'phtml',
+    },
+    publicPath: '/publicPathForDevServe',
+    serverSideRender: true,
+    writeToDisk: true,
   })
-  .pfx('/path/to/file.pfx')
-  .pfxPassphrase('passphrase')
-  .port(8080)
-  .progress(true)
-  .proxy({})
-  .public('foo')
-
-  .publicPath('bar')
-  .quiet(false)
-  .setup((app) => {})
-  .socket('socket')
-  .sockHost('localhost')
-  .sockPath('/sockpath/')
-  .sockPort(8080)
-  .staticOptions({})
-  .stats({
-    reasons: true,
-    errors: true,
-    warnings: false,
+  .host('0.0.0.0')
+  .ipc(true)
+  .ipc('ipcpath')
+  .liveReload(true)
+  .magicHtml(true)
+  .onListening(() => {})
+  .open(['/my-page'])
+  .port(123123)
+  .proxy({
+    '/api': 'http://localhost:3000',
   })
-  .transportMode('sockjs')
-  .transportMode({
-    client: {},
-    server: 'ws',
-  })
-  .stdin(true)
-  .useLocalIp(true)
-  .watchContentBase(true)
-  .watchOptions({})
-  .writeToDisk(true)
+  .setupExitSignals(false)
+  .static(['static'])
+  .static([
+    {
+      directory: 'asd',
+      serveIndex: true,
+      watch: true,
+      publicPath: '/serve-public-path-url',
+      staticOptions: {
+        redirect: true,
+      },
+    },
+  ])
+  .static.set('directory', 'asd')
+  .set('watch', false)
+  .end()
+  .watchFiles(['src/**/*.php', 'public/**/*'])
+  .webSocketServer(true)
   .end()
   // performance
   .performance(false)

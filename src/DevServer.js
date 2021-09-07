@@ -1,63 +1,37 @@
 const ChainedMap = require('./ChainedMap');
 const ChainedSet = require('./ChainedSet');
+const ChainedValueMap = require('./ChainedValueMap');
 
 module.exports = class extends ChainedMap {
   constructor(parent) {
     super(parent);
 
     this.allowedHosts = new ChainedSet(this);
+    this.client = new ChainedMap(this);
+    this.static = new ChainedValueMap(this);
 
     this.extend([
-      'after',
-      'before',
       'bonjour',
-      'clientLogLevel',
       'compress',
-      'contentBase',
-      'contentBasePublicPath',
-      'disableHostCheck',
-      'filename',
+      'devMiddleware',
+      'http2',
+      'https',
       'headers',
       'historyApiFallback',
       'host',
       'hot',
-      'hotOnly',
-      'http2',
-      'https',
-      'index',
-      'injectClient',
-      'injectHot',
-      'inline',
-      'lazy',
+      'ipc',
       'liveReload',
-      'mimeTypes',
-      'noInfo',
+      'magicHtml',
+      'onAfterSetupMiddleware',
+      'onBeforeSetupMiddleware',
       'onListening',
       'open',
-      'openPage',
-      'overlay',
-      'pfx',
-      'pfxPassphrase',
       'port',
       'proxy',
-      'progress',
-      'public',
-      'publicPath',
-      'quiet',
-      'serveIndex',
-      'setup',
-      'socket',
-      'sockHost',
-      'sockPath',
-      'sockPort',
-      'staticOptions',
-      'stats',
-      'stdin',
-      'transportMode',
-      'useLocalIp',
-      'watchContentBase',
-      'watchOptions',
-      'writeToDisk',
+      'setupExitSignals',
+      'watchFiles',
+      'webSocketServer',
     ]);
   }
 
