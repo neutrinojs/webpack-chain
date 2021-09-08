@@ -40,7 +40,7 @@ module.exports = class extends ChainedMap {
       allowedHosts: this.allowedHosts.values(),
       ...(this.entries() || {}),
       client: this.client.entries(),
-      static: this.static.entries()
+      static: this.static.entries(),
     });
   }
 
