@@ -36,8 +36,6 @@
     "javascript-stringify": "^2.0.1"
   },
   "devDependencies": {
-    "@types/enhanced-resolve": "^3.0.6",
-    "@types/tapable": "^1.0.6",
     "@types/webpack": "^5.0.0",
     "@types/webpack-dev-server": "^4.1.0",
     "auto-changelog": "^2.2.0",
