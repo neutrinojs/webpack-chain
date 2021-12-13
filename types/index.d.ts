@@ -37,6 +37,8 @@ declare namespace __Config {
 }
 
 declare class Config extends __Config.ChainedMap<void> {
+  static toString(config: webpack.Configuration, options: {verbose?: boolean, configPrefix?: string}): string;
+  
   devServer: Config.DevServer;
   entryPoints: Config.TypedChainedMap<Config, Config.EntryPoint>;
   module: Config.Module;
@@ -71,6 +73,8 @@ declare class Config extends __Config.ChainedMap<void> {
   plugin(name: string): Config.Plugin<this>;
 
   toConfig(): webpack.Configuration;
+  toString(options: {verbose?: boolean, configPrefix?: string}): string;
+
 }
 
 declare namespace Config {
