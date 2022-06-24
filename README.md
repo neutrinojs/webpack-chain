@@ -1355,6 +1355,7 @@ config.merge({
         enforce,
         issuer,
         parser,
+        generator,
         resource,
         resourceQuery,
         test,

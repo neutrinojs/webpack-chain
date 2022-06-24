@@ -34,6 +34,7 @@ const Rule = Orderable(
         'enforce',
         'issuer',
         'parser',
+        'generator',
         'resource',
         'resourceQuery',
         'sideEffects',
