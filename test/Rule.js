@@ -505,3 +505,32 @@ test('ordered oneOfs', () => {
     /\.third$/,
   ]);
 });
+
+test('asset modules with generator and parser', () => {
+  const rule = new Rule();
+  rule
+    .rule('fonts')
+    .test(/\.tff$/)
+    .type('asset')
+    .generator({
+      filename: 'fonts/[hash][ext][query]',
+    })
+    .parser({
+      dataUrlCondition: {
+        maxSize: 4 * 1024,
+      },
+    });
+
+  expect(rule.toConfig().rules[0]).toStrictEqual({
+    test: /\.tff$/,
+    type: 'asset',
+    generator: {
+      filename: 'fonts/[hash][ext][query]',
+    },
+    parser: {
+      dataUrlCondition: {
+        maxSize: 4 * 1024,
+      },
+    },
+  });
+});
