@@ -1,6 +1,6 @@
+import * as https from 'https';
 import { Tapable } from 'tapable';
 import * as webpack from 'webpack';
-import * as https from 'https';
 
 export = Config;
 
@@ -133,12 +133,20 @@ declare namespace Config {
     strictExportPresence(value: boolean): this;
   }
 
+  type FileNameType = string | ((pathData: {
+    chunk?: {
+      name?: string
+    }&Record<string,any>
+    hash?: string
+    contentHash?:any
+  }&Record<string,any>)=> string)
+
   class Output extends ChainedMap<Config> {
     auxiliaryComment(value: string | { [comment: string]: string }): this;
-    chunkFilename(value: string): this;
+    chunkFilename(value: FileNameType): this;
     chunkLoadTimeout(value: number): this;
     crossOriginLoading(value: boolean | string): this;
-    filename(value: string): this;
+    filename(value: FileNameType): this;
     library(value: string): this;
     libraryExport(value: string | string[]): this;
     libraryTarget(value: string): this;
